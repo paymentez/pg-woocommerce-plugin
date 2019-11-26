@@ -1,0 +1,34 @@
+.center-block{
+	display: block;
+	margin: 0 auto;
+	text-align: center;
+	padding-left: 15px;
+	padding-right: 15px;
+	
+}
+
+.form{
+
+	padding: 20px;
+	
+}
+
+
+.btn-tienda{
+	background-color: #5FA000;
+	text-decoration: none;
+	color: #ffffff;
+	display: inline-block;
+	text-align: center;
+	font-weight: normal;
+	padding: 6px 12px;
+	border-radius: 4px;
+	font-size: 14px;
+}
+
+.container{
+
+	display: block;
+	margin: 0 auto;
+	margin-top: 100px;
+}

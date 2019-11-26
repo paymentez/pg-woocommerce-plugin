@@ -1,0 +1,48 @@
+body{
+	width:100%;
+}
+
+p a h1{
+	font-family: 'VarelaRound-Regular';
+}
+
+.container{
+
+	display: block;
+	margin: 0 auto;
+	margin-top: 100px;
+}
+
+.img-circle{
+
+	border-radius: 50%;
+}
+
+.center-block{
+	display: block;
+	margin: 0 auto;
+	text-align: center;
+	padding-left: 15px;
+	padding-right: 15px;
+	
+}
+
+.textconfirmation{
+
+	font-weight: bold;
+}
+
+.btn-tienda{
+	background-color: #4B8A08;
+	text-decoration: none;
+	color: #fff;
+	display: inline-block;
+	text-align: center;
+	font-weight: normal;
+	padding: 6px 12px;
+	border-radius: 4px;
+	font-size: 14px;
+}
+.installments_type_checkbox{
+
+}
