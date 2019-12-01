@@ -57,9 +57,9 @@ function pg_woocommerce_plugin() {
       $this->app_key_server = $this->get_option('app_key_server');
 
       // Para guardar sus opciones, simplemente tiene que conectar la función process_admin_options en su constructor.
-      add_action('woocommerce_update_options_payment_gateways', array(&$this, 'process_admin_options'));
+      add_action('woocommerce_update_options_payment_gateways_' . $this->id, array(&$this, 'process_admin_options'));
 
-      add_action('woocommerce_receipt_paymentez', array(&$this, 'receipt_page'));
+      add_action('woocommerce_receipt_pg_woocommerce', array(&$this, 'receipt_page'));
     }
 
     public function init_form_fields() {
@@ -138,11 +138,9 @@ function pg_woocommerce_plugin() {
         $sku = $prod->get_id();
       }
       $fecha_actual = date('Y-m-d');
-      $variableTimestamp = strtotime($fecha_actual);
       $subtotal = number_format(($order->get_subtotal()), 2, '.', '');
       $vat = number_format(($order->get_total_tax()), 2, '.', '');
       $taxReturnBase = number_format(($amount - $vat), 2, '.', '');
-      $tax_percentage = $this->impuesto_pay;
       if ($vat == 0) $taxReturnBase = 0;
       if ($vat == 0) $tax_percentage = 0;
       if (is_null($order_data['customer_id']) or empty($order_data['customer_id'])) {
@@ -150,20 +148,11 @@ function pg_woocommerce_plugin() {
       } else {
           $uid = $order_data['customer_id'];
       }
-      $token = 'application_code=' . $this->app_code_client . '&dev_reference=' . $orderId . '&product_amount=' . $amount . '&product_code=' . $sku . '&product_description=' . urlencode($description) . '&uid=' . $uid . '&vat=' . $vat . '&' . $variableTimestamp . '&' . $this->app_key_client;
-      $signature = hash('sha256', $token);
       $parametersArgs = array(
-        'app_code' => $this->app_code_client,
-        'credito' => $credito,
         'purchase_order_id' => $orderId,
         'purchase_description' => $description,
         'purchase_amount' => $amount,
         'subtotal' => $subtotal,
-        'purchase_tax' => $vat,
-        'purchase_returnbase' => $taxReturnBase,
-        'purchase_tax_percentage' => $tax_percentage,
-        'purchase_signature' => $signature,
-        'token' => $token,
         'purchase_currency' => $currency,
         'customer_firstname' => $order_data['billing']['first_name'],
         'customer_lastname' => $order_data['billing']['last_name'],
@@ -175,7 +164,6 @@ function pg_woocommerce_plugin() {
         'address_state' => $order_data['billing']['state'],
         'user_id' => $uid,
         'cod_prod' => $sku,
-        'timestamp' => $variableTimestamp,
         'productos' => $prod,
         'taxable_amount' => $taxable_amount,
       );
@@ -185,10 +173,62 @@ function pg_woocommerce_plugin() {
     }
 
     public function generate_paymentez_form($orderId) {
+      $orderData = $this->get_params_post($orderId);
       ?>
-      <link rel="stylesheet" type="text/css" href="https://cdn.paymentez.com/checkout/1.0.1/paymentez-checkout.min.css" media="all">
-      <script src="https://cdn.paymentez.com/checkout/1.0.1/paymentez-checkout.min.js" charset="UTF-8"></script>
+      <script src="https://cdn.paymentez.com/checkout/1.0.1/paymentez-checkout.min.js"></script>
+
+      <button class="js-paymentez-checkout">Purchase</button>
+
+      <script>
+        var paymentezCheckout = new PaymentezCheckout.modal({
+            client_app_code: '<?php echo $this->app_code_client;?>', // Client Credentials Provied by Paymentez
+            client_app_key: '<?php echo $this->app_key_client;?>', // Client Credentials Provied by Paymentez
+            locale: 'en', // User's preferred language (es, en, pt). English will be used by default.
+            env_mode: 'stg', // `prod`, `stg` to change environment. Default is `stg`
+            onOpen: function() {
+                console.log('modal open');
+            },
+            onClose: function() {
+                console.log('modal closed');
+            },
+            onResponse: function(response) { // The callback to invoke when the Checkout process is completed
+                console.log('modal response');
+                document.getElementById('response').innerHTML = JSON.stringify(response);
+            }
+        });
+
+        var btnOpenCheckout = document.querySelector('.js-paymentez-checkout');
+        btnOpenCheckout.addEventListener('click', function(){
+          // Open Checkout with further options:
+          paymentezCheckout.open({
+            user_id: '<?php echo $orderData['user_id'];?>',
+            user_email: '<?php echo $orderData['customer_email'];?>', //optional
+            user_phone: '<?php echo $orderData['customer_phone'];?>', //optional
+            order_description: '<?php echo $orderData['purchase_description'];?>',
+            order_amount: <?php echo $orderData['purchase_amount'];?>,
+            order_vat: 0,
+            order_reference: '#234323411',
+            //order_installments_type: 2, // optional: For Colombia an Brazil to show installments should be 0, For Ecuador the valid values are: https://paymentez.github.io/api-doc/#payment-methods-cards-debit-with-token-installments-type
+            //order_taxable_amount: 0, // optional: Only available for Ecuador. The taxable amount, if it is zero, it is calculated on the total. Format: Decimal with two fraction digits.
+            //order_tax_percentage: 10 // optional: Only available for Ecuador. The tax percentage to be applied to this order.
+          });
+        });
+
+        // Close Checkout on page navigation:
+        window.addEventListener('popstate', function() {
+          paymentezCheckout.close();
+        });
+      </script>
       <?php
+    }
+
+    public function process_payment($orderId)
+    {
+        $order = new WC_Order($orderId);
+        return array(
+            'result' => 'success',
+            'redirect' => $order->get_checkout_payment_url(true)
+        );
     }
   }
 }
