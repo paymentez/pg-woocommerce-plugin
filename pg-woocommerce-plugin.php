@@ -173,13 +173,28 @@ function pg_woocommerce_plugin() {
     }
 
     public function generate_paymentez_form($orderId) {
+      $callback = plugins_url('/callback.php', __FILE__);
+      $css = plugins_url('/css/styles.css', __FILE__);
       $orderData = $this->get_params_post($orderId);
       ?>
+      <link rel="stylesheet" type="text/css" href="<?php echo $css; ?>">
+
+      <div id="messagetwo" class="hide"> <p class="alert alert-success" > Su pago se ha realizado con éxito. Muchas gracias por su compra </p> </div>
+
+      <div id="messagetres" class="hide"> <p class="alert alert-warning"> Ocurrió un error al comprar y su pago no se pudo realizar. Intente con otra Tarjeta de Crédito </p> </div>
+
+      <div id="buttonreturn" class="hide">
+        <p>
+          <a class="btn-tienda" href="<?php echo get_permalink( wc_get_page_id( 'shop' ) ); ?>"><?php _e( 'Return to Store', 'woocommerce' ) ?></a>
+        </p>
+      </div>
+
       <script src="https://cdn.paymentez.com/checkout/1.0.1/paymentez-checkout.min.js"></script>
 
       <button class="js-paymentez-checkout">Purchase</button>
 
       <script>
+      jQuery(document).ready(function($) {
         var paymentezCheckout = new PaymentezCheckout.modal({
             client_app_code: '<?php echo $this->app_code_client;?>', // Client Credentials Provied by Paymentez
             client_app_key: '<?php echo $this->app_key_client;?>', // Client Credentials Provied by Paymentez
@@ -191,9 +206,15 @@ function pg_woocommerce_plugin() {
             onClose: function() {
                 console.log('modal closed');
             },
-            onResponse: function(response) { // The callback to invoke when the Checkout process is completed
-                console.log('modal response');
-                document.getElementById('response').innerHTML = JSON.stringify(response);
+            onResponse: function(response) {
+                announceTransaction(response);
+                if (response.transaction["status_detail"] === 3) {
+                   console.log('modal response');
+                   console.log(response);
+                   showMessageSuccess();
+                } else {
+                   showMessageError();
+                }
             }
         });
 
@@ -205,9 +226,9 @@ function pg_woocommerce_plugin() {
             user_email: '<?php echo $orderData['customer_email'];?>', //optional
             user_phone: '<?php echo $orderData['customer_phone'];?>', //optional
             order_description: '<?php echo $orderData['purchase_description'];?>',
-            order_amount: <?php echo $orderData['purchase_amount'];?>,
+            order_amount: parseFloat('<?php echo $orderData['purchase_amount'];?>'),
             order_vat: 0,
-            order_reference: '#234323411',
+            order_reference: '<?php echo $orderData['purchase_order_id'];?>',
             //order_installments_type: 2, // optional: For Colombia an Brazil to show installments should be 0, For Ecuador the valid values are: https://paymentez.github.io/api-doc/#payment-methods-cards-debit-with-token-installments-type
             //order_taxable_amount: 0, // optional: Only available for Ecuador. The taxable amount, if it is zero, it is calculated on the total. Format: Decimal with two fraction digits.
             //order_tax_percentage: 10 // optional: Only available for Ecuador. The tax percentage to be applied to this order.
@@ -218,6 +239,30 @@ function pg_woocommerce_plugin() {
         window.addEventListener('popstate', function() {
           paymentezCheckout.close();
         });
+
+        function showMessageSuccess() {
+          $("#buttonspay").addClass("hide");
+          $("#messagetwo").removeClass("hide");
+          $("#buttonreturn").removeClass("hide");
+        }
+
+        function showMessageError() {
+          $("#buttonspay").addClass("hide");
+          $("#messagetres").removeClass("hide");
+          $("#buttonreturn").removeClass("hide");
+        }
+
+        function announceTransaction(data) {
+            fetch("<?php echo $callback; ?>", {
+            method: "POST",
+            body: JSON.stringify(data)
+            }).then(function(response) {
+            console.log(response);
+            }).catch(function(myJson) {
+            console.log(myJson);
+            });
+        }
+      });
       </script>
       <?php
     }
