@@ -4,7 +4,7 @@
 Plugin Name: Paymentez WooCommerce Plugin
 Plugin URI: http://www.paymentez.com
 Description: This module is a solution that allows WooCommerce users to easily process credit card payments.
-Version: 1.0
+Version: 1.2
 Author: Paymentez
 Author URI: http://www.paymentez.com
 License: A "Slug" license name e.g. GPL2
@@ -41,7 +41,7 @@ function pg_woocommerce_plugin() {
     public function __construct() {
       # $this->has_fields = true;
       $this->id = 'pg_woocommerce';
-      $this->icon = apply_filters('woocomerce_paymentez_icon', plugins_url('/imgs/paymentezcheck.png', __FILE__));
+      $this->icon = apply_filters('woocomerce_paymentez_icon', plugins_url('/assets/imgs/paymentezcheck.png', __FILE__));
       $this->method_title = 'Paymentez Plugin';
       $this->method_description = 'This module is a solution that allows WooCommerce users to easily process credit card payments.';
 
@@ -63,54 +63,19 @@ function pg_woocommerce_plugin() {
     }
 
     public function init_form_fields() {
-      $this->form_fields = array (
-        'enabled' => array(
-            'title' => __( 'Enable/Disable', 'pg_woocommerce' ),
-            'type' => 'checkbox',
-            'label' => __( 'Enable Paymentez Gateway', 'pg_woocommerce' ),
-            'default' => 'yes'
-        ),
-        'title' => array(
-            'title' => __( 'Title', 'pg_woocommerce' ),
-            'type' => 'text',
-            'description' => __( 'This controls the title which the user sees during checkout.', 'pg_woocommerce' ),
-            'default' => __( 'Paymentez Gateway', 'pg_woocommerce' ),
-            'desc_tip' => true,
-        ),
-        'description' => array(
-            'title' => __( 'Customer Message', 'pg_woocommerce' ),
-            'type' => 'textarea',
-            'default' => 'Paymentez is a complete solution for online payments. Safe, easy and fast.'
-        ),
-        'app_code_client' => array(
-        'title' => __('App Code Client', 'pg_woocommerce'),
-        'type' => 'text',
-        'description' => __('Unique identifier in Paymentez.', 'pg_woocommerce')
-        ),
-        'app_key_client' => array(
-            'title' => __('App Key Client', 'pg_woocommerce'),
-            'type' => 'text',
-            'description' => __('Key used to encrypt communication with Paymentez.', 'pg_woocommerce')
-        ),
-        'app_code_server' => array(
-            'title' => __('App Code Server', 'pg_woocommerce'),
-            'type' => 'text',
-            'description' => __('Unique identifier in Paymentez Server.', 'pg_woocommerce')
-        ),
-        'app_key_server' => array(
-            'title' => __('App Key Server', 'pg_woocommerce'),
-            'type' => 'text',
-            'description' => __('Key used for reverse communication with Paymentez Server.', 'pg_woocommerce')
-        )
-      );
+      $this->form_fields = require( dirname( __FILE__ ) . '/includes/admin/paymentez-settings.php' );
     }
 
     function admin_options() {
+      $logo = plugins_url('/assets/imgs/paymentez.png', __FILE__);
       ?>
+      <p>
+        <img style='width: 30%;position: relative;display: inherit;'src='<?php echo $logo;?>'>
+      </p>
       <h2><?php _e('Paymentez Gateway','pg_woocommerce'); ?></h2>
-      <table class="form-table">
-      <?php $this->generate_settings_html(); ?>
-      </table>
+        <table class="form-table">
+          <?php $this->generate_settings_html(); ?>
+        </table>
       <?php
     }
 
@@ -174,101 +139,39 @@ function pg_woocommerce_plugin() {
 
     public function generate_paymentez_form($orderId) {
       $callback = plugins_url('/callback.php', __FILE__);
-      $css = plugins_url('/css/styles.css', __FILE__);
+      $css = plugins_url('/assets/css/styles.css', __FILE__);
+      $checkout = plugins_url('/assets/js/paymentez_checkout.js', __FILE__);
       $orderData = $this->get_params_post($orderId);
+      $orderDataJSON = json_encode($orderData)
       ?>
-      <link rel="stylesheet" type="text/css" href="<?php echo $css; ?>">
+        <link rel="stylesheet" type="text/css" href="<?php echo $css; ?>">
 
-      <div id="messagetwo" class="hide"> <p class="alert alert-success" > Su pago se ha realizado con éxito. Muchas gracias por su compra </p> </div>
+        <div id="messagetwo" class="hide"> <p class="alert alert-success" > Su pago se ha realizado con éxito. Muchas gracias por su compra </p> </div>
+        <div id="messagetres" class="hide"> <p class="alert alert-warning"> Ocurrió un error al comprar y su pago no se pudo realizar. Intente con otra Tarjeta de Crédito </p> </div>
 
-      <div id="messagetres" class="hide"> <p class="alert alert-warning"> Ocurrió un error al comprar y su pago no se pudo realizar. Intente con otra Tarjeta de Crédito </p> </div>
+        <div id="buttonreturn" class="hide">
+          <p>
+            <a class="btn-tienda" href="<?php echo get_permalink( wc_get_page_id( 'shop' ) ); ?>"><?php _e( 'Return to Store', 'woocommerce' ) ?></a>
+          </p>
+        </div>
 
-      <div id="buttonreturn" class="hide">
-        <p>
-          <a class="btn-tienda" href="<?php echo get_permalink( wc_get_page_id( 'shop' ) ); ?>"><?php _e( 'Return to Store', 'woocommerce' ) ?></a>
-        </p>
-      </div>
+        <script src="https://cdn.paymentez.com/checkout/1.0.1/paymentez-checkout.min.js"></script>
 
-      <script src="https://cdn.paymentez.com/checkout/1.0.1/paymentez-checkout.min.js"></script>
+        <button class="js-paymentez-checkout">Purchase</button>
 
-      <button class="js-paymentez-checkout">Purchase</button>
+        <div id="orderDataJSON" class="hide">
+          <?php echo $orderDataJSON; ?>
+        </div>
 
-      <script>
-      jQuery(document).ready(function($) {
-        var paymentezCheckout = new PaymentezCheckout.modal({
-            client_app_code: '<?php echo $this->app_code_client;?>', // Client Credentials Provied by Paymentez
-            client_app_key: '<?php echo $this->app_key_client;?>', // Client Credentials Provied by Paymentez
-            locale: 'en', // User's preferred language (es, en, pt). English will be used by default.
-            env_mode: 'stg', // `prod`, `stg` to change environment. Default is `stg`
-            onOpen: function() {
-                console.log('modal open');
-            },
-            onClose: function() {
-                console.log('modal closed');
-            },
-            onResponse: function(response) {
-                announceTransaction(response);
-                if (response.transaction["status_detail"] === 3) {
-                   console.log('modal response');
-                   console.log(response);
-                   showMessageSuccess();
-                } else {
-                   showMessageError();
-                }
-            }
-        });
-
-        var btnOpenCheckout = document.querySelector('.js-paymentez-checkout');
-        btnOpenCheckout.addEventListener('click', function(){
-          // Open Checkout with further options:
-          paymentezCheckout.open({
-            user_id: '<?php echo $orderData['user_id'];?>',
-            user_email: '<?php echo $orderData['customer_email'];?>', //optional
-            user_phone: '<?php echo $orderData['customer_phone'];?>', //optional
-            order_description: '<?php echo $orderData['purchase_description'];?>',
-            order_amount: parseFloat('<?php echo $orderData['purchase_amount'];?>'),
-            order_vat: 0,
-            order_reference: '<?php echo $orderData['purchase_order_id'];?>',
-            //order_installments_type: 2, // optional: For Colombia an Brazil to show installments should be 0, For Ecuador the valid values are: https://paymentez.github.io/api-doc/#payment-methods-cards-debit-with-token-installments-type
-            //order_taxable_amount: 0, // optional: Only available for Ecuador. The taxable amount, if it is zero, it is calculated on the total. Format: Decimal with two fraction digits.
-            //order_tax_percentage: 10 // optional: Only available for Ecuador. The tax percentage to be applied to this order.
-          });
-        });
-
-        // Close Checkout on page navigation:
-        window.addEventListener('popstate', function() {
-          paymentezCheckout.close();
-        });
-
-        function showMessageSuccess() {
-          $("#buttonspay").addClass("hide");
-          $("#messagetwo").removeClass("hide");
-          $("#buttonreturn").removeClass("hide");
-        }
-
-        function showMessageError() {
-          $("#buttonspay").addClass("hide");
-          $("#messagetres").removeClass("hide");
-          $("#buttonreturn").removeClass("hide");
-        }
-
-        function announceTransaction(data) {
-            fetch("<?php echo $callback; ?>", {
-            method: "POST",
-            body: JSON.stringify(data)
-            }).then(function(response) {
-            console.log(response);
-            }).catch(function(myJson) {
-            console.log(myJson);
-            });
-        }
-      });
-      </script>
+        <script id="checkout_php" callback="<?php echo $callback; ?>"
+          app-key="<?php echo $this->app_key_client; ?>"
+          app-code="<?php echo $this->app_code_client; ?>"
+          src="<?php echo $checkout; ?>">
+        </script>
       <?php
     }
 
-    public function process_payment($orderId)
-    {
+    public function process_payment($orderId) {
         $order = new WC_Order($orderId);
         return array(
             'result' => 'success',
