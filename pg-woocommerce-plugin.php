@@ -4,7 +4,7 @@
 Plugin Name: Paymentez WooCommerce Plugin
 Plugin URI: http://www.paymentez.com
 Description: This module is a solution that allows WooCommerce users to easily process credit card payments.
-Version: 1.2
+Version: 1.0
 Author: Paymentez
 Author URI: http://www.paymentez.com
 License: A "Slug" license name e.g. GPL2
@@ -12,25 +12,11 @@ License: A "Slug" license name e.g. GPL2
 
 add_action( 'plugins_loaded', 'pg_woocommerce_plugin' );
 
-// Creación de la base de datos
+// Creación de la base de datos si no existe
 if (!function_exists('db_paymentez_plugin')) {
   function db_paymentez_plugin() {
-    global $wpdb;
-    $table_name = $wpdb->prefix . 'paymentez_plugin';
-
-    if ($wpdb->get_var('SHOW TABLES LIKES ' . $table_name) != $table_name) {
-      $sql = 'CREATE TABLE ' . $table_name . ' (
-             id integer(9) unsigned NOT NULL AUTO_INCREMENT,
-             Status varchar(50) NOT NULL,
-             Comments varchar(50) NOT NULL,
-             description text(500) NOT NULL,
-             OrdenId int(9) NOT NULL,
-             Transaction_Code varchar(50) NOT NULL,
-             PRIMARY KEY  (id)
-             );';
-      require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-      dbDelta($sql);
-    }
+    require( dirname( __FILE__ ) . '/database_helper.php' );
+    echo WC_Paymentez_Database_Helper::create_database();
   }
 }
 
@@ -157,7 +143,7 @@ function pg_woocommerce_plugin() {
 
         <script src="https://cdn.paymentez.com/checkout/1.0.1/paymentez-checkout.min.js"></script>
 
-        <button class="js-paymentez-checkout">Purchase</button>
+        <button class="js-paymentez-checkout">Purchazze</button>
 
         <div id="orderDataJSON" class="hide">
           <?php echo $orderDataJSON; ?>

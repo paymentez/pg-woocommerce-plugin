@@ -63,13 +63,8 @@ jQuery(document).ready(function($) {
   }
 
   function announceTransaction(data) {
-      fetch(callback, {
-      method: "POST",
-      body: JSON.stringify(data)
-      }).then(function(response) {
-      console.log(response);
-      }).catch(function(myJson) {
-      console.log(myJson);
-      });
+    fetch(callback, { method: "POST", body: JSON.stringify(data) })
+    .then(function(response) { console.log(response); })
+    .catch(function(myJson) { console.log(myJson); });
   }
 });
