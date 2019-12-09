@@ -1,7 +1,7 @@
 <?php
 
 require_once('../../../wp-load.php');
-require( dirname( __FILE__ ) . '/database_helper.php' );
+require_once( dirname( __FILE__ ) . '/database_helper.php' );
 
 $requestBody = file_get_contents('php://input');
 $requestBodyJs = json_decode($requestBody, true);

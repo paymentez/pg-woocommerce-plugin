@@ -11,16 +11,56 @@ License: A "Slug" license name e.g. GPL2
 */
 
 add_action( 'plugins_loaded', 'pg_woocommerce_plugin' );
+require( dirname( __FILE__ ) . '/database_helper.php' );
 
 // Creación de la base de datos si no existe
 if (!function_exists('db_paymentez_plugin')) {
   function db_paymentez_plugin() {
-    require( dirname( __FILE__ ) . '/database_helper.php' );
     echo WC_Paymentez_Database_Helper::create_database();
   }
 }
 
 register_activation_hook(__FILE__, 'db_paymentez_plugin');
+
+// define the woocommerce_order_refunded callback
+function paymentez_woocommerce_order_refunded($order_id, $refund_id) {
+  $refundObj = new WC_Gateway_Paymentez();
+  $app_code_server = 'SS-MX-SERVER';
+  $app_key_server = '5BCH7GptkaJhLhSGTSOZZ4z0KYX6ix';
+
+  $fecha_actual = time();
+  $variableTimestamp = (string)($fecha_actual);
+  $uniq_token_string = $app_key_server . $variableTimestamp;
+  $uniq_token_hash = hash('sha256', $uniq_token_string);
+  $auth_token = base64_encode($app_code_server . ';' . $variableTimestamp . ';' . $uniq_token_hash);
+
+  $urlrefund = 'https://ccapi-stg.paymentez.com/v2/transaction/refund/';
+
+  $transactionCode = WC_Paymentez_Database_Helper::select_order($order_id);
+  $data = array(
+      'id' => $transactionCode
+  );
+  $payload = json_encode(array("transaction" => $data));
+
+  $ch = curl_init($urlrefund);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+  curl_setopt($ch, CURLOPT_POSTFIELDS, ($payload));
+  curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+      'Content-Type:application/json',
+      'Auth-Token:' . $auth_token));
+
+  $response = curl_exec($ch);
+  $getresponse = json_decode($response, true);
+  $status = $getresponse['status'];
+
+  curl_close($ch);
+
+  WC_Paymentez_Database_Helper::update_table($status);
+}
+
+// add the action
+add_action( 'woocommerce_order_refunded', 'paymentez_woocommerce_order_refunded', 10, 2 );
 
 function pg_woocommerce_plugin() {
   class WC_Gateway_Paymentez extends WC_Payment_Gateway {
@@ -143,7 +183,7 @@ function pg_woocommerce_plugin() {
 
         <script src="https://cdn.paymentez.com/checkout/1.0.1/paymentez-checkout.min.js"></script>
 
-        <button class="js-paymentez-checkout">Purchazze</button>
+        <button class="js-paymentez-checkout">Purchasse</button>
 
         <div id="orderDataJSON" class="hide">
           <?php echo $orderDataJSON; ?>
