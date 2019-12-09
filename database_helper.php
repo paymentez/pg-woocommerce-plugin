@@ -53,14 +53,8 @@ class WC_Paymentez_Database_Helper {
     $myrows = $wpdb->get_results("SELECT * FROM $table_name where OrdenId = '$order_id' ", OBJECT);
 
     foreach ($myrows as $campos) {
-        $transactionCode = $campos->Transaction_Code;
+      $transactionCode = $campos->Transaction_Code;
     }
     return $transactionCode;
-  }
-
-  public static function update_table($status) {
-    global $wpdb;
-    $table_name = $wpdb->prefix . 'paymentez_plugin';
-    $wpdb->update($table_name, array('Status' => $status));
   }
 }

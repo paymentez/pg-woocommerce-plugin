@@ -25,8 +25,8 @@ register_activation_hook(__FILE__, 'db_paymentez_plugin');
 // define the woocommerce_order_refunded callback
 function paymentez_woocommerce_order_refunded($order_id, $refund_id) {
   $refundObj = new WC_Gateway_Paymentez();
-  $app_code_server = 'SS-MX-SERVER';
-  $app_key_server = '5BCH7GptkaJhLhSGTSOZZ4z0KYX6ix';
+  $app_code_server = $refundObj->app_code_server;
+  $app_key_server = $refundObj->app_key_server;
 
   $fecha_actual = time();
   $variableTimestamp = (string)($fecha_actual);
@@ -56,7 +56,10 @@ function paymentez_woocommerce_order_refunded($order_id, $refund_id) {
 
   curl_close($ch);
 
-  WC_Paymentez_Database_Helper::update_table($status);
+  $comments = "Refund Completed";
+  $description = "Aqui va un refund";
+
+  WC_Paymentez_Database_Helper::insert_data($status, $comments, $description, $order_id, $transactionCode);
 }
 
 // add the action
@@ -183,7 +186,7 @@ function pg_woocommerce_plugin() {
 
         <script src="https://cdn.paymentez.com/checkout/1.0.1/paymentez-checkout.min.js"></script>
 
-        <button class="js-paymentez-checkout">Purchasse</button>
+        <button class="js-paymentez-checkout">Purchase</button>
 
         <div id="orderDataJSON" class="hide">
           <?php echo $orderDataJSON; ?>
