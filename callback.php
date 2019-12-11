@@ -12,14 +12,15 @@ $transaction_id = $requestBodyJs["transaction"]['id'];
 $authorization_code = $requestBodyJs["transaction"]['authorization_code'];
 $response_description = $requestBodyJs["transaction"]['order_description'];
 $dev_reference = $requestBodyJs["transaction"]['dev_reference'];
+$paymentez_message = $requestBodyJs["transaction"]['message'];
 
 $detailPayment = array(
-  2 => "Paid partially",
-  3 => "Paid",
-  6 => "Fraud",
-  7 => "Refund",
-  8 => "Chargeback",
-  9 => "Rejected by carrier",
+  2  => "Paid partially",
+  3  => "Paid",
+  6  => "Fraud",
+  7  => "Refund",
+  8  => "Chargeback",
+  9  => "Rejected by carrier",
   10 => "System error",
   11 => "Paymentez fraud",
   12 => "Paymentez blacklist",
@@ -36,62 +37,46 @@ $credito = get_post_meta($order->id, '_billing_customer_dni', true);
 update_post_meta($order->id, '_transaction_id', $transaction_id);
 
 if (!in_array($statusOrder, ['completed', 'cancelled', 'failed'])) {
-    $description = "Respuesta Paymentez: Status: " . $status_detail .
-                " | Status_detail: " . $detailPayment[$status_detail] .
-                " | Dev_Reference: " . $dev_reference .
-                " | Authorization_Code: " . $authorization_code .
-                " | Response_Description: " . $response_description .
-                " | Transaction_Code: " . $transaction_id;
+    $description = __("Paymentez Response: Status: ", "pg_woocommerce") . $status_detail .
+                   __(" | Status_detail: ", "pg_woocommerce") . $detailPayment[$status_detail] .
+                   __(" | Dev_Reference: ", "pg_woocommerce") . $dev_reference .
+                   __(" | Authorization_Code: ", "pg_woocommerce") . $authorization_code .
+                   __(" | Response_Description: ", "pg_woocommerce") . $response_description .
+                   __(" | Transaction_Code: ", "pg_woocommerce") . $transaction_id;
 
-    if ($status == 1 || $status == 'success') {
-        $comments = "Pago exitoso";
-        $order->update_status('completed');
-        $order->reduce_order_stock();
-        $woocommerce->cart->empty_cart();
-        $order->add_order_note('Su pago se ha efectuado Satisfactoriamente. Código Transacción: ' . $transaction_id . ' y su Código de Autorización es: ' . $authorization_code);
-        $mensaje = 'Su pago se ha efectuado Satisfactoriamente';
+    if ($status == 'success') {
+      $comments = __("Successful Payment", "pg_woocommerce");
+      $order->update_status('Completed');
+      $order->reduce_order_stock();
+      $woocommerce->cart->empty_cart();
+      $order->add_order_note( __('Your payment has been made successfully. Transaction Code: ', 'pg_woocommerce') . $transaction_id . __(' and its Authorization Code is: ', 'pg_woocommerce') . $authorization_code);
 
-        WC_Paymentez_Database_Helper::insert_data($status, $comments, $description, $dev_reference, $transaction_id);
-        $statusOrder = $order->get_status();
+      WC_Paymentez_Database_Helper::insert_data($status, $comments, $description, $dev_reference, $transaction_id);
+      $statusOrder = $order->get_status();
 
-        if (!headers_sent()) {
-            header("HTTP/1.0 200 confirmado");
-        }
+      if (!headers_sent()) {
+          header("HTTP/1.0 200 confirmado");
+      }
+    } elseif ($status == 'failure') {
+      $comments = __("Payment Failed", "pg_woocommerce");
+      $order->update_status('Failed');
+      $order->add_order_note( __('Your payment has failed. Transaction Code: ', 'pg_woocommerce') . $transaction_id . __(' the reason is: ', 'pg_woocommerce') . $paymentez_message);
+
+      WC_Paymentez_Database_Helper::insert_data($status, $comments, $description, $dev_reference, $transaction_id);
+      $statusOrder = $order->get_status();
+
+    } elseif ($status == 'pending') {
+      $comments = __("Pending Payment", "pg_woocommerce");
+      $order->update_status('on-hold');
+      $order->reduce_order_stock();
+      $woocommerce->cart->empty_cart();
+      $order->add_order_note( __('Your payment is pending. Transaction Code: ', 'pg_woocommerce') . $transaction_id);
+
+      WC_Paymentez_Database_Helper::insert_data($status, $comments, $description, $dev_reference, $transaction_id);
+      $statusOrder = $order->get_status();
+
     } else {
-        if ($statusOrder != 'refunded') {
-            // Marca la orden como completa automáticamente
-            $order->update_status('failed');
-            $woocommerce->cart->empty_cart();
-            //$order->add_order_note( __( 'Error mientras se procesaba el pago.', 'paymentez' ) );
-            $comments = "Pago fallido";
-            $statusOrder = $order->get_status();
-            WC_Paymentez_Database_Helper::insert_data($status, $comments, $description, $dev_reference, $transaction_id);
-
-            if (!headers_sent()) {
-                header("HTTP/1.0 204 confirmado");
-            }
-        } else {
-            $comments = "Se confirma reverso";
-            WC_Paymentez_Database_Helper::insert_data($status, $comments, $description, $dev_reference, $transaction_id);
-            $order->update_status('refunded');
-
-            if (!headers_sent()) {
-                header("HTTP/1.0 204 confirmado");
-            }
-        }
-    }
-  } else {
-
-    $description = "Respuesta Paymentez: Status: " . $status_detail . " | Dev_Reference: " . $dev_reference . " | Transaction_Code: " . $transaction_id;
-
-    $comments = "Se confirma transacción";
-    $order->payment_complete($transaction_id);
-    $order->update_status('completed');
-    WC_Paymentez_Database_Helper::insert_data($status, $comments, $description, $dev_reference, $transaction_id);
-
-    if (!headers_sent()) {
-        header("HTTP/1.0 204 confirmado");
+      // TODO: Que hacer en caso de que falle todo?
+      // TODO: La variable $statusOrder se puede usar aquí, es el estatus de WC.
     }
 }
-
-?>

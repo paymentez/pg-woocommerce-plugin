@@ -17,12 +17,16 @@ jQuery(document).ready(function($) {
           console.log('modal closed');
       },
       onResponse: function(response) {
+          console.log('modal response');
           announceTransaction(response);
           if (response.transaction["status_detail"] === 3) {
-             console.log('modal response');
              console.log(response);
              showMessageSuccess();
+          } else if (response.transaction["status_detail"] === 1) {
+             console.log(response);
+             showMessagePending();
           } else {
+             console.log(response);
              showMessageError();
           }
       }
@@ -52,13 +56,19 @@ jQuery(document).ready(function($) {
 
   function showMessageSuccess() {
     $("#buttonspay").addClass("hide");
-    $("#messagetwo").removeClass("hide");
+    $("#mensajeSucccess").removeClass("hide");
     $("#buttonreturn").removeClass("hide");
   }
 
   function showMessageError() {
     $("#buttonspay").addClass("hide");
     $("#messagetres").removeClass("hide");
+    $("#mensajeFailed").removeClass("hide");
+  }
+
+  function showMessagePending() {
+    $("#buttonspay").addClass("hide");
+    $("#mensajePending").removeClass("hide");
     $("#buttonreturn").removeClass("hide");
   }
 

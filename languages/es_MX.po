@@ -1,0 +1,151 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2019-12-10 18:14-0600\n"
+"PO-Revision-Date: 2019-12-10 18:16-0600\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es_MX\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.2.4\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: includes\n"
+
+#: callback.php:40
+msgid "Paymentez Response: Status: "
+msgstr ""
+
+#: callback.php:41
+msgid " | Status_detail: "
+msgstr ""
+
+#: callback.php:42
+msgid " | Dev_Reference: "
+msgstr ""
+
+#: callback.php:43
+msgid " | Authorization_Code: "
+msgstr ""
+
+#: callback.php:44
+msgid " | Response_Description: "
+msgstr ""
+
+#: callback.php:45
+msgid " | Transaction_Code: "
+msgstr ""
+
+#: callback.php:48
+msgid "Successful Payment"
+msgstr ""
+
+#: callback.php:52
+msgid "Your payment has been made successfully. Transaction Code: "
+msgstr ""
+
+#: callback.php:52
+msgid " and its Authorization Code is: "
+msgstr ""
+
+#: callback.php:61
+msgid "Payment Failed"
+msgstr ""
+
+#: callback.php:63
+msgid "Your payment has failed. Transaction Code: "
+msgstr ""
+
+#: callback.php:63
+msgid " the reason is: "
+msgstr ""
+
+#: callback.php:69
+msgid "Pending Payment"
+msgstr ""
+
+#: callback.php:73
+msgid "Your payment is pending. Transaction Code: "
+msgstr ""
+
+#: includes/admin/paymentez-settings.php:5
+msgid "Enable/Disable"
+msgstr ""
+
+#: includes/admin/paymentez-settings.php:7
+msgid "Enable Paymentez Gateway"
+msgstr ""
+
+#: includes/admin/paymentez-settings.php:11
+msgid "Title"
+msgstr ""
+
+#: includes/admin/paymentez-settings.php:13
+msgid "This controls the title which the user sees during checkout."
+msgstr ""
+
+#: includes/admin/paymentez-settings.php:14 pg-woocommerce-plugin.php:111
+msgid "Paymentez Gateway"
+msgstr ""
+
+#: includes/admin/paymentez-settings.php:18
+msgid "Customer Message"
+msgstr ""
+
+#: includes/admin/paymentez-settings.php:23
+msgid "App Code Client"
+msgstr ""
+
+#: includes/admin/paymentez-settings.php:25
+msgid "Unique identifier in Paymentez."
+msgstr ""
+
+#: includes/admin/paymentez-settings.php:28
+msgid "App Key Client"
+msgstr ""
+
+#: includes/admin/paymentez-settings.php:30
+msgid "Key used to encrypt communication with Paymentez."
+msgstr ""
+
+#: includes/admin/paymentez-settings.php:33
+msgid "App Code Server"
+msgstr ""
+
+#: includes/admin/paymentez-settings.php:35
+msgid "Unique identifier in Paymentez Server."
+msgstr ""
+
+#: includes/admin/paymentez-settings.php:38
+msgid "App Key Server"
+msgstr ""
+
+#: includes/admin/paymentez-settings.php:40
+msgid "Key used for reverse communication with Paymentez Server."
+msgstr ""
+
+#: pg-woocommerce-plugin.php:186
+msgid "Your payment has been made successfully. Thank you for your purchase."
+msgstr ""
+
+#: pg-woocommerce-plugin.php:187
+msgid ""
+"An error occurred while processing your payment and could not be made. Try "
+"another Credit Card."
+msgstr ""
+
+#: pg-woocommerce-plugin.php:188
+msgid "Here is a message JAJA SALU2"
+msgstr ""
+
+#: pg-woocommerce-plugin.php:193
+msgid "Return to Store"
+msgstr ""
+
+#: pg-woocommerce-plugin.php:199
+msgid "Purchase"
+msgstr ""

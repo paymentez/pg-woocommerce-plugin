@@ -7,6 +7,8 @@ Description: This module is a solution that allows WooCommerce users to easily p
 Version: 1.0
 Author: Paymentez
 Author URI: http://www.paymentez.com
+Text Domain: pg_woocommerce
+Domain Path: /languages
 License: A "Slug" license name e.g. GPL2
 */
 
@@ -21,6 +23,10 @@ if (!function_exists('db_paymentez_plugin')) {
 }
 
 register_activation_hook(__FILE__, 'db_paymentez_plugin');
+
+load_plugin_textdomain( 'pg_woocommerce', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+
+// TODO: Mover la function paymentez_woocommerce_order_refunded
 
 // define the woocommerce_order_refunded callback
 function paymentez_woocommerce_order_refunded($order_id, $refund_id) {
@@ -56,8 +62,9 @@ function paymentez_woocommerce_order_refunded($order_id, $refund_id) {
 
   curl_close($ch);
 
+  // TODO: Definir estas dos variables bien
   $comments = "Refund Completed";
-  $description = "Aqui va un refund";
+  $description = "Refund Completed 2";
 
   WC_Paymentez_Database_Helper::insert_data($status, $comments, $description, $order_id, $transactionCode);
 }
@@ -112,6 +119,7 @@ function pg_woocommerce_plugin() {
       echo $this->generate_paymentez_form($order);
     }
 
+    // TODO: Reposicionar la function get_params_post en otro archivo
     public function get_params_post($orderId) {
       $order = new WC_Order($orderId);
       $order_data = $order->get_data();
@@ -143,23 +151,23 @@ function pg_woocommerce_plugin() {
           $uid = $order_data['customer_id'];
       }
       $parametersArgs = array(
-        'purchase_order_id' => $orderId,
+        'purchase_order_id'    => $orderId,
         'purchase_description' => $description,
-        'purchase_amount' => $amount,
-        'subtotal' => $subtotal,
-        'purchase_currency' => $currency,
-        'customer_firstname' => $order_data['billing']['first_name'],
-        'customer_lastname' => $order_data['billing']['last_name'],
-        'customer_phone' => $order_data['billing']['phone'],
-        'customer_email' => $order_data['billing']['email'],
-        'address_street' => $order_data['billing']['address_1'],
-        'address_city' => $order_data['billing']['city'],
-        'address_country' => $order_data['billing']['country'],
-        'address_state' => $order_data['billing']['state'],
-        'user_id' => $uid,
-        'cod_prod' => $sku,
-        'productos' => $prod,
-        'taxable_amount' => $taxable_amount,
+        'purchase_amount'      => $amount,
+        'subtotal'             => $subtotal,
+        'purchase_currency'    => $currency,
+        'customer_firstname'   => $order_data['billing']['first_name'],
+        'customer_lastname'    => $order_data['billing']['last_name'],
+        'customer_phone'       => $order_data['billing']['phone'],
+        'customer_email'       => $order_data['billing']['email'],
+        'address_street'       => $order_data['billing']['address_1'],
+        'address_city'         => $order_data['billing']['city'],
+        'address_country'      => $order_data['billing']['country'],
+        'address_state'        => $order_data['billing']['state'],
+        'user_id'              => $uid,
+        'cod_prod'             => $sku,
+        'productos'            => $prod,
+        'taxable_amount'       => $taxable_amount,
       );
 
       return $parametersArgs;
@@ -175,8 +183,10 @@ function pg_woocommerce_plugin() {
       ?>
         <link rel="stylesheet" type="text/css" href="<?php echo $css; ?>">
 
-        <div id="messagetwo" class="hide"> <p class="alert alert-success" > Su pago se ha realizado con éxito. Muchas gracias por su compra </p> </div>
-        <div id="messagetres" class="hide"> <p class="alert alert-warning"> Ocurrió un error al comprar y su pago no se pudo realizar. Intente con otra Tarjeta de Crédito </p> </div>
+        <div id="mensajeSucccess" class="hide"> <p class="alert alert-success" ><?php _e('Your payment has been made successfully. Thank you for your purchase.', 'pg_woocommerce'); ?></p> </div>
+        <div id="mensajeFailed" class="hide"> <p class="alert alert-warning"><?php _e('An error occurred while processing your payment and could not be made. Try another Credit Card.', 'pg_woocommerce'); ?></p> </div>
+        <div id="mensajePending" class="hide"> <p class="alert alert-pending"><?php _e('Here is a message JAJA SALU2', 'pg_woocommerce'); ?></p> </div>
+
 
         <div id="buttonreturn" class="hide">
           <p>
@@ -186,7 +196,7 @@ function pg_woocommerce_plugin() {
 
         <script src="https://cdn.paymentez.com/checkout/1.0.1/paymentez-checkout.min.js"></script>
 
-        <button class="js-paymentez-checkout">Purchase</button>
+        <button class="js-paymentez-checkout"><?php _e('Purchase', 'pg_woocommerce'); ?></button>
 
         <div id="orderDataJSON" class="hide">
           <?php echo $orderDataJSON; ?>
