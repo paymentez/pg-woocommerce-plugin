@@ -8,7 +8,7 @@ jQuery(document).ready(function($) {
   var paymentezCheckout = new PaymentezCheckout.modal({
       client_app_code: app_code_js, // Client Credentials Provied by Paymentez
       client_app_key: app_key_js, // Client Credentials Provied by Paymentez
-      locale: 'en', // User's preferred language (es, en, pt). English will be used by default.
+      locale: 'pt', // User's preferred language (es, en, pt). English will be used by default.
       env_mode: 'stg', // `prod`, `stg` to change environment. Default is `stg`
       onOpen: function() {
           console.log('modal open');
