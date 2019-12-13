@@ -1,20 +1,23 @@
 jQuery(document).ready(function($) {
+  var language = document.getElementById('checkout_php').getAttribute('checkout_language');
   var app_code_js = document.getElementById('checkout_php').getAttribute('app-code');
   var app_key_js = document.getElementById('checkout_php').getAttribute('app-key');
   var orderData = document.getElementById('orderDataJSON').textContent;
   var orderDataJSON = JSON.parse(orderData);
-  var callback = document.getElementById('checkout_php').getAttribute('callback');
+  var webhook_p = document.getElementById('checkout_php').getAttribute('webhook_p');
+  var staging = document.getElementById('checkout_php').getAttribute('enviroment');
+  var enviroment = (staging === "yes") ? "stg" : "prod";
 
   var paymentezCheckout = new PaymentezCheckout.modal({
       client_app_code: app_code_js, // Client Credentials Provied by Paymentez
       client_app_key: app_key_js, // Client Credentials Provied by Paymentez
-      locale: 'pt', // User's preferred language (es, en, pt). English will be used by default.
-      env_mode: 'stg', // `prod`, `stg` to change environment. Default is `stg`
+      locale: language, // User's preferred language (es, en, pt). English will be used by default.
+      env_mode: enviroment, // `prod`, `stg` to change environment. Default is `stg`
       onOpen: function() {
-          console.log('modal open');
+          // console.log('modal openn');
       },
       onClose: function() {
-          console.log('modal closed');
+          // console.log('modal closed');
       },
       onResponse: function(response) {
           console.log('modal response');
@@ -73,7 +76,7 @@ jQuery(document).ready(function($) {
   }
 
   function announceTransaction(data) {
-    fetch(callback, { method: "POST", body: JSON.stringify(data) })
+    fetch(webhook_p, { method: "POST", body: JSON.stringify(data) })
     .then(function(response) { console.log(response); })
     .catch(function(myJson) { console.log(myJson); });
   }

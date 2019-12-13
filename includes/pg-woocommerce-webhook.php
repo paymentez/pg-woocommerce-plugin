@@ -1,7 +1,7 @@
 <?php
 
-require_once('../../../wp-load.php');
-require_once( dirname( __FILE__ ) . '/includes/pg-woocommerce-helper.php' );
+require_once('../../../../wp-load.php');
+require_once( dirname( __FILE__ ) . '/pg-woocommerce-helper.php' );
 
 $requestBody = file_get_contents('php://input');
 $requestBodyJs = json_decode($requestBody, true);
@@ -22,8 +22,6 @@ $detailPayment = array(
   8  => "Chargeback",
   9  => "Rejected by carrier",
   10 => "System error",
-  11 => "Paymentez fraud",
-  12 => "Paymentez blacklist",
   16 => "Rejected by our fraud control system",
   19 => "Rejected by invalid data",
   20 => "Rejected by bank"
@@ -46,7 +44,7 @@ if (!in_array($statusOrder, ['completed', 'cancelled', 'failed'])) {
 
     if ($status == 'success') {
       $comments = __("Successful Payment", "pg_woocommerce");
-      $order->update_status('Completed');
+      $order->update_status('completed');
       $order->reduce_order_stock();
       $woocommerce->cart->empty_cart();
       $order->add_order_note( __('Your payment has been made successfully. Transaction Code: ', 'pg_woocommerce') . $transaction_id . __(' and its Authorization Code is: ', 'pg_woocommerce') . $authorization_code);
@@ -59,7 +57,7 @@ if (!in_array($statusOrder, ['completed', 'cancelled', 'failed'])) {
       }
     } elseif ($status == 'failure') {
       $comments = __("Payment Failed", "pg_woocommerce");
-      $order->update_status('Failed');
+      $order->update_status('failed');
       $order->add_order_note( __('Your payment has failed. Transaction Code: ', 'pg_woocommerce') . $transaction_id . __(' the reason is: ', 'pg_woocommerce') . $paymentez_message);
 
       WC_Paymentez_Database_Helper::insert_data($status, $comments, $description, $dev_reference, $transaction_id);

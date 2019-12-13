@@ -1,10 +1,10 @@
 <?php
 
 return array (
-    'enabled' => array(
-        'title' => __( 'Enable/Disable', 'pg_woocommerce' ),
+    'staging' => array(
+        'title' => __( 'Staging Enviroment', 'pg_woocommerce' ),
         'type' => 'checkbox',
-        'label' => __( 'Enable Paymentez Gateway', 'pg_woocommerce' ),
+        'label' => __( 'Use the Paymentez Gateway staging enviroment.', 'pg_woocommerce' ),
         'default' => 'yes'
     ),
     'title' => array(
@@ -18,6 +18,17 @@ return array (
         'title' => __( 'Customer Message', 'pg_woocommerce' ),
         'type' => 'textarea',
         'default' => 'Paymentez is a complete solution for online payments. Safe, easy and fast.'
+    ),
+    'checkout_language' => array(
+    'title' => __('Checkout Language', 'pg_woocommerce'),
+    'type' => 'select',
+    'default' => 'en',
+    'options' => array(
+        'en' => 'EN',
+        'es' => 'ES',
+        'pt' => 'PT',
+    ),
+    'description' => __('User\'s preferred language for checkout window. English will be used by default.', 'pg_woocommerce')
     ),
     'app_code_client' => array(
     'title' => __('App Code Client', 'pg_woocommerce'),
