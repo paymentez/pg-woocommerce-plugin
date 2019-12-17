@@ -17,7 +17,7 @@ return array (
     'description' => array(
         'title' => __( 'Customer Message', 'pg_woocommerce' ),
         'type' => 'textarea',
-        'default' => 'Paymentez is a complete solution for online payments. Safe, easy and fast.'
+        'default' => __('Paymentez is a complete solution for online payments. Safe, easy and fast.')
     ),
     'checkout_language' => array(
     'title' => __('Checkout Language', 'pg_woocommerce'),

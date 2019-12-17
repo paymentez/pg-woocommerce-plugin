@@ -23,13 +23,13 @@ jQuery(document).ready(function($) {
           console.log('modal response');
           announceTransaction(response);
           if (response.transaction["status_detail"] === 3) {
-             console.log(response);
+             // console.log(response);
              showMessageSuccess();
           } else if (response.transaction["status_detail"] === 1) {
-             console.log(response);
+             // console.log(response);
              showMessagePending();
           } else {
-             console.log(response);
+             // console.log(response);
              showMessageError();
           }
       }

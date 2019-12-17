@@ -19,6 +19,14 @@ class WC_Paymentez_Database_Helper {
       }
   }
 
+  public static function delete_database() {
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'paymentez_plugin';
+    $sql = "DROP TABLE IF EXISTS $table_name";
+    require_once( ABSPATH . '/wp-admin/includes/upgrade.php' );
+    $wpdb->query($sql);
+  }
+
   public static function insert_data($status, $comments, $description, $dev_reference, $transaction_id) {
     $statusfinal = $status;
     $commentsfinal = $comments;
@@ -27,7 +35,7 @@ class WC_Paymentez_Database_Helper {
     $transaction_id = $transaction_id;
 
     global $wpdb;
-    $table_name = $wpdb->prefix . 'paymentez_plugin';
+    $table_name = $wpdb->prefix . 'paymentez_plugin4';
 
     $wpdb->insert($table_name, array(
         'id' => $id,

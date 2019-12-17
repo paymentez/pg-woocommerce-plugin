@@ -9,27 +9,23 @@ Author: Paymentez
 Author URI: http://www.paymentez.com
 Text Domain: pg_woocommerce
 Domain Path: /languages
-License: // TODO: definir licencia
+License: GPLv3
+License URI: https://www.gnu.org/licenses/gpl-3.0.html
 */
 
 add_action( 'plugins_loaded', 'pg_woocommerce_plugin' );
-require( dirname( __FILE__ ) . '/includes/pg-woocommerce-helper.php' );
+
+define('PLUGIN_MAIN_FILE_PATH', __FILE__);
+
+include( dirname( __FILE__ ) . '/includes/pg-woocommerce-helper.php' );
+register_activation_hook( __FILE__, array( 'WC_Paymentez_Database_Helper', 'create_database' ) );
+register_deactivation_hook( __FILE__, array( 'WC_Paymentez_Database_Helper', 'delete_database' ) );
+
 require( dirname( __FILE__ ) . '/includes/pg-woocommerce-refund.php' );
-
-// TODO: Tratar de mover  ésta function
-// Creación de la base de datos si no existe
-if (!function_exists('db_paymentez_plugin')) {
-  function db_paymentez_plugin() {
-    echo WC_Paymentez_Database_Helper::create_database();
-  }
-}
-
-register_activation_hook(__FILE__, 'db_paymentez_plugin');
 
 load_plugin_textdomain( 'pg_woocommerce', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
 // TODO: Mover la function paymentez_woocommerce_order_refunded
-
 // define the woocommerce_order_refunded callback
 function paymentez_woocommerce_order_refunded($order_id, $refund_id) {
   $refund = new WC_Paymentez_Refund();
