@@ -1,5 +1,6 @@
 jQuery(document).ready(function($) {
-  var language = document.getElementById('checkout_php').getAttribute('checkout_language');
+  var checkout_values = document.getElementById('checkout_php');
+  var language = checkout_values.getAttribute('checkout_language');
   var app_code_js = document.getElementById('checkout_php').getAttribute('app-code');
   var app_key_js = document.getElementById('checkout_php').getAttribute('app-key');
   var orderData = document.getElementById('orderDataJSON').textContent;
@@ -14,22 +15,23 @@ jQuery(document).ready(function($) {
       locale: language, // User's preferred language (es, en, pt). English will be used by default.
       env_mode: enviroment, // `prod`, `stg` to change environment. Default is `stg`
       onOpen: function() {
-          // console.log('modal openn');
+          console.log('modal oppen');
+          console.log(language);
       },
       onClose: function() {
           // console.log('modal closed');
       },
       onResponse: function(response) {
-          console.log('modal response');
+          console.log('modal respownse');
           announceTransaction(response);
           if (response.transaction["status_detail"] === 3) {
-             // console.log(response);
+             console.log(response);
              showMessageSuccess();
           } else if (response.transaction["status_detail"] === 1) {
-             // console.log(response);
+             console.log(response);
              showMessagePending();
           } else {
-             // console.log(response);
+             console.log(response);
              showMessageError();
           }
       }

@@ -12,6 +12,7 @@ class WC_Paymentez_Refund
     $refundObj = new WC_Gateway_Paymentez();
     $app_code_server = $refundObj->app_code_server;
     $app_key_server = $refundObj->app_key_server;
+    $enviroment = $refundObj->enviroment;
 
     $fecha_actual = time();
     $variableTimestamp = (string)($fecha_actual);
@@ -19,7 +20,7 @@ class WC_Paymentez_Refund
     $uniq_token_hash = hash('sha256', $uniq_token_string);
     $auth_token = base64_encode($app_code_server . ';' . $variableTimestamp . ';' . $uniq_token_hash);
 
-    $urlrefund = 'https://ccapi-stg.paymentez.com/v2/transaction/refund/';
+    $urlrefund = ($enviroment == 'yes') ? 'https://ccapi-stg.paymentez.com/v2/transaction/refund/' : 'https://ccapi.paymentez.com/v2/transaction/refund/';
 
     $transactionCode = WC_Paymentez_Database_Helper::select_order($order_id);
     $data = array(

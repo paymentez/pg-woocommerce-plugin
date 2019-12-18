@@ -35,7 +35,7 @@ class WC_Paymentez_Database_Helper {
     $transaction_id = $transaction_id;
 
     global $wpdb;
-    $table_name = $wpdb->prefix . 'paymentez_plugin4';
+    $table_name = $wpdb->prefix . 'paymentez_plugin';
 
     $wpdb->insert($table_name, array(
         'id' => $id,

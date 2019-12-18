@@ -15,8 +15,6 @@ License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
 add_action( 'plugins_loaded', 'pg_woocommerce_plugin' );
 
-define('PLUGIN_MAIN_FILE_PATH', __FILE__);
-
 include( dirname( __FILE__ ) . '/includes/pg-woocommerce-helper.php' );
 register_activation_hook( __FILE__, array( 'WC_Paymentez_Database_Helper', 'create_database' ) );
 register_deactivation_hook( __FILE__, array( 'WC_Paymentez_Database_Helper', 'delete_database' ) );
@@ -92,7 +90,6 @@ if (!function_exists('pg_woocommerce_plugin')) {
         $order_data = $order->get_data();
         $currency = get_woocommerce_currency();
         $amount = $order_data['total'];
-        $credito = get_post_meta($orderId, '_billing_customer_dni', true);
         $products = $order->get_items();
         $description = '';
         $taxable_amount = 0.00;
@@ -167,6 +164,7 @@ if (!function_exists('pg_woocommerce_plugin')) {
           <div id="orderDataJSON" class="hide">
             <?php echo $orderDataJSON; ?>
           </div>
+
           <script id="checkout_php" webhook_p="<?php echo $webhook_p; ?>"
             app-key="<?php echo $this->app_key_client; ?>"
             app-code="<?php echo $this->app_code_client; ?>"
