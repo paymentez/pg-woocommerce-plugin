@@ -113,7 +113,7 @@ msgstr "Pago Exitoso"
 
 #: includes/pg-woocommerce-webhook.php:50
 msgid "Your payment has been made successfully. Transaction Code: "
-msgstr "Su pago ha sido realizado con éxito. Codigo de transacción: "
+msgstr "Su pago ha sido realizado con éxito. Código de transacción: "
 
 #: includes/pg-woocommerce-webhook.php:50
 msgid " and its Authorization Code is: "

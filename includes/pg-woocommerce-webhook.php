@@ -2,6 +2,7 @@
 
 require_once('../../../../wp-load.php');
 require_once( dirname( __FILE__ ) . '/pg-woocommerce-helper.php' );
+require_once( dirname( __DIR__ ) . '/pg-woocommerce-plugin.php' );
 
 $requestBody = file_get_contents('php://input');
 $requestBodyJs = json_decode($requestBody, true);
@@ -13,6 +14,7 @@ $authorization_code = $requestBodyJs["transaction"]['authorization_code'];
 $response_description = $requestBodyJs["transaction"]['order_description'];
 $dev_reference = $requestBodyJs["transaction"]['dev_reference'];
 $paymentez_message = $requestBodyJs["transaction"]['message'];
+$paymentezStoken = $requestBodyJs["transaction"]['stoken'];
 
 $detailPayment = array(
   1  => "Verification required",
@@ -37,8 +39,23 @@ global $woocommerce;
 $order = new WC_Order($dev_reference);
 $statusOrder = $order->get_status();
 
-$credito = get_post_meta($order->id, '_billing_customer_dni', true);
 update_post_meta($order->id, '_transaction_id', $transaction_id);
+
+if ($paymentezStoken) {
+  $webhookObj = new WC_Gateway_Paymentez();
+  $app_code_client = $webhookObj->app_code_client;
+  $app_key_client = $webhookObj->app_key_client;
+  $userId = $requestBodyJs["user"]["id"];
+  $stoken = md5($transaction_id ."_". $app_code_client ."_". $userId ."_". $app_key_client);
+  if ($stoken != $paymentezStoken) {
+    header("HTTP/1.0 203 token error");
+  } elseif ($status_detail == 8) {
+      $description = $detailPayment[$status_detail];
+      $comments = __("Payment Cancelled", "pg_woocommerce");
+      $order->update_status('cancelled');
+      $order->add_order_note( __('Your payment was cancelled. Transaction Code: ', 'pg_woocommerce') . $transaction_id . __(' the reason is chargeback. ', 'pg_woocommerce'));
+  }
+}
 
 if (!in_array($statusOrder, ['completed', 'cancelled', 'refunded'])) {
     $description = __("Paymentez Response: Status: ", "pg_woocommerce") . $status_detail .

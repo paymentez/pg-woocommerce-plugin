@@ -88,27 +88,16 @@ if (!function_exists('pg_woocommerce_plugin')) {
       public function get_params_post($orderId) {
         $order = new WC_Order($orderId);
         $order_data = $order->get_data();
-        $currency = get_woocommerce_currency();
         $amount = $order_data['total'];
         $products = $order->get_items();
-        $description = '';
-        $taxable_amount = 0.00;
+        $description = $products;
+        /*
         foreach ($products as $product) {
           $description .= $product['name'] . ',';
-          if ($product['subtotal_tax'] != 0 && $product['subtotal_tax'] != '') {
-              $taxable_amount = number_format(($product['subtotal']), 2, '.', '');
-          }
         }
-        foreach ($order->get_items() as $item_key => $item) {
-          $prod = $order->get_product_from_item($item);
-          $sku = $prod->get_id();
-        }
-        $fecha_actual = date('Y-m-d');
+        */
         $subtotal = number_format(($order->get_subtotal()), 2, '.', '');
         $vat = number_format(($order->get_total_tax()), 2, '.', '');
-        $taxReturnBase = number_format(($amount - $vat), 2, '.', '');
-        if ($vat == 0) $taxReturnBase = 0;
-        if ($vat == 0) $tax_percentage = 0;
         if (is_null($order_data['customer_id']) or empty($order_data['customer_id'])) {
             $uid = $orderId;
         } else {
@@ -116,22 +105,12 @@ if (!function_exists('pg_woocommerce_plugin')) {
         }
         $parametersArgs = array(
           'purchase_order_id'    => $orderId,
-          'purchase_description' => $description,
           'purchase_amount'      => $amount,
-          'subtotal'             => $subtotal,
-          'purchase_currency'    => $currency,
-          'customer_firstname'   => $order_data['billing']['first_name'],
-          'customer_lastname'    => $order_data['billing']['last_name'],
+          'purchase_description' => $description,
           'customer_phone'       => $order_data['billing']['phone'],
           'customer_email'       => $order_data['billing']['email'],
-          'address_street'       => $order_data['billing']['address_1'],
-          'address_city'         => $order_data['billing']['city'],
-          'address_country'      => $order_data['billing']['country'],
-          'address_state'        => $order_data['billing']['state'],
           'user_id'              => $uid,
-          'cod_prod'             => $sku,
-          'productos'            => $prod,
-          'taxable_amount'       => $taxable_amount,
+          'vat'                  => $vat
         );
 
         return $parametersArgs;

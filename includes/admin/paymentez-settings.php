@@ -4,7 +4,7 @@ return array (
     'staging' => array(
         'title' => __( 'Staging Enviroment', 'pg_woocommerce' ),
         'type' => 'checkbox',
-        'label' => __( 'Use the Paymentez Gateway staging enviroment.', 'pg_woocommerce' ),
+        'label' => __( 'Use the Paymentez Gateway staging environment.', 'pg_woocommerce' ),
         'default' => 'yes'
     ),
     'title' => array(
@@ -17,7 +17,8 @@ return array (
     'description' => array(
         'title' => __( 'Customer Message', 'pg_woocommerce' ),
         'type' => 'textarea',
-        'default' => __('Paymentez is a complete solution for online payments. Safe, easy and fast.')
+        'default' => __('Paymentez is a complete solution for online payments. Safe, easy and fast.', 'pg_woocommerce
+        ')
     ),
     'checkout_language' => array(
     'title' => __('Checkout Language', 'pg_woocommerce'),

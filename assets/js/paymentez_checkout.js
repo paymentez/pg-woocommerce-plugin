@@ -1,12 +1,12 @@
 jQuery(document).ready(function($) {
   var checkout_values = document.getElementById('checkout_php');
   var language = checkout_values.getAttribute('checkout_language');
-  var app_code_js = document.getElementById('checkout_php').getAttribute('app-code');
-  var app_key_js = document.getElementById('checkout_php').getAttribute('app-key');
+  var app_code_js = checkout_values.getAttribute('app-code');
+  var app_key_js = checkout_values.getAttribute('app-key');
   var orderData = document.getElementById('orderDataJSON').textContent;
   var orderDataJSON = JSON.parse(orderData);
-  var webhook_p = document.getElementById('checkout_php').getAttribute('webhook_p');
-  var staging = document.getElementById('checkout_php').getAttribute('enviroment');
+  var webhook_p = checkout_values.getAttribute('webhook_p');
+  var staging = checkout_values.getAttribute('enviroment');
   var enviroment = (staging === "yes") ? "stg" : "prod";
 
   var paymentezCheckout = new PaymentezCheckout.modal({
@@ -15,23 +15,23 @@ jQuery(document).ready(function($) {
       locale: language, // User's preferred language (es, en, pt). English will be used by default.
       env_mode: enviroment, // `prod`, `stg` to change environment. Default is `stg`
       onOpen: function() {
-          console.log('modal oppen');
-          console.log(language);
+          console.log('modal open');
+          console.log(orderDataJSON.purchase_description);
       },
       onClose: function() {
-          // console.log('modal closed');
+          console.log('modal closed');
       },
       onResponse: function(response) {
-          console.log('modal respownse');
+          console.log('modal response');
           announceTransaction(response);
           if (response.transaction["status_detail"] === 3) {
              console.log(response);
              showMessageSuccess();
           } else if (response.transaction["status_detail"] === 1) {
-             console.log(response);
+             // console.log(response);
              showMessagePending();
           } else {
-             console.log(response);
+             // console.log(response);
              showMessageError();
           }
       }
@@ -46,7 +46,7 @@ jQuery(document).ready(function($) {
       user_phone: orderDataJSON.customer_phone.toString(), //optional
       order_description: orderDataJSON.purchase_description,
       order_amount: Number(orderDataJSON.purchase_amount),
-      order_vat: Number(orderDataJSON.taxable_amount),
+      order_vat: Number(orderDataJSON.vat),
       order_reference: orderDataJSON.purchase_order_id.toString(),
       //order_installments_type: 2, // optional: For Colombia an Brazil to show installments should be 0, For Ecuador the valid values are: https://paymentez.github.io/api-doc/#payment-methods-cards-debit-with-token-installments-type
       //order_taxable_amount: 0, // optional: Only available for Ecuador. The taxable amount, if it is zero, it is calculated on the total. Format: Decimal with two fraction digits.
