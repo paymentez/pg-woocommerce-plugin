@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-12-13 15:37-0600\n"
-"PO-Revision-Date: 2019-12-16 14:14-0600\n"
+"POT-Creation-Date: 2019-12-20 17:17-0600\n"
+"PO-Revision-Date: 2019-12-20 17:34-0600\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_MX\n"
@@ -15,146 +15,169 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: includes/admin/paymentez-settings.php:5
-msgid "Staging Enviroment"
-msgstr "Entorno de Pruebas"
+#: gp-woocommerce-plugin.php:47
+msgid ""
+"This module is a solution that allows WooCommerce users to easily process "
+"credit card payments."
+msgstr ""
+"Este módulo es una solución que permite a los usuarios de WooCommerce "
+"procesar fácilmente los pagos con tarjeta de crédito."
 
-#: includes/admin/paymentez-settings.php:7
-msgid "Use the Paymentez Gateway staging enviroment."
-msgstr "Usar el entorno de pruebas de Paymentez Gateway."
-
-#: includes/admin/paymentez-settings.php:11
-msgid "Title"
-msgstr "Título"
-
-#: includes/admin/paymentez-settings.php:13
-msgid "This controls the title which the user sees during checkout."
-msgstr "Esto controla el título que el usuario ve durante la compra."
-
-#: includes/admin/paymentez-settings.php:14 pg-woocommerce-plugin.php:82
+#: gp-woocommerce-plugin.php:79 includes/admin/gp-woocommerce-settings.php:14
 msgid "Paymentez Gateway"
 msgstr ""
 
-#: includes/admin/paymentez-settings.php:18
-msgid "Customer Message"
-msgstr "Mensaje al Cliente"
-
-#: includes/admin/paymentez-settings.php:20
-msgid "Paymentez is a complete solution for online payments. Safe, easy and fast."
-msgstr "Paymentez es una solución completa para pagos en línea. Segura, fácil y rápida."
-
-#: includes/admin/paymentez-settings.php:23
-msgid "Checkout Language"
-msgstr "Idioma del Checkout"
-
-#: includes/admin/paymentez-settings.php:31
-msgid "User's preferred language for checkout window. English will be used by default."
-msgstr "Idioma preferido del usuario para la ventana de pago. Inglés se usará de forma predeterminada."
-
-#: includes/admin/paymentez-settings.php:34
-msgid "App Code Client"
-msgstr ""
-
-#: includes/admin/paymentez-settings.php:36
-msgid "Unique identifier in Paymentez."
-msgstr "Identificador único en Paymentez."
-
-#: includes/admin/paymentez-settings.php:39
-msgid "App Key Client"
-msgstr ""
-
-#: includes/admin/paymentez-settings.php:41
-msgid "Key used to encrypt communication with Paymentez."
-msgstr "Clave utilizada para cifrar la comunicación con Paymentez."
-
-#: includes/admin/paymentez-settings.php:44
-msgid "App Code Server"
-msgstr ""
-
-#: includes/admin/paymentez-settings.php:46
-msgid "Unique identifier in Paymentez Server."
-msgstr "Identificador único en el servidor de Paymentez."
-
-#: includes/admin/paymentez-settings.php:49
-msgid "App Key Server"
-msgstr ""
-
-#: includes/admin/paymentez-settings.php:51
-msgid "Key used for reverse communication with Paymentez Server."
-msgstr "Clave usada para la comunicación reversa con el servidor de Paymentez."
-
-#: includes/pg-woocommerce-webhook.php:38
-msgid "Paymentez Response: Status: "
-msgstr "Paymentez Response: Status: "
-
-#: includes/pg-woocommerce-webhook.php:39
-msgid " | Status_detail: "
-msgstr ""
-
-#: includes/pg-woocommerce-webhook.php:40
-msgid " | Dev_Reference: "
-msgstr ""
-
-#: includes/pg-woocommerce-webhook.php:41
-msgid " | Authorization_Code: "
-msgstr ""
-
-#: includes/pg-woocommerce-webhook.php:41
-msgid " | Response_Description: "
-msgstr ""
-
-#: includes/pg-woocommerce-webhook.php:43
-msgid " | Transaction_Code: "
-msgstr ""
-
-#: includes/pg-woocommerce-webhook.php:46
-msgid "Successful Payment"
-msgstr "Pago Exitoso"
-
-#: includes/pg-woocommerce-webhook.php:50
-msgid "Your payment has been made successfully. Transaction Code: "
-msgstr "Su pago ha sido realizado con éxito. Código de transacción: "
-
-#: includes/pg-woocommerce-webhook.php:50
-msgid " and its Authorization Code is: "
-msgstr " y su código de autorización es: "
-
-#: includes/pg-woocommerce-webhook.php:59
-msgid "Payment Failed"
-msgstr "Pago Fallido"
-
-#: includes/pg-woocommerce-webhook.php:61
-msgid "Your payment has failed. Transaction Code: "
-msgstr "Su pago a fallado, Código de transaccion: "
-
-#: includes/pg-woocommerce-webhook.php:61
-msgid " the reason is: "
-msgstr " la razón es: "
-
-#: includes/pg-woocommerce-webhook.php:67
-msgid "Pending Payment"
-msgstr "Pago Pendiente"
-
-#: includes/pg-woocommerce-webhook.php:71
-msgid "Your payment is pending. Transaction Code: "
-msgstr "Su pago está pendiente. Código de transacción: "
-
-#: pg-woocommerce-plugin.php:156
+#: gp-woocommerce-plugin.php:129
 msgid "Your payment has been made successfully. Thank you for your purchase."
 msgstr "Su pago ha sido realizado con éxito. Gracias por su compra."
 
-#: pg-woocommerce-plugin.php:157
-msgid "An error occurred while processing your payment and could not be made. Try another Credit Card."
-msgstr "Se produjo un error al procesar su pago y no se pudo realizar. Pruebe con otra tarjeta de crédito."
+#: gp-woocommerce-plugin.php:130
+msgid ""
+"An error occurred while processing your payment and could not be made. Try "
+"another Credit Card."
+msgstr ""
+"Se produjo un error al procesar su pago y no se pudo realizar. Pruebe con "
+"otra tarjeta de crédito."
 
-#: pg-woocommerce-plugin.php:158
-msgid "Your payment is pending."
-msgstr "Su pago está pendiente."
-
-#: pg-woocommerce-plugin.php:163
+#: gp-woocommerce-plugin.php:134
 msgid "Return to Store"
 msgstr "Regresar a la tienda"
 
-#: pg-woocommerce-plugin.php:169
+#: gp-woocommerce-plugin.php:140
 msgid "Purchase"
 msgstr "Comprar"
+
+#: includes/admin/gp-woocommerce-settings.php:5
+msgid "Staging Enviroment"
+msgstr "Entorno de Pruebas"
+
+#: includes/admin/gp-woocommerce-settings.php:7
+msgid "Use the Paymentez Gateway staging environment."
+msgstr "Usar el entorno de pruebas de Paymentez Gateway."
+
+#: includes/admin/gp-woocommerce-settings.php:11
+msgid "Title"
+msgstr "Título"
+
+#: includes/admin/gp-woocommerce-settings.php:13
+msgid "This controls the title which the user sees during checkout."
+msgstr "Esto controla el título que el usuario ve durante la compra."
+
+#: includes/admin/gp-woocommerce-settings.php:18
+msgid "Customer Message"
+msgstr "Mensaje al Cliente"
+
+#: includes/admin/gp-woocommerce-settings.php:20
+msgid ""
+"Paymentez is a complete solution for online payments. Safe, easy and fast."
+msgstr ""
+"Paymentez es una solución completa para pagos en línea. Segura, fácil y "
+"rápida."
+
+#: includes/admin/gp-woocommerce-settings.php:23
+msgid "Checkout Language"
+msgstr "Idioma del Checkout"
+
+#: includes/admin/gp-woocommerce-settings.php:31
+msgid ""
+"User's preferred language for checkout window. English will be used by "
+"default."
+msgstr ""
+"Idioma preferido del usuario para la ventana de pago. Inglés se usará de "
+"forma predeterminada."
+
+#: includes/admin/gp-woocommerce-settings.php:34
+msgid "App Code Client"
+msgstr ""
+
+#: includes/admin/gp-woocommerce-settings.php:36
+msgid "Unique identifier in Paymentez."
+msgstr "Identificador único en Paymentez."
+
+#: includes/admin/gp-woocommerce-settings.php:39
+msgid "App Key Client"
+msgstr ""
+
+#: includes/admin/gp-woocommerce-settings.php:41
+msgid "Key used to encrypt communication with Paymentez."
+msgstr "Clave utilizada para cifrar la comunicación con Paymentez."
+
+#: includes/admin/gp-woocommerce-settings.php:44
+msgid "App Code Server"
+msgstr ""
+
+#: includes/admin/gp-woocommerce-settings.php:46
+msgid "Unique identifier in Paymentez Server."
+msgstr "Identificador único en el servidor de Paymentez."
+
+#: includes/admin/gp-woocommerce-settings.php:49
+msgid "App Key Server"
+msgstr ""
+
+#: includes/admin/gp-woocommerce-settings.php:51
+msgid "Key used for reverse communication with Paymentez Server."
+msgstr "Clave usada para la comunicación con el servidor de Paymentez."
+
+#: includes/gp-woocommerce-webhook.php:67
+msgid "Payment Cancelled"
+msgstr "Pago Cancelado"
+
+#: includes/gp-woocommerce-webhook.php:69
+msgid "Your payment was cancelled. Transaction Code: "
+msgstr "Su pago fue cancelado. Código de transacción: "
+
+#: includes/gp-woocommerce-webhook.php:69
+msgid " the reason is chargeback. "
+msgstr " la razón es contracargo: "
+
+#: includes/gp-woocommerce-webhook.php:76
+msgid "Paymentez Response: Status: "
+msgstr "Paymentez Response: Status: "
+
+#: includes/gp-woocommerce-webhook.php:77
+msgid " | Status_detail: "
+msgstr " | Detalle_estado: "
+
+#: includes/gp-woocommerce-webhook.php:78
+msgid " | Dev_Reference: "
+msgstr " | Referencia_WC: "
+
+#: includes/gp-woocommerce-webhook.php:79
+msgid " | Authorization_Code: "
+msgstr " | Codigo_Autorización: "
+
+#: includes/gp-woocommerce-webhook.php:80
+msgid " | Transaction_Code: "
+msgstr " | Código_Transacción: "
+
+#: includes/gp-woocommerce-webhook.php:83
+msgid "Successful Payment"
+msgstr "Pago Exitoso"
+
+#: includes/gp-woocommerce-webhook.php:87
+msgid "Your payment has been made successfully. Transaction Code: "
+msgstr "Su pago ha sido realizado con éxito. Código de transacción: "
+
+#: includes/gp-woocommerce-webhook.php:87
+msgid " and its Authorization Code is: "
+msgstr " y su código de autorización es: "
+
+#: includes/gp-woocommerce-webhook.php:90
+msgid "Payment Failed"
+msgstr "Pago Fallido"
+
+#: includes/gp-woocommerce-webhook.php:92
+msgid "Your payment has failed. Transaction Code: "
+msgstr "Su pago a fallado, Código de transaccion: "
+
+#: includes/gp-woocommerce-webhook.php:92
+msgid " the reason is: "
+msgstr " la razón es: "
+
+#: includes/gp-woocommerce-webhook.php:95
+msgid "Failed Payment"
+msgstr "Pago Fallido"
+
+#: includes/gp-woocommerce-webhook.php:96
+msgid "The payment fails.: "
+msgstr "El pago falló.: "

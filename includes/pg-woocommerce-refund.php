@@ -20,7 +20,7 @@ class WC_Paymentez_Refund
     $uniq_token_hash = hash('sha256', $uniq_token_string);
     $auth_token = base64_encode($app_code_server . ';' . $variableTimestamp . ';' . $uniq_token_hash);
 
-    $urlrefund = ($enviroment == 'yes') ? 'https://ccapi-stg.paymentez.com/v2/transaction/refund/' : 'https://ccapi.paymentez.com/v2/transaction/refund/';
+    $urlrefund = ($enviroment == 'yes') ? 'https://ccapi-stg.'.PG_DOMAIN.PG_REFUND : 'https://ccapi.'.PG_DOMAIN.PG_REFUND ;
 
     $transactionCode = WC_Paymentez_Database_Helper::select_order($order_id);
     $data = array(
@@ -44,7 +44,7 @@ class WC_Paymentez_Refund
 
     // TODO: Definir estas dos variables bien
     $comments = "Refund Completed";
-    $description = "Refund Completed 2";
+    $description = "Refund Completed";
 
     WC_Paymentez_Database_Helper::insert_data($status, $comments, $description, $order_id, $transactionCode);
   }

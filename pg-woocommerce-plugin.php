@@ -23,6 +23,9 @@ require( dirname( __FILE__ ) . '/includes/pg-woocommerce-refund.php' );
 
 load_plugin_textdomain( 'pg_woocommerce', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
+define("PG_DOMAIN", "paymentez.com");
+define("PG_REFUND", "/v2/transaction/refund/");
+
 // TODO: Mover la function paymentez_woocommerce_order_refunded
 // define the woocommerce_order_refunded callback
 function paymentez_woocommerce_order_refunded($order_id, $refund_id) {
@@ -41,7 +44,7 @@ if (!function_exists('pg_woocommerce_plugin')) {
         $this->id = 'pg_woocommerce';
         $this->icon = apply_filters('woocomerce_paymentez_icon', plugins_url('/assets/imgs/paymentezcheck.png', __FILE__));
         $this->method_title = 'Paymentez Plugin';
-        $this->method_description = 'This module is a solution that allows WooCommerce users to easily process credit card payments.';
+        $this->method_description = __('This module is a solution that allows WooCommerce users to easily process credit card payments.', 'pg_woocommerce');
 
         $this->init_settings();
         $this->init_form_fields();
@@ -90,12 +93,10 @@ if (!function_exists('pg_woocommerce_plugin')) {
         $order_data = $order->get_data();
         $amount = $order_data['total'];
         $products = $order->get_items();
-        $description = $products;
-        /*
+        $description = "";
         foreach ($products as $product) {
           $description .= $product['name'] . ',';
         }
-        */
         $subtotal = number_format(($order->get_subtotal()), 2, '.', '');
         $vat = number_format(($order->get_total_tax()), 2, '.', '');
         if (is_null($order_data['customer_id']) or empty($order_data['customer_id'])) {
@@ -127,8 +128,6 @@ if (!function_exists('pg_woocommerce_plugin')) {
 
           <div id="mensajeSucccess" class="hide"> <p class="alert alert-success" ><?php _e('Your payment has been made successfully. Thank you for your purchase.', 'pg_woocommerce'); ?></p> </div>
           <div id="mensajeFailed" class="hide"> <p class="alert alert-warning"><?php _e('An error occurred while processing your payment and could not be made. Try another Credit Card.', 'pg_woocommerce'); ?></p> </div>
-          <div id="mensajePending" class="hide"> <p class="alert alert-pending"><?php _e('Your payment is pending.', 'pg_woocommerce'); ?></p> </div>
-
 
           <div id="buttonreturn" class="hide">
             <p>
@@ -144,7 +143,7 @@ if (!function_exists('pg_woocommerce_plugin')) {
             <?php echo $orderDataJSON; ?>
           </div>
 
-          <script id="checkout_php" webhook_p="<?php echo $webhook_p; ?>"
+          <script id="woocommerce_checkout_pg" webhook_p="<?php echo $webhook_p; ?>"
             app-key="<?php echo $this->app_key_client; ?>"
             app-code="<?php echo $this->app_code_client; ?>"
             checkout_language="<?php echo $this->checkout_language; ?>"

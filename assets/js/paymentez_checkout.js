@@ -1,5 +1,5 @@
 jQuery(document).ready(function($) {
-  var checkout_values = document.getElementById('checkout_php');
+  var checkout_values = document.getElementById('woocommerce_checkout_pg');
   var language = checkout_values.getAttribute('checkout_language');
   var app_code_js = checkout_values.getAttribute('app-code');
   var app_key_js = checkout_values.getAttribute('app-key');
@@ -16,7 +16,6 @@ jQuery(document).ready(function($) {
       env_mode: enviroment, // `prod`, `stg` to change environment. Default is `stg`
       onOpen: function() {
           console.log('modal open');
-          console.log(orderDataJSON.purchase_description);
       },
       onClose: function() {
           console.log('modal closed');
@@ -25,11 +24,8 @@ jQuery(document).ready(function($) {
           console.log('modal response');
           announceTransaction(response);
           if (response.transaction["status_detail"] === 3) {
-             console.log(response);
-             showMessageSuccess();
-          } else if (response.transaction["status_detail"] === 1) {
              // console.log(response);
-             showMessagePending();
+             showMessageSuccess();
           } else {
              // console.log(response);
              showMessageError();
@@ -44,7 +40,7 @@ jQuery(document).ready(function($) {
       user_id: orderDataJSON.user_id.toString(),
       user_email: orderDataJSON.customer_email, //optional
       user_phone: orderDataJSON.customer_phone.toString(), //optional
-      order_description: orderDataJSON.purchase_description,
+      order_description: orderDataJSON.purchase_description.toString(),
       order_amount: Number(orderDataJSON.purchase_amount),
       order_vat: Number(orderDataJSON.vat),
       order_reference: orderDataJSON.purchase_order_id.toString(),
@@ -69,12 +65,6 @@ jQuery(document).ready(function($) {
     $("#buttonspay").addClass("hide");
     $("#messagetres").removeClass("hide");
     $("#mensajeFailed").removeClass("hide");
-  }
-
-  function showMessagePending() {
-    $("#buttonspay").addClass("hide");
-    $("#mensajePending").removeClass("hide");
-    $("#buttonreturn").removeClass("hide");
   }
 
   function announceTransaction(data) {
