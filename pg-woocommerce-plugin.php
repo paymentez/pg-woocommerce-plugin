@@ -30,7 +30,7 @@ define("PG_REFUND", "/v2/transaction/refund/");
 // define the woocommerce_order_refunded callback
 function paymentez_woocommerce_order_refunded($order_id, $refund_id) {
   $refund = new WC_Paymentez_Refund();
-  $refund->refund($order_id);
+  $refund->refund($order_id, $refund_id);
 }
 
 // add the action
@@ -91,22 +91,20 @@ if (!function_exists('pg_woocommerce_plugin')) {
       public function get_params_post($orderId) {
         $order = new WC_Order($orderId);
         $order_data = $order->get_data();
-        $amount = $order_data['total'];
         $products = $order->get_items();
         $description = "";
         foreach ($products as $product) {
           $description .= $product['name'] . ',';
         }
-        $subtotal = number_format(($order->get_subtotal()), 2, '.', '');
         $vat = number_format(($order->get_total_tax()), 2, '.', '');
         if (is_null($order_data['customer_id']) or empty($order_data['customer_id'])) {
-            $uid = $orderId;
+            $uid = $order_data['billing']['email'];
         } else {
             $uid = $order_data['customer_id'];
         }
         $parametersArgs = array(
           'purchase_order_id'    => $orderId,
-          'purchase_amount'      => $amount,
+          'purchase_amount'      => $order_data['total'],
           'purchase_description' => $description,
           'customer_phone'       => $order_data['billing']['phone'],
           'customer_email'       => $order_data['billing']['email'],

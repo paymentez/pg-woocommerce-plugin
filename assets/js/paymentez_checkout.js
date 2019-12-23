@@ -15,13 +15,13 @@ jQuery(document).ready(function($) {
       locale: language, // User's preferred language (es, en, pt). English will be used by default.
       env_mode: enviroment, // `prod`, `stg` to change environment. Default is `stg`
       onOpen: function() {
-          console.log('modal open');
+          // console.log('modal open');
       },
       onClose: function() {
-          console.log('modal closed');
+          // console.log('modal closed');
       },
       onResponse: function(response) {
-          console.log('modal response');
+          // console.log('modal response');
           announceTransaction(response);
           if (response.transaction["status_detail"] === 3) {
              // console.log(response);

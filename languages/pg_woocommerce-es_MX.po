@@ -130,54 +130,54 @@ msgstr "Su pago fue cancelado. Código de transacción: "
 msgid " the reason is chargeback. "
 msgstr " la razón es contracargo: "
 
-#: includes/gp-woocommerce-webhook.php:76
+#: includes/gp-woocommerce-webhook.php:79
 msgid "Paymentez Response: Status: "
 msgstr "Paymentez Response: Status: "
 
-#: includes/gp-woocommerce-webhook.php:77
+#: includes/gp-woocommerce-webhook.php:80
 msgid " | Status_detail: "
 msgstr " | Detalle_estado: "
 
-#: includes/gp-woocommerce-webhook.php:78
+#: includes/gp-woocommerce-webhook.php:81
 msgid " | Dev_Reference: "
 msgstr " | Referencia_WC: "
 
-#: includes/gp-woocommerce-webhook.php:79
+#: includes/gp-woocommerce-webhook.php:82
 msgid " | Authorization_Code: "
 msgstr " | Codigo_Autorización: "
 
-#: includes/gp-woocommerce-webhook.php:80
+#: includes/gp-woocommerce-webhook.php:83
 msgid " | Transaction_Code: "
 msgstr " | Código_Transacción: "
 
-#: includes/gp-woocommerce-webhook.php:83
+#: includes/gp-woocommerce-webhook.php:86
 msgid "Successful Payment"
 msgstr "Pago Exitoso"
 
-#: includes/gp-woocommerce-webhook.php:87
+#: includes/gp-woocommerce-webhook.php:90
 msgid "Your payment has been made successfully. Transaction Code: "
 msgstr "Su pago ha sido realizado con éxito. Código de transacción: "
 
-#: includes/gp-woocommerce-webhook.php:87
+#: includes/gp-woocommerce-webhook.php:90
 msgid " and its Authorization Code is: "
 msgstr " y su código de autorización es: "
 
-#: includes/gp-woocommerce-webhook.php:90
+#: includes/gp-woocommerce-webhook.php:93
 msgid "Payment Failed"
 msgstr "Pago Fallido"
 
-#: includes/gp-woocommerce-webhook.php:92
+#: includes/gp-woocommerce-webhook.php:95
 msgid "Your payment has failed. Transaction Code: "
 msgstr "Su pago a fallado, Código de transaccion: "
 
-#: includes/gp-woocommerce-webhook.php:92
+#: includes/gp-woocommerce-webhook.php:95
 msgid " the reason is: "
 msgstr " la razón es: "
 
-#: includes/gp-woocommerce-webhook.php:95
+#: includes/gp-woocommerce-webhook.php:98
 msgid "Failed Payment"
 msgstr "Pago Fallido"
 
-#: includes/gp-woocommerce-webhook.php:96
+#: includes/gp-woocommerce-webhook.php:99
 msgid "The payment fails.: "
 msgstr "El pago falló.: "

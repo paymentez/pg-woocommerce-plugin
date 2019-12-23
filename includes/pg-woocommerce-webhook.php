@@ -69,11 +69,14 @@ if ($paymentezStoken) {
       $order->add_order_note( __('Your payment was cancelled. Transaction Code: ', 'pg_woocommerce') . $transaction_id . __(' the reason is chargeback. ', 'pg_woocommerce'));
   } elseif ($status_detail == 3 && $statusOrder == "completed") {
     header("HTTP/1.0 204 transaction_id already received");
+  } elseif ($status_detail == 7) {
+    $order->update_status('refunded');
+    $order->add_order_note( __('Your payment was refunded. Transaction Code: ', 'pg_woocommerce') . $transaction_id . __(' the reason is refund. ', 'pg_woocommerce'));
   }
 }
 
 if (!in_array($statusOrder, ['completed', 'cancelled', 'refunded'])) {
-    $description = __("Paymentez Response: Status: ", "pg_woocommerce") . $status_detail .
+    $description = __("Paymentez Response: Status: ", "pg_woocommerce") . $status .
                    __(" | Status_detail: ", "pg_woocommerce") . $detailPayment[$status_detail] .
                    __(" | Dev_Reference: ", "pg_woocommerce") . $dev_reference .
                    __(" | Authorization_Code: ", "pg_woocommerce") . $authorization_code .
@@ -98,3 +101,4 @@ if (!in_array($statusOrder, ['completed', 'cancelled', 'refunded'])) {
 }
 
 WC_Paymentez_Database_Helper::insert_data($status, $comments, $description, $dev_reference, $transaction_id);
+header("HTTP/1.0 204 transaction_id received");

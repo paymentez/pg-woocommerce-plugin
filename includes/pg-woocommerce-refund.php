@@ -7,7 +7,7 @@ require_once( dirname( __FILE__ ) . '/pg-woocommerce-helper.php' );
 
 class WC_Paymentez_Refund
 {
-  function refund($order_id)
+  function refund($order_id, $refund_id)
   {
     $refundObj = new WC_Gateway_Paymentez();
     $app_code_server = $refundObj->app_code_server;
@@ -44,7 +44,7 @@ class WC_Paymentez_Refund
 
     // TODO: Definir estas dos variables bien
     $comments = "Refund Completed";
-    $description = "Refund Completed";
+    $description = "Refund ID: ". $refund_id;
 
     WC_Paymentez_Database_Helper::insert_data($status, $comments, $description, $order_id, $transactionCode);
   }
