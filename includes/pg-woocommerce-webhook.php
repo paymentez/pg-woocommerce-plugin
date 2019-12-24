@@ -71,6 +71,8 @@ if ($paymentezStoken) {
     header("HTTP/1.0 204 transaction_id already received");
   } elseif ($status_detail == 7) {
     $order->update_status('refunded');
+    $description = "Refund";
+    $comments = __("Payment Refunded", "pg_woocommerce");
     $order->add_order_note( __('Your payment was refunded. Transaction Code: ', 'pg_woocommerce') . $transaction_id . __(' the reason is refund. ', 'pg_woocommerce'));
   }
 }
