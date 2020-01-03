@@ -5,11 +5,11 @@
 require_once( dirname( __DIR__ ) . '/pg-woocommerce-plugin.php' );
 require_once( dirname( __FILE__ ) . '/pg-woocommerce-helper.php' );
 
-class WC_Paymentez_Refund
+class WCPaymentezRefund
 {
   function refund($order_id, $refund_id)
   {
-    $refundObj = new WC_Gateway_Paymentez();
+    $refundObj = new WCGatewayPaymentez();
     $app_code_server = $refundObj->app_code_server;
     $app_key_server = $refundObj->app_key_server;
     $enviroment = $refundObj->enviroment;
@@ -22,7 +22,7 @@ class WC_Paymentez_Refund
 
     $urlrefund = ($enviroment == 'yes') ? 'https://ccapi-stg.'.PG_DOMAIN.PG_REFUND : 'https://ccapi.'.PG_DOMAIN.PG_REFUND ;
 
-    $transactionCode = WC_Paymentez_Database_Helper::select_order($order_id);
+    $transactionCode = WCPaymentezDatabaseHelper::select_order($order_id);
     $data = array(
         'id' => $transactionCode
     );
@@ -46,6 +46,6 @@ class WC_Paymentez_Refund
     $comments = "Refund Completed";
     $description = "Refund ID: ". $refund_id;
 
-    WC_Paymentez_Database_Helper::insert_data($status, $comments, $description, $order_id, $transactionCode);
+    WCPaymentezDatabaseHelper::insert_data($status, $comments, $description, $order_id, $transactionCode);
   }
 }

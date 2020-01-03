@@ -16,8 +16,8 @@ License URI: https://www.gnu.org/licenses/gpl-3.0.html
 add_action( 'plugins_loaded', 'pg_woocommerce_plugin' );
 
 include( dirname( __FILE__ ) . '/includes/pg-woocommerce-helper.php' );
-register_activation_hook( __FILE__, array( 'WC_Paymentez_Database_Helper', 'create_database' ) );
-register_deactivation_hook( __FILE__, array( 'WC_Paymentez_Database_Helper', 'delete_database' ) );
+register_activation_hook( __FILE__, array( 'WCPaymentezDatabaseHelper', 'create_database' ) );
+register_deactivation_hook( __FILE__, array( 'WCPaymentezDatabaseHelper', 'delete_database' ) );
 
 require( dirname( __FILE__ ) . '/includes/pg-woocommerce-refund.php' );
 
@@ -29,7 +29,7 @@ define("PG_REFUND", "/v2/transaction/refund/");
 // TODO: Mover la function paymentez_woocommerce_order_refunded
 // define the woocommerce_order_refunded callback
 function paymentez_woocommerce_order_refunded($order_id, $refund_id) {
-  $refund = new WC_Paymentez_Refund();
+  $refund = new WCPaymentezRefund();
   $refund->refund($order_id, $refund_id);
 }
 
@@ -38,7 +38,7 @@ add_action( 'woocommerce_order_refunded', 'paymentez_woocommerce_order_refunded'
 
 if (!function_exists('pg_woocommerce_plugin')) {
   function pg_woocommerce_plugin() {
-    class WC_Gateway_Paymentez extends WC_Payment_Gateway {
+    class WCGatewayPaymentez extends WC_Payment_Gateway {
       public function __construct() {
         # $this->has_fields = true;
         $this->id = 'pg_woocommerce';
@@ -163,7 +163,7 @@ if (!function_exists('pg_woocommerce_plugin')) {
 }
 
 function add_pg_woocommerce_plugin( $methods ) {
-    $methods[] = 'WC_Gateway_Paymentez';
+    $methods[] = 'WCGatewayPaymentez';
     return $methods;
 }
 

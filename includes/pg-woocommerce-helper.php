@@ -1,5 +1,5 @@
 <?php
-class WC_Paymentez_Database_Helper {
+class WCPaymentezDatabaseHelper {
   public static function create_database() {
     global $wpdb;
     $table_name = $wpdb->prefix . 'paymentez_plugin';
