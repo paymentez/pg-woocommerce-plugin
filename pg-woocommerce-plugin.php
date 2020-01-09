@@ -13,11 +13,11 @@ License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 */
 
-add_action( 'plugins_loaded', 'pg_woocommerce_plugin' );
+add_action( 'plugins_loaded', 'pgWoocommercePlugin' );
 
 include( dirname( __FILE__ ) . '/includes/pg-woocommerce-helper.php' );
-register_activation_hook( __FILE__, array( 'WCPaymentezDatabaseHelper', 'create_database' ) );
-register_deactivation_hook( __FILE__, array( 'WCPaymentezDatabaseHelper', 'delete_database' ) );
+register_activation_hook( __FILE__, array( 'WCPaymentezDatabaseHelper', 'createDatabase' ) );
+register_deactivation_hook( __FILE__, array( 'WCPaymentezDatabaseHelper', 'deleteDatabase' ) );
 
 require( dirname( __FILE__ ) . '/includes/pg-woocommerce-refund.php' );
 
@@ -26,18 +26,18 @@ load_plugin_textdomain( 'pg_woocommerce', false, dirname( plugin_basename( __FIL
 define("PG_DOMAIN", "paymentez.com");
 define("PG_REFUND", "/v2/transaction/refund/");
 
-// TODO: Mover la function paymentez_woocommerce_order_refunded
+// TODO: Mover la function paymentezWoocommerceOrderRefunded
 // define the woocommerce_order_refunded callback
-function paymentez_woocommerce_order_refunded($order_id, $refund_id) {
+function paymentezWoocommerceOrderRefunded($order_id, $refund_id) {
   $refund = new WCPaymentezRefund();
   $refund->refund($order_id, $refund_id);
 }
 
 // add the action
-add_action( 'woocommerce_order_refunded', 'paymentez_woocommerce_order_refunded', 10, 2 );
+add_action( 'woocommerce_order_refunded', 'paymentezWoocommerceOrderRefunded', 10, 2 );
 
-if (!function_exists('pg_woocommerce_plugin')) {
-  function pg_woocommerce_plugin() {
+if (!function_exists('pgWoocommercePlugin')) {
+  function pgWoocommercePlugin() {
     class WCGatewayPaymentez extends WC_Payment_Gateway {
       public function __construct() {
         # $this->has_fields = true;
@@ -63,7 +63,7 @@ if (!function_exists('pg_woocommerce_plugin')) {
         // Para guardar sus opciones, simplemente tiene que conectar la función process_admin_options en su constructor.
         add_action('woocommerce_update_options_payment_gateways_' . $this->id, array(&$this, 'process_admin_options'));
 
-        add_action('woocommerce_receipt_pg_woocommerce', array(&$this, 'receipt_page'));
+        add_action('woocommerce_receipt_pg_woocommerce', array(&$this, 'receiptPage'));
       }
 
       public function init_form_fields() {
@@ -83,12 +83,12 @@ if (!function_exists('pg_woocommerce_plugin')) {
         <?php
       }
 
-      function receipt_page($order) {
-        echo $this->generate_paymentez_form($order);
+      function receiptPage($order) {
+        echo $this->generatePaymentezForm($order);
       }
 
-      // TODO: Reposicionar la function get_params_post en otro archivo
-      public function get_params_post($orderId) {
+      // TODO: Reposicionar la function getParamsPost en otro archivo
+      public function getParamsPost($orderId) {
         $order = new WC_Order($orderId);
         $order_data = $order->get_data();
         $products = $order->get_items();
@@ -115,11 +115,11 @@ if (!function_exists('pg_woocommerce_plugin')) {
         return $parametersArgs;
       }
 
-      public function generate_paymentez_form($orderId) {
+      public function generatePaymentezForm($orderId) {
         $webhook_p = plugins_url('/includes/pg-woocommerce-webhook.php', __FILE__);
         $css = plugins_url('/assets/css/styles.css', __FILE__);
         $checkout = plugins_url('/assets/js/paymentez_checkout.js', __FILE__);
-        $orderData = $this->get_params_post($orderId);
+        $orderData = $this->getParamsPost($orderId);
         $orderDataJSON = json_encode($orderData)
         ?>
           <link rel="stylesheet" type="text/css" href="<?php echo $css; ?>">
@@ -151,7 +151,7 @@ if (!function_exists('pg_woocommerce_plugin')) {
         <?php
       }
 
-      public function process_payment($orderId) {
+      public function processPayment($orderId) {
           $order = new WC_Order($orderId);
           return array(
               'result' => 'success',

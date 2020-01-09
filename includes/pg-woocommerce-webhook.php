@@ -6,24 +6,24 @@ require_once( dirname( __FILE__ ) . '/pg-woocommerce-helper.php' );
 require_once( dirname( __DIR__ ) . '/pg-woocommerce-plugin.php' );
 
 $requestBody = file_get_contents('php://input');
-$requestBodyJs = json_decode($requestBody, true);
+$request_body_js = json_decode($requestBody, true);
 
-$status = $requestBodyJs["transaction"]['status'];
-$status_detail = $requestBodyJs["transaction"]['status_detail'];
-$transaction_id = $requestBodyJs["transaction"]['id'];
-$authorization_code = $requestBodyJs["transaction"]['authorization_code'];
-$dev_reference = $requestBodyJs["transaction"]['dev_reference'];
-$paymentez_message = $requestBodyJs["transaction"]['message'];
-$paymentezStoken = $requestBodyJs["transaction"]['stoken'];
-$payment_date = strtotime($requestBodyJs["transaction"]['payment_date']);
+$status = $request_body_js["transaction"]['status'];
+$status_detail = $request_body_js["transaction"]['status_detail'];
+$transaction_id = $request_body_js["transaction"]['id'];
+$authorization_code = $request_body_js["transaction"]['authorization_code'];
+$dev_reference = $request_body_js["transaction"]['dev_reference'];
+$paymentez_message = $request_body_js["transaction"]['message'];
+$paymentez_stoken = $request_body_js["transaction"]['stoken'];
+$payment_date = strtotime($request_body_js["transaction"]['payment_date']);
 $actual_date = strtotime(date("Y-m-d H:i:s",time()));
 $time_difference = ceil(($actual_date - $payment_date)/60);
 
-if ($time_difference > 3 && !$paymentezStoken) {
+if ($time_difference > 3 && !$paymentez_stoken) {
   header("HTTP/1.0 400 time error");
 }
 
-$detailPayment = array(
+$detail_payment = array(
   1  => "Verification required",
   2  => "Paid partially",
   3  => "Paid",
@@ -50,24 +50,24 @@ $detailPayment = array(
 
 global $woocommerce;
 $order = new WC_Order($dev_reference);
-$statusOrder = $order->get_status();
+$status_order = $order->get_status();
 
 update_post_meta($order->id, '_transaction_id', $transaction_id);
 
-if ($paymentezStoken) {
-  $webhookObj = new WCGatewayPaymentez();
-  $app_code_client = $webhookObj->app_code_client;
-  $app_key_client = $webhookObj->app_key_client;
-  $userId = $requestBodyJs["user"]["id"];
-  $stoken = md5($transaction_id ."_". $app_code_client ."_". $userId ."_". $app_key_client);
-  if ($stoken != $paymentezStoken) {
+if ($paymentez_stoken) {
+  $webhook_obj = new WCGatewayPaymentez();
+  $app_code_client = $webhook_obj->app_code_client;
+  $app_key_client = $webhook_obj->app_key_client;
+  $user_id = $request_body_js["user"]["id"];
+  $stoken = md5($transaction_id ."_". $app_code_client ."_". $user_id ."_". $app_key_client);
+  if ($stoken != $paymentez_stoken) {
     header("HTTP/1.0 203 token error");
   } elseif ($status_detail == 8) {
-      $description = $detailPayment[$status_detail];
+      $description = $detail_payment[$status_detail];
       $comments = __("Payment Cancelled", "pg_woocommerce");
       $order->update_status('cancelled');
       $order->add_order_note( __('Your payment was cancelled. Transaction Code: ', 'pg_woocommerce') . $transaction_id . __(' the reason is chargeback. ', 'pg_woocommerce'));
-  } elseif ($status_detail == 3 && $statusOrder == "completed") {
+  } elseif ($status_detail == 3 && $status_order == "completed") {
     header("HTTP/1.0 204 transaction_id already received");
   } elseif ($status_detail == 7) {
     $order->update_status('refunded');
@@ -77,9 +77,9 @@ if ($paymentezStoken) {
   }
 }
 
-if (!in_array($statusOrder, ['completed', 'cancelled', 'refunded'])) {
+if (!in_array($status_order, ['completed', 'cancelled', 'refunded'])) {
     $description = __("Paymentez Response: Status: ", "pg_woocommerce") . $status .
-                   __(" | Status_detail: ", "pg_woocommerce") . $detailPayment[$status_detail] .
+                   __(" | Status_detail: ", "pg_woocommerce") . $detail_payment[$status_detail] .
                    __(" | Dev_Reference: ", "pg_woocommerce") . $dev_reference .
                    __(" | Authorization_Code: ", "pg_woocommerce") . $authorization_code .
                    __(" | Transaction_Code: ", "pg_woocommerce") . $transaction_id;
@@ -102,5 +102,5 @@ if (!in_array($statusOrder, ['completed', 'cancelled', 'refunded'])) {
     }
 }
 
-WCPaymentezDatabaseHelper::insert_data($status, $comments, $description, $dev_reference, $transaction_id);
+WCPaymentezDatabaseHelper::insertData($status, $comments, $description, $dev_reference, $transaction_id);
 header("HTTP/1.0 204 transaction_id received");

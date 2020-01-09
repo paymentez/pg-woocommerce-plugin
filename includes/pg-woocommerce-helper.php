@@ -1,6 +1,6 @@
 <?php
 class WCPaymentezDatabaseHelper {
-  public static function create_database() {
+  public static function createDatabase() {
     global $wpdb;
     $table_name = $wpdb->prefix . 'paymentez_plugin';
 
@@ -19,7 +19,7 @@ class WCPaymentezDatabaseHelper {
       }
   }
 
-  public static function delete_database() {
+  public static function deleteDatabase() {
     global $wpdb;
     $table_name = $wpdb->prefix . 'paymentez_plugin';
     $sql = "DROP TABLE IF EXISTS $table_name";
@@ -27,7 +27,7 @@ class WCPaymentezDatabaseHelper {
     $wpdb->query($sql);
   }
 
-  public static function insert_data($status, $comments, $description, $dev_reference, $transaction_id) {
+  public static function insertData($status, $comments, $description, $dev_reference, $transaction_id) {
     $statusfinal = $status;
     $commentsfinal = $comments;
     $guardar = $description;
@@ -55,14 +55,14 @@ class WCPaymentezDatabaseHelper {
     );
   }
 
-  public static function select_order($order_id) {
+  public static function selectOrder($order_id) {
     global $wpdb;
     $table_name = $wpdb->prefix . 'paymentez_plugin';
     $myrows = $wpdb->get_results("SELECT * FROM $table_name where OrdenId = '$order_id' ", OBJECT);
 
     foreach ($myrows as $campos) {
-      $transactionCode = $campos->Transaction_Code;
+      $transaction_code = $campos->Transaction_Code;
     }
-    return $transactionCode;
+    return $transaction_code;
   }
 }

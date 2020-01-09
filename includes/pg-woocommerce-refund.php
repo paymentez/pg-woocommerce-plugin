@@ -15,16 +15,16 @@ class WCPaymentezRefund
     $enviroment = $refundObj->enviroment;
 
     $fecha_actual = time();
-    $variableTimestamp = (string)($fecha_actual);
-    $uniq_token_string = $app_key_server . $variableTimestamp;
+    $variable_timestamp = (string)($fecha_actual);
+    $uniq_token_string = $app_key_server . $variable_timestamp;
     $uniq_token_hash = hash('sha256', $uniq_token_string);
-    $auth_token = base64_encode($app_code_server . ';' . $variableTimestamp . ';' . $uniq_token_hash);
+    $auth_token = base64_encode($app_code_server . ';' . $variable_timestamp . ';' . $uniq_token_hash);
 
     $urlrefund = ($enviroment == 'yes') ? 'https://ccapi-stg.'.PG_DOMAIN.PG_REFUND : 'https://ccapi.'.PG_DOMAIN.PG_REFUND ;
 
-    $transactionCode = WCPaymentezDatabaseHelper::select_order($order_id);
+    $transaction_code = WCPaymentezDatabaseHelper::selectOrder($order_id);
     $data = array(
-        'id' => $transactionCode
+        'id' => $transaction_code
     );
     $payload = json_encode(array("transaction" => $data));
 
@@ -46,6 +46,6 @@ class WCPaymentezRefund
     $comments = "Refund Completed";
     $description = "Refund ID: ". $refund_id;
 
-    WCPaymentezDatabaseHelper::insert_data($status, $comments, $description, $order_id, $transactionCode);
+    WCPaymentezDatabaseHelper::insertData($status, $comments, $description, $order_id, $transaction_code);
   }
 }
