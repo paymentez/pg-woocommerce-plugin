@@ -1,4 +1,4 @@
-.js-paymentez-checkout {
+.js-payment-checkout {
   border: 1px solid #9c9c9c;
   width: 30%;
   margin-right: 10px;
@@ -18,7 +18,7 @@
   float: left;
 }
 
-.paymentez-checkout-modal {
+.payment-checkout-modal {
   z-index: 2000;
 }
 
@@ -51,7 +51,7 @@
   display: none!important;
 }
 
-.btn-tienda {
+.purchase-button {
   background-color: #0fbd71;
   text-decoration: none;
   color: #fff;

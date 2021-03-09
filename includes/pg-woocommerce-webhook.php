@@ -55,7 +55,7 @@ $statusOrder = $order->get_status();
 update_post_meta($order->id, '_transaction_id', $transaction_id);
 
 if ($paymentezStoken) {
-  $webhookObj = new WC_Gateway_Paymentez();
+  $webhookObj = new PG_WC_Plugin();
   $app_code_client = $webhookObj->app_code_client;
   $app_key_client = $webhookObj->app_key_client;
   $userId = $requestBodyJs["user"]["id"];
@@ -97,4 +97,4 @@ if (!in_array($statusOrder, ['completed', 'cancelled', 'refunded'])) {
     }
 }
 
-WC_Paymentez_Database_Helper::insert_data($status, $comments, $description, $dev_reference, $transaction_id);
+PG_WC_Helper::insert_data($status, $comments, $description, $dev_reference, $transaction_id);

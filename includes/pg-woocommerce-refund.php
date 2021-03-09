@@ -9,7 +9,7 @@ class WC_Paymentez_Refund
 {
   function refund($order_id)
   {
-    $refundObj = new WC_Gateway_Paymentez();
+    $refundObj = new PG_WC_Plugin();
     $app_code_server = $refundObj->app_code_server;
     $app_key_server = $refundObj->app_key_server;
     $enviroment = $refundObj->enviroment;
@@ -22,7 +22,7 @@ class WC_Paymentez_Refund
 
     $urlrefund = ($enviroment == 'yes') ? 'https://ccapi-stg.'.PG_DOMAIN.PG_REFUND : 'https://ccapi.'.PG_DOMAIN.PG_REFUND ;
 
-    $transactionCode = WC_Paymentez_Database_Helper::select_order($order_id);
+    $transactionCode = PG_WC_Helper::select_order($order_id);
     $data = array(
         'id' => $transactionCode
     );
@@ -46,6 +46,6 @@ class WC_Paymentez_Refund
     $comments = "Refund Completed";
     $description = "Refund Completed";
 
-    WC_Paymentez_Database_Helper::insert_data($status, $comments, $description, $order_id, $transactionCode);
+    PG_WC_Helper::insert_data($status, $comments, $description, $order_id, $transactionCode);
   }
 }
