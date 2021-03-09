@@ -7,6 +7,12 @@ return array (
         'label' => __( 'Use the Paymentez Gateway staging environment.', 'pg_woocommerce' ),
         'default' => 'yes'
     ),
+    'enable_ltp' => array(
+        'title' => __( 'Enable LinkToPay', 'pg_woocommerce' ),
+        'type' => 'checkbox',
+        'label' => __( 'If selected, LinkToPay(Bank transfer, cash) can be used to pay.', 'pg_woocommerce' ),
+        'default' => 'no'
+    ),
     'title' => array(
         'title' => __( 'Title', 'pg_woocommerce' ),
         'type' => 'text',

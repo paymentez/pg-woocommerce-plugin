@@ -54,11 +54,14 @@ if (!function_exists('pg_woocommerce_plugin')) {
 
         $this->checkout_language  = $this->get_option('checkout_language');
         $this->enviroment         = $this->get_option('staging');
+        $this->enable_ltp         = $this->get_option('enable_ltp');
 
         $this->app_code_client    = $this->get_option('app_code_client');
         $this->app_key_client     = $this->get_option('app_key_client');
         $this->app_code_server    = $this->get_option('app_code_server');
         $this->app_key_server     = $this->get_option('app_key_server');
+
+        $this->css                = plugins_url('/assets/css/styles.css', __FILE__);
 
         add_action('woocommerce_update_options_payment_gateways_' . $this->id, array(&$this, 'process_admin_options'));
 
@@ -82,18 +85,27 @@ if (!function_exists('pg_woocommerce_plugin')) {
         <?php
       }
 
-      function receipt_page($order) {
-        echo $this->generate_payment_form($order);
+      function receipt_page($orderId) {
+        $order = new WC_Order($orderId);
+        echo $this->generate_cc_form($order);
+        if ($this->enable_ltp == 'yes') {
+          echo $this->generate_ltp_form($order);
+        }
       }
 
-      public function generate_payment_form($orderId) {
+      public function generate_ltp_form($order) {
+        ?>
+          <link rel="stylesheet" type="text/css" href="<?php echo $this->css; ?>">
+          <button class="ltp-button"><?php _e('Pay on LinkToPay(Cash/Bank Transfer)', 'pg_woocommerce'); ?></button>
+        <?php
+      }
+
+      public function generate_cc_form($order) {
         $webhook_p = plugins_url('/includes/pg-woocommerce-webhook.php', __FILE__);
-        $css = plugins_url('/assets/css/styles.css', __FILE__);
         $checkout = plugins_url('/assets/js/payment_checkout.js', __FILE__);
-        $order = new WC_Order($orderId);
         $order_data = PG_WC_Helper::get_checkout_params($order);
         ?>
-          <link rel="stylesheet" type="text/css" href="<?php echo $css; ?>">
+          <link rel="stylesheet" type="text/css" href="<?php echo $this->css; ?>">
 
           <div id="msj-succcess" class="hide"> <p class="alert alert-success" ><?php _e('Your payment has been made successfully. Thank you for your purchase.', 'pg_woocommerce'); ?></p> </div>
           <div id="msj-failed" class="hide"> <p class="alert alert-warning"><?php _e('An error occurred while processing your payment and could not be made. Try another Credit Card.', 'pg_woocommerce'); ?></p> </div>
@@ -106,7 +118,7 @@ if (!function_exists('pg_woocommerce_plugin')) {
 
           <script src="https://cdn.paymentez.com/ccapi/sdk/payment_checkout_stable.min.js"></script>
 
-          <button class="js-payment-checkout"><?php _e('Purchase', 'pg_woocommerce'); ?></button>
+          <button class="js-payment-checkout"><?php _e('Pay With Card', 'pg_woocommerce'); ?></button>
 
           <div id="order_data" class="hide">
             <?php echo $order_data; ?>

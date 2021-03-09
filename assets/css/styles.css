@@ -18,6 +18,26 @@
   float: left;
 }
 
+.ltp-button {
+  border: 1px solid #9c9c9c;
+  width: 30%;
+  margin-right: 10px;
+  margin-bottom: 20px;
+  line-height:1;
+  height:53px;
+  padding: 8px;
+  text-align: center;
+  background: #0fbd71;
+  color: #FFF;
+  font-size: 17px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 500;
+  border-radius: 4px;
+  cursor: pointer;
+  float: left;
+}
+
 .payment-checkout-modal {
   z-index: 2000;
 }
