@@ -13,9 +13,14 @@ License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 */
 
+if ( ! in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
+	return;
+}
+
 define("FLAVOR", "Paymentez");
 define("PG_DOMAIN", "paymentez.com");
 define("PG_REFUND", "/v2/transaction/refund/");
+define("PG_LTP", "/linktopay/init_order/");
 
 add_action( 'plugins_loaded', 'pg_woocommerce_plugin' );
 
@@ -53,7 +58,7 @@ if (!function_exists('pg_woocommerce_plugin')) {
         $this->description        = $this->get_option('description');
 
         $this->checkout_language  = $this->get_option('checkout_language');
-        $this->enviroment         = $this->get_option('staging');
+        $this->environment        = $this->get_option('staging');
         $this->enable_ltp         = $this->get_option('enable_ltp');
 
         $this->app_code_client    = $this->get_option('app_code_client');
@@ -94,9 +99,19 @@ if (!function_exists('pg_woocommerce_plugin')) {
       }
 
       public function generate_ltp_form($order) {
+        $url = PG_WC_Helper::generate_ltp($order, $this->environment);
+				$order->update_status( 'on-hold', __( 'Payment status will be updated by webhook.', 'pg_woocommerce' ) );
+        WC()->cart->empty_cart();
         ?>
           <link rel="stylesheet" type="text/css" href="<?php echo $this->css; ?>">
-          <button class="ltp-button"><?php _e('Pay on LinkToPay(Cash/Bank Transfer)', 'pg_woocommerce'); ?></button>
+          <button id="ltp-button" class="<?php if($url == NULL){echo "hide";} else {echo "ltp-button";} ?>" onclick="ltpRedirect()">
+            <?php _e('Pay on LinkToPay(Cash/Bank Transfer)', 'pg_woocommerce'); ?>
+          </button>
+          <script>
+            function ltpRedirect() {
+              location.replace("<?php echo $url; ?>")
+            }
+          </script>
         <?php
       }
 
@@ -118,22 +133,28 @@ if (!function_exists('pg_woocommerce_plugin')) {
 
           <script src="https://cdn.paymentez.com/ccapi/sdk/payment_checkout_stable.min.js"></script>
 
-          <button class="js-payment-checkout"><?php _e('Pay With Card', 'pg_woocommerce'); ?></button>
+          <button id="checkout-button" class="js-payment-checkout"><?php _e('Pay With Card', 'pg_woocommerce'); ?></button>
 
           <div id="order_data" class="hide">
-            <?php echo $order_data; ?>
+            <?php echo json_encode($order_data); ?>
           </div>
 
           <script id="woocommerce_checkout_pg" webhook_p="<?php echo $webhook_p; ?>"
             app_key="<?php echo $this->app_key_client; ?>"
             app_code="<?php echo $this->app_code_client; ?>"
             checkout_language="<?php echo $this->checkout_language; ?>"
-            enviroment="<?php echo $this->enviroment; ?>"
+            environment="<?php echo $this->environment; ?>"
             src="<?php echo $checkout; ?>">
           </script>
         <?php
       }
 
+      /**
+  		 * Process the payment and return the result
+  		 *
+  		 * @param int $orderId
+  		 * @return array
+  		 */
       public function process_payment($orderId) {
           $order = new WC_Order($orderId);
           return array(

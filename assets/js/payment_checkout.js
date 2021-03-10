@@ -5,14 +5,14 @@ jQuery(document).ready(function($) {
   var app_key_js = checkout_values.getAttribute('app_key');
   var order_data = JSON.parse(document.getElementById('order_data').textContent);
   var webhook_p = checkout_values.getAttribute('webhook_p');
-  var staging = checkout_values.getAttribute('enviroment');
-  var enviroment = (staging === "yes") ? "stg" : "prod";
+  var staging = checkout_values.getAttribute('environment');
+  var environment = (staging === "yes") ? "stg" : "prod";
 
   var paymentCheckout = new PaymentCheckout.modal({
       client_app_code: app_code_js,
       client_app_key: app_key_js,
       locale: language,
-      env_mode: enviroment,
+      env_mode: environment,
       onOpen: function() {
           console.log('modal open');
       },
@@ -54,14 +54,15 @@ jQuery(document).ready(function($) {
   });
 
   function showMessageSuccess() {
-    $("#buttonspay").addClass("hide");
+    $("#checkout-button").addClass("hide");
+    if (document.getElementById("ltp-button")) {
+      $("#ltp-button").addClass("hide");
+    }
     $("#msj-succcess").removeClass("hide");
-    $("#buttonreturn").removeClass("hide");
+    $("#button-return").removeClass("hide");
   }
 
   function showMessageError() {
-    $("#buttonspay").addClass("hide");
-    $("#messagetres").removeClass("hide");
     $("#msj-failed").removeClass("hide");
   }
 

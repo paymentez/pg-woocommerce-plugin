@@ -1,5 +1,5 @@
 <?php
-
+header("HTTP/1.0 204 transaction_id already received");
 date_default_timezone_set("UTC");
 require_once('../../../../wp-load.php');
 require_once( dirname( __FILE__ ) . '/pg-woocommerce-helper.php' );

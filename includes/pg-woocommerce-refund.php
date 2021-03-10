@@ -1,18 +1,19 @@
 <?php
-/**
- *
- */
 require_once( dirname( __DIR__ ) . '/pg-woocommerce-plugin.php' );
 require_once( dirname( __FILE__ ) . '/pg-woocommerce-helper.php' );
 
+/**
+ *
+ */
 class WC_Paymentez_Refund
 {
   function refund($order_id)
   {
+    // TODO: poner el generate_auth_token del helper
     $refundObj = new PG_WC_Plugin();
     $app_code_server = $refundObj->app_code_server;
     $app_key_server = $refundObj->app_key_server;
-    $enviroment = $refundObj->enviroment;
+    $environment = $refundObj->environment;
 
     $fecha_actual = time();
     $variableTimestamp = (string)($fecha_actual);
@@ -20,7 +21,7 @@ class WC_Paymentez_Refund
     $uniq_token_hash = hash('sha256', $uniq_token_string);
     $auth_token = base64_encode($app_code_server . ';' . $variableTimestamp . ';' . $uniq_token_hash);
 
-    $urlrefund = ($enviroment == 'yes') ? 'https://ccapi-stg.'.PG_DOMAIN.PG_REFUND : 'https://ccapi.'.PG_DOMAIN.PG_REFUND ;
+    $urlrefund = ($environment == 'yes') ? 'https://ccapi-stg.'.PG_DOMAIN.PG_REFUND : 'https://ccapi.'.PG_DOMAIN.PG_REFUND ;
 
     $transactionCode = PG_WC_Helper::select_order($order_id);
     $data = array(
