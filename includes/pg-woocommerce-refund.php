@@ -25,9 +25,11 @@ class WC_Paymentez_Refund
 
     $transactionCode = PG_WC_Helper::select_order($order_id);
     $data = array(
-        'id' => $transactionCode
+      'transaction' => array(
+        'id' => $transactionCode,
+      )
     );
-    $payload = json_encode(array("transaction" => $data));
+    $payload = json_encode($data);
 
     $ch = curl_init($urlrefund);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -40,13 +42,12 @@ class WC_Paymentez_Refund
     $response = curl_exec($ch);
     $getresponse = json_decode($response, true);
     $status = $getresponse['status'];
+    $detail = $getresponse['detail'];
 
     curl_close($ch);
 
-    // TODO: Definir estas dos variables bien
-    $comments = "Refund Completed";
-    $description = "Refund Completed";
+    $comments = "Refund ".$status;
 
-    PG_WC_Helper::insert_data($status, $comments, $description, $order_id, $transactionCode);
+    PG_WC_Helper::insert_data($status, $comments, $detail, $order_id, $transactionCode);
   }
 }

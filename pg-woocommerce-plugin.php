@@ -33,14 +33,12 @@ require( dirname( __FILE__ ) . '/includes/pg-woocommerce-refund.php' );
 load_plugin_textdomain( 'pg_woocommerce', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
 // TODO: Mover la function paymentez_woocommerce_order_refunded
-// define the woocommerce_order_refunded callback
-function paymentez_woocommerce_order_refunded($order_id, $refund_id) {
-  $refund = new WC_Paymentez_Refund();
-  $refund->refund($order_id);
-}
+//function paymentez_woocommerce_order_refunded($order_id, $refund_id) {
+//  $refund = new WC_Paymentez_Refund();
+//  $refund->refund($order_id);
+//}
 
-// add the action
-add_action( 'woocommerce_order_refunded', 'paymentez_woocommerce_order_refunded', 10, 2 );
+// add_action( 'woocommerce_order_refunded', 'paymentez_woocommerce_order_refunded', 10, 2 );
 
 if (!function_exists('pg_woocommerce_plugin')) {
   function pg_woocommerce_plugin() {
@@ -50,6 +48,7 @@ if (!function_exists('pg_woocommerce_plugin')) {
         $this->icon               = apply_filters('woocomerce_pg_icon', plugins_url('/assets/imgs/payment_check.png', __FILE__));
         $this->method_title       = FLAVOR.' Plugin';
         $this->method_description = __('This module is a solution developed by'. FLAVOR .'that allows WooCommerce users to easily process credit card payments.', 'pg_woocommerce');
+				$this->supports           = array( 'products', 'refunds' );
 
         $this->init_settings();
         $this->init_form_fields();
@@ -60,6 +59,7 @@ if (!function_exists('pg_woocommerce_plugin')) {
         $this->checkout_language  = $this->get_option('checkout_language');
         $this->environment        = $this->get_option('staging');
         $this->enable_ltp         = $this->get_option('enable_ltp');
+				$this->installments_type  = $this->get_option('installments_type');
 
         $this->app_code_client    = $this->get_option('app_code_client');
         $this->app_key_client     = $this->get_option('app_key_client');
@@ -98,10 +98,17 @@ if (!function_exists('pg_woocommerce_plugin')) {
         }
       }
 
+			public function process_refund( $order_id, $amount = NULL,  $reason = '' ) {
+				// Do your refund here. Refund $amount for the order with ID $order_id
+				$refund = new WC_Paymentez_Refund();
+				$refund->refund($order_id);
+				return true;
+			}
+
       public function generate_ltp_form($order) {
         $url = PG_WC_Helper::generate_ltp($order, $this->environment);
-				$order->update_status( 'on-hold', __( 'Payment status will be updated by webhook.', 'pg_woocommerce' ) );
-        WC()->cart->empty_cart();
+				// TODO: poner on-hold en lugar de pending
+				$order->update_status( 'pending', __( 'Payment status will be updated by webhook.', 'pg_woocommerce' ) );
         ?>
           <link rel="stylesheet" type="text/css" href="<?php echo $this->css; ?>">
           <button id="ltp-button" class="<?php if($url == NULL){echo "hide";} else {echo "ltp-button";} ?>" onclick="ltpRedirect()">
@@ -144,6 +151,7 @@ if (!function_exists('pg_woocommerce_plugin')) {
             app_code="<?php echo $this->app_code_client; ?>"
             checkout_language="<?php echo $this->checkout_language; ?>"
             environment="<?php echo $this->environment; ?>"
+						installments_type="<?php echo $this->installments_type; ?>"
             src="<?php echo $checkout; ?>">
           </script>
         <?php
@@ -157,6 +165,7 @@ if (!function_exists('pg_woocommerce_plugin')) {
   		 */
       public function process_payment($orderId) {
           $order = new WC_Order($orderId);
+					WC()->cart->empty_cart();
           return array(
               'result' => 'success',
               'redirect' => $order->get_checkout_payment_url(true)

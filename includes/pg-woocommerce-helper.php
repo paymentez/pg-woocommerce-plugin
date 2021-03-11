@@ -162,6 +162,7 @@ class PG_WC_Helper
     curl_close($ch);
 
     $get_response = json_decode($response, true);
+    // TODO: arreglar esto para devolver null
     $data = $get_response['data'];
     $payment = $data['payment'];
     if ($payment) {

@@ -7,6 +7,8 @@ jQuery(document).ready(function($) {
   var webhook_p = checkout_values.getAttribute('webhook_p');
   var staging = checkout_values.getAttribute('environment');
   var environment = (staging === "yes") ? "stg" : "prod";
+  var installments_type = checkout_values.getAttribute('installments_type');
+  console.log(installments_type);
 
   var paymentCheckout = new PaymentCheckout.modal({
       client_app_code: app_code_js,
@@ -21,12 +23,11 @@ jQuery(document).ready(function($) {
       },
       onResponse: function(response) {
           console.log('modal response');
+          console.log(response);
           announceTransaction(response);
           if (response.transaction["status_detail"] === 3) {
-             // console.log(response);
              showMessageSuccess();
           } else {
-             // console.log(response);
              showMessageError();
           }
       }
@@ -42,7 +43,7 @@ jQuery(document).ready(function($) {
       order_amount: Number(order_data.purchase_amount),
       order_vat: Number(order_data.vat),
       order_reference: order_data.purchase_order_id.toString(),
-      //order_installments_type: 2, // optional: For Colombia an Brazil to show installments should be 0, For Ecuador the valid values are: https://paymentez.github.io/api-doc/#payment-methods-cards-debit-with-token-installments-type
+      order_installments_type: Number(installments_type), // optional: For Colombia an Brazil to show installments should be 0, For Ecuador the valid values are: https://paymentez.github.io/api-doc/#payment-methods-cards-debit-with-token-installments-type
       //order_taxable_amount: 0, // optional: Only available for Ecuador. The taxable amount, if it is zero, it is calculated on the total. Format: Decimal with two fraction digits.
       //order_tax_percentage: 10 // optional: Only available for Ecuador. The tax percentage to be applied to this order.
     });
@@ -50,16 +51,19 @@ jQuery(document).ready(function($) {
 
   // Close Checkout on page navigation:
   window.addEventListener('popstate', function() {
-    paymentezCheckout.close();
+    paymentCheckout.close();
   });
 
   function showMessageSuccess() {
     $("#checkout-button").addClass("hide");
+    $("#msj-succcess").removeClass("hide");
+    $("#button-return").removeClass("hide");
     if (document.getElementById("ltp-button")) {
       $("#ltp-button").addClass("hide");
     }
-    $("#msj-succcess").removeClass("hide");
-    $("#button-return").removeClass("hide");
+    if (document.getElementById("msj-failed")) {
+      $("#msj-failed").addClass("hide");
+    }
   }
 
   function showMessageError() {
