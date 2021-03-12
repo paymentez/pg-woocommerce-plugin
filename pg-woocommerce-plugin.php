@@ -94,7 +94,6 @@ if (!function_exists('pg_woocommerce_plugin')) {
 				if ($refund_data['success']) {
 					$order = new WC_Order($order_id);
 					$order->add_order_note( __('Transaction: ', 'pg_woocommerce') . $refund_data['transaction_id'] . __(' refund status: ', 'pg_woocommerce') . $refund_data['status'] . __(' reason: ', 'pg_woocommerce') . $reason);
-					$order->update_status('refunded');
 					return $refund_data['success'];
 				} else {
 					return $refund_data['success'];
@@ -107,7 +106,7 @@ if (!function_exists('pg_woocommerce_plugin')) {
         ?>
           <link rel="stylesheet" type="text/css" href="<?php echo $this->css; ?>">
           <button id="ltp-button" class="<?php if($url == NULL){echo "hide";} else {echo "ltp-button";} ?>" onclick="ltpRedirect()">
-            <?php _e('Pay with Cash/Bank Transfer)', 'pg_woocommerce'); ?>
+            <?php _e('Pay with Cash/Bank Transfer', 'pg_woocommerce'); ?>
           </button>
           <script>
             function ltpRedirect() {

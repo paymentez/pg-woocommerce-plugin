@@ -9,18 +9,11 @@ class WC_Paymentez_Refund
 {
   function refund($order_id, $amount)
   {
-    // TODO: poner el generate_auth_token del helper
     $refundObj = new PG_WC_Plugin();
-    $app_code_server = $refundObj->app_code_server;
-    $app_key_server = $refundObj->app_key_server;
+
+    $auth_token = PG_WC_Helper::generate_auth_token('server');
+
     $environment = $refundObj->environment;
-
-    $fecha_actual = time();
-    $variableTimestamp = (string)($fecha_actual);
-    $uniq_token_string = $app_key_server . $variableTimestamp;
-    $uniq_token_hash = hash('sha256', $uniq_token_string);
-    $auth_token = base64_encode($app_code_server . ';' . $variableTimestamp . ';' . $uniq_token_hash);
-
     $urlrefund = ($environment == 'yes') ? 'https://ccapi-stg.'.PG_DOMAIN.PG_REFUND : 'https://ccapi.'.PG_DOMAIN.PG_REFUND ;
 
     $transactionCode = PG_WC_Helper::select_order($order_id);
@@ -38,18 +31,22 @@ class WC_Paymentez_Refund
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
     curl_setopt($ch, CURLOPT_POSTFIELDS, ($payload));
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-        'Content-Type:application/json',
-        'Auth-Token:' . $auth_token));
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json', 'Auth-Token:' . $auth_token));
 
-    $response = curl_exec($ch);
-    $getresponse = json_decode($response, true);
-    $status = $getresponse['status'];
-    $detail = $getresponse['detail'];
-    $success = ($status == 'success') ? true : false ;
+    try {
+      $response = curl_exec($ch);
+      $getresponse = json_decode($response, true);
+      $status = $getresponse['status'];
+      $detail = $getresponse['detail'];
+
+    } catch (Exception $e) {
+      $status = 'error';
+      $detail = $e->getMessage();
+    }
 
     curl_close($ch);
 
+    $success = ($status == 'success') ? true : false ;
     $comments = "Refund ".$status;
 
     PG_WC_Helper::insert_data($status, $comments, $detail, $order_id, $transactionCode);

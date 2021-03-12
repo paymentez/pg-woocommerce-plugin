@@ -108,7 +108,7 @@ class PG_WC_Helper
    */
   public static function generate_ltp($order, $environment) {
     $url_ltp = ($environment == 'yes') ? 'https://noccapi-stg.'.PG_DOMAIN.PG_LTP : 'https://noccapi.'.PG_DOMAIN.PG_LTP ;
-    $auth_token = PG_WC_Helper::generate_auth_token();
+    $auth_token = PG_WC_Helper::generate_auth_token('client');
 
     $checkout_data = PG_WC_Helper::get_checkout_params($order);
     $redirect_url = $order->get_view_order_url();
@@ -144,40 +144,37 @@ class PG_WC_Helper
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
     curl_setopt($ch, CURLOPT_POSTFIELDS, ($payload));
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-        'Content-Type:application/json',
-        'Auth-Token:' . $auth_token));
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json', 'Auth-Token:' . $auth_token));
 
-    $response = curl_exec($ch);
-    curl_close($ch);
-
-    $get_response = json_decode($response, true);
-    // TODO: arreglar esto para devolver null
-    $data = $get_response['data'];
-    $payment = $data['payment'];
-    if ($payment) {
-      $payment_url = $payment['payment_url'];
-    }
-    else {
+    try {
+      $response = curl_exec($ch);
+      $get_response = json_decode($response, true);
+      $payment_url = $get_response['data']['payment']['payment_url'];
+    } catch (Exception $e) {
       $payment_url = NULL;
     }
-
+    curl_close($ch);
     return $payment_url;
   }
 
   /**
    *
    */
-   public static function generate_auth_token() {
+   public static function generate_auth_token($type) {
      $plugin = new PG_WC_Plugin();
-     $app_code_server = $plugin->app_code_server;
-     $app_key_server = $plugin->app_key_server;
+     if ($type == 'server') {
+       $app_code = $plugin->app_code_server;
+       $app_key = $plugin->app_key_server;
+     } elseif ($type == 'client') {
+       $app_code = $plugin->app_code_client;
+       $app_key = $plugin->app_key_client;
+     }
 
      $fecha_actual = time();
      $variableTimestamp = (string)($fecha_actual);
-     $uniq_token_string = $app_key_server . $variableTimestamp;
+     $uniq_token_string = $app_key . $variableTimestamp;
      $uniq_token_hash = hash('sha256', $uniq_token_string);
-     $auth_token = base64_encode($app_code_server . ';' . $variableTimestamp . ';' . $uniq_token_hash);
+     $auth_token = base64_encode($app_code . ';' . $variableTimestamp . ';' . $uniq_token_hash);
 
      return $auth_token;
    }
