@@ -102,7 +102,7 @@ if (!function_exists('pg_woocommerce_plugin')) {
 
       public function generate_ltp_form($order) {
         $url = PG_WC_Helper::generate_ltp($order, $this->environment);
-				$order->update_status( 'on-hold', __( 'Payment status will be updated by webhook.', 'pg_woocommerce' ) );
+				$order->update_status( 'on-hold', __( 'Payment status will be updated via webhook.', 'pg_woocommerce' ) );
         ?>
           <link rel="stylesheet" type="text/css" href="<?php echo $this->css; ?>">
           <button id="ltp-button" class="<?php if($url == NULL){echo "hide";} else {echo "ltp-button";} ?>" onclick="ltpRedirect()">

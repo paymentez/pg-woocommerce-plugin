@@ -56,17 +56,17 @@ return array (
         22 => __('For Diners Club exclusive, deferred with and without interest (Ecuador)', 'pg_woocommerce'),
         30 => __('Deferred with interest pay month by month (Ecuador)(Medianet)', 'pg_woocommerce'),
         50 => __('Deferred without interest promotions (Supermaxi)(Ecuador)(Medianet)', 'pg_woocommerce'),
-        51 => __('Deferred with interest (Cuota fácil) (Ecuador)(Medianet)', 'pg_woocommerce'),
-        52 => __('Without interest (Rendecion Produmillas) (Ecuador)(Medianet)', 'pg_woocommerce'),
+        51 => __('Deferred with interest (Cuota fácil)(Ecuador)(Medianet)', 'pg_woocommerce'),
+        52 => __('Without interest (Rendecion Produmillas)(Ecuador)(Medianet)', 'pg_woocommerce'),
         53 => __('Without interest sale with promotions (Ecuador)(Medianet)', 'pg_woocommerce'),
         70 => __('Deferred special without interest (Ecuador)(Medianet)', 'pg_woocommerce'),
         72 => __('Credit without interest (cte smax)(Ecuador)(Medianet)', 'pg_woocommerce'),
         73 => __('Special credit without interest (smax)(Ecuador)(Medianet)', 'pg_woocommerce'),
         74 => __('Prepay without interest (smax)(Ecuador)(Medianet)', 'pg_woocommerce'),
-        75 => __('Deffered credit without interest (smax)(Ecuador)(Medianet)', 'pg_woocommerce'),
+        75 => __('Defered credit without interest (smax)(Ecuador)(Medianet)', 'pg_woocommerce'),
         90 => __('Without interest with months of grace (Supermaxi)(Ecuador)(Medianet)', 'pg_woocommerce'),
       ),
-      'description' => __('Select the installments type that will be enabled on the payment screen. (Only on card payment).', 'pg_woocommerce')
+      'description' => __('Select the installments type that will be enabled on the payment screen (Only on card payment).', 'pg_woocommerce')
     ),
     'app_code_client' => array(
       'title' => __('App Code Client', 'pg_woocommerce'),
