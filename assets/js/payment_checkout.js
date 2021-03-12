@@ -43,9 +43,7 @@ jQuery(document).ready(function($) {
       order_amount: Number(order_data.purchase_amount),
       order_vat: Number(order_data.vat),
       order_reference: order_data.purchase_order_id.toString(),
-      order_installments_type: Number(installments_type), // optional: For Colombia an Brazil to show installments should be 0, For Ecuador the valid values are: https://paymentez.github.io/api-doc/#payment-methods-cards-debit-with-token-installments-type
-      //order_taxable_amount: 0, // optional: Only available for Ecuador. The taxable amount, if it is zero, it is calculated on the total. Format: Decimal with two fraction digits.
-      //order_tax_percentage: 10 // optional: Only available for Ecuador. The tax percentage to be applied to this order.
+      order_installments_type: Number(installments_type),
     });
   });
 

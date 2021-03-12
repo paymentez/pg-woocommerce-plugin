@@ -19,7 +19,7 @@ $actual_date = strtotime(date("Y-m-d H:i:s",time()));
 $time_difference = ceil(($actual_date - $payment_date)/60);
 $user_id = $requestBodyJs["user"]["id"];
 
-if ($time_difference > 3 || !$paymentez_stoken) {
+if ($time_difference > 3 || !$payment_stoken) {
   header("HTTP/1.0 400 time error");
 }
 

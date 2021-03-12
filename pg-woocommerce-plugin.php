@@ -37,7 +37,7 @@ if (!function_exists('pg_woocommerce_plugin')) {
         $this->id                 = 'pg_woocommerce';
         $this->icon               = apply_filters('woocomerce_pg_icon', plugins_url('/assets/imgs/payment_checkout.png', __FILE__));
         $this->method_title       = FLAVOR;
-        $this->method_description = __('This module is a solution developed by'. FLAVOR .'that allows WooCommerce users to easily process credit card payments.', 'pg_woocommerce');
+        $this->method_description = __('This module is a solution developed by '. FLAVOR .' that allows WooCommerce users to easily process credit card payments.', 'pg_woocommerce');
 				$this->supports           = array( 'products', 'refunds' );
 
         $this->init_settings();
@@ -73,7 +73,7 @@ if (!function_exists('pg_woocommerce_plugin')) {
         <p>
           <img style='width: 30%;position: relative;display: inherit;'src='<?php echo $logo;?>'>
         </p>
-        <h2><?php _e('Paymentez Gateway','pg_woocommerce'); ?></h2>
+        <h2><?php _e(FLAVOR.' Gateway','pg_woocommerce'); ?></h2>
           <table class="form-table">
             <?php $this->generate_settings_html(); ?>
           </table>
@@ -89,7 +89,7 @@ if (!function_exists('pg_woocommerce_plugin')) {
       }
 
 			public function process_refund( $order_id, $amount = null,  $reason = '' ) {
-				$refund = new WC_Paymentez_Refund();
+				$refund = new WC_Payment_Refund();
 				$refund_data = $refund->refund($order_id, $amount);
 				if ($refund_data['success']) {
 					$order = new WC_Order($order_id);

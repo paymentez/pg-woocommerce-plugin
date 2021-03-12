@@ -5,7 +5,7 @@ require_once( dirname( __FILE__ ) . '/pg-woocommerce-helper.php' );
 /**
  *
  */
-class WC_Paymentez_Refund
+class WC_Payment_Refund
 {
   function refund($order_id, $amount)
   {
