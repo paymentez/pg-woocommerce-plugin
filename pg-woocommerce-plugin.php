@@ -24,9 +24,7 @@ define("PG_LTP", "/linktopay/init_order/");
 
 add_action( 'plugins_loaded', 'pg_woocommerce_plugin' );
 
-include( dirname( __FILE__ ) . '/includes/pg-woocommerce-helper.php' );
 register_activation_hook( __FILE__, array( 'PG_WC_Helper', 'create_table' ) );
-register_deactivation_hook( __FILE__, array( 'PG_WC_Helper', 'delete_table' ) );
 
 require( dirname( __FILE__ ) . '/includes/pg-woocommerce-refund.php' );
 
@@ -37,7 +35,7 @@ if (!function_exists('pg_woocommerce_plugin')) {
     class PG_WC_Plugin extends WC_Payment_Gateway {
       public function __construct() {
         $this->id                 = 'pg_woocommerce';
-        $this->icon               = apply_filters('woocomerce_pg_icon', plugins_url('/assets/imgs/payment_check.png', __FILE__));
+        $this->icon               = apply_filters('woocomerce_pg_icon', plugins_url('/assets/imgs/payment_checkout.png', __FILE__));
         $this->method_title       = FLAVOR;
         $this->method_description = __('This module is a solution developed by'. FLAVOR .'that allows WooCommerce users to easily process credit card payments.', 'pg_woocommerce');
 				$this->supports           = array( 'products', 'refunds' );
@@ -105,12 +103,11 @@ if (!function_exists('pg_woocommerce_plugin')) {
 
       public function generate_ltp_form($order) {
         $url = PG_WC_Helper::generate_ltp($order, $this->environment);
-				// TODO: poner on-hold en lugar de pending
-				$order->update_status( 'pending', __( 'Payment status will be updated by webhook.', 'pg_woocommerce' ) );
+				$order->update_status( 'on-hold', __( 'Payment status will be updated by webhook.', 'pg_woocommerce' ) );
         ?>
           <link rel="stylesheet" type="text/css" href="<?php echo $this->css; ?>">
           <button id="ltp-button" class="<?php if($url == NULL){echo "hide";} else {echo "ltp-button";} ?>" onclick="ltpRedirect()">
-            <?php _e('Pay on LinkToPay(Cash/Bank Transfer)', 'pg_woocommerce'); ?>
+            <?php _e('Pay with Cash/Bank Transfer)', 'pg_woocommerce'); ?>
           </button>
           <script>
             function ltpRedirect() {

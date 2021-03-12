@@ -34,16 +34,6 @@ class PG_WC_Helper
   /**
    *
    */
-  public static function delete_table() {
-    global $wpdb;
-    $sql = "DROP TABLE IF EXISTS ".TABLE_NAME;
-    require_once( ABSPATH . '/wp-admin/includes/upgrade.php' );
-    $wpdb->query($sql);
-  }
-
-  /**
-   *
-   */
   public static function insert_data($status, $comments, $description, $dev_reference, $transaction_id) {
     global $wpdb;
     $wpdb->insert(
@@ -85,9 +75,11 @@ class PG_WC_Helper
     $order_data = $order->get_data();
 
     $description = "";
-    // TODO: Cortarlo al numero de caracteres como en prestashop
     foreach ($order->get_items() as $product) {
       $description .= $product['name'] . ',';
+    }
+    if (strlen($description) > 240) {
+            $description = substr($description,0,240);
     }
 
     if (is_null($order_data['customer_id']) or empty($order_data['customer_id'])) {
