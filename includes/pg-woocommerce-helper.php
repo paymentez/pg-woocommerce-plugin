@@ -49,7 +49,6 @@ class PG_WC_Helper
     $wpdb->insert(
       TABLE_NAME,
       array(
-        'id'                => $id,
         'status'            => $status,
         'comments'          => $comments,
         'description'       => $description,
@@ -57,7 +56,6 @@ class PG_WC_Helper
         'pg_transaction_id' => $transaction_id
       ),
       array(
-        '%s',
         '%s',
         '%s',
         '%s',
@@ -75,7 +73,7 @@ class PG_WC_Helper
     $myrows = $wpdb->get_results("SELECT * FROM ".TABLE_NAME." where order_id = '$order_id' ", OBJECT);
 
     foreach ($myrows as $campos) {
-      $transactionCode = $campos->Transaction_Code;
+      $transactionCode = $campos->pg_transaction_id;
     }
     return $transactionCode;
   }

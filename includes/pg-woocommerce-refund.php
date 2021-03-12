@@ -7,7 +7,7 @@ require_once( dirname( __FILE__ ) . '/pg-woocommerce-helper.php' );
  */
 class WC_Paymentez_Refund
 {
-  function refund($order_id)
+  function refund($order_id, $amount)
   {
     // TODO: poner el generate_auth_token del helper
     $refundObj = new PG_WC_Plugin();
@@ -27,7 +27,10 @@ class WC_Paymentez_Refund
     $data = array(
       'transaction' => array(
         'id' => $transactionCode,
-      )
+      ),
+      'order' => array(
+        'amount' => (float)$amount
+      ),
     );
     $payload = json_encode($data);
 
@@ -43,11 +46,13 @@ class WC_Paymentez_Refund
     $getresponse = json_decode($response, true);
     $status = $getresponse['status'];
     $detail = $getresponse['detail'];
+    $success = ($status == 'success') ? true : false ;
 
     curl_close($ch);
 
     $comments = "Refund ".$status;
 
     PG_WC_Helper::insert_data($status, $comments, $detail, $order_id, $transactionCode);
+    return array('status' => $status, 'transaction_id' => $transactionCode, 'success' => $success);
   }
 }

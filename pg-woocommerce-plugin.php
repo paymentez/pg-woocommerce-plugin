@@ -32,21 +32,13 @@ require( dirname( __FILE__ ) . '/includes/pg-woocommerce-refund.php' );
 
 load_plugin_textdomain( 'pg_woocommerce', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
-// TODO: Mover la function paymentez_woocommerce_order_refunded
-//function paymentez_woocommerce_order_refunded($order_id, $refund_id) {
-//  $refund = new WC_Paymentez_Refund();
-//  $refund->refund($order_id);
-//}
-
-// add_action( 'woocommerce_order_refunded', 'paymentez_woocommerce_order_refunded', 10, 2 );
-
 if (!function_exists('pg_woocommerce_plugin')) {
   function pg_woocommerce_plugin() {
     class PG_WC_Plugin extends WC_Payment_Gateway {
       public function __construct() {
         $this->id                 = 'pg_woocommerce';
         $this->icon               = apply_filters('woocomerce_pg_icon', plugins_url('/assets/imgs/payment_check.png', __FILE__));
-        $this->method_title       = FLAVOR.' Plugin';
+        $this->method_title       = FLAVOR;
         $this->method_description = __('This module is a solution developed by'. FLAVOR .'that allows WooCommerce users to easily process credit card payments.', 'pg_woocommerce');
 				$this->supports           = array( 'products', 'refunds' );
 
@@ -98,11 +90,17 @@ if (!function_exists('pg_woocommerce_plugin')) {
         }
       }
 
-			public function process_refund( $order_id, $amount = NULL,  $reason = '' ) {
-				// Do your refund here. Refund $amount for the order with ID $order_id
+			public function process_refund( $order_id, $amount = null,  $reason = '' ) {
 				$refund = new WC_Paymentez_Refund();
-				$refund->refund($order_id);
-				return true;
+				$refund_data = $refund->refund($order_id, $amount);
+				if ($refund_data['success']) {
+					$order = new WC_Order($order_id);
+					$order->add_order_note( __('Transaction: ', 'pg_woocommerce') . $refund_data['transaction_id'] . __(' refund status: ', 'pg_woocommerce') . $refund_data['status'] . __(' reason: ', 'pg_woocommerce') . $reason);
+					$order->update_status('refunded');
+					return $refund_data['success'];
+				} else {
+					return $refund_data['success'];
+				}
 			}
 
       public function generate_ltp_form($order) {
