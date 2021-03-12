@@ -4,7 +4,7 @@ return array (
     'staging' => array(
         'title' => __( 'Staging Enviroment', 'pg_woocommerce' ),
         'type' => 'checkbox',
-        'label' => __( 'Use the '.FLAVOR.' Gateway staging environment.', 'pg_woocommerce' ),
+        'label' => __( 'Use staging environment in '.FLAVOR, 'pg_woocommerce' ),
         'default' => 'yes'
     ),
     'enable_ltp' => array(
@@ -17,7 +17,7 @@ return array (
         'title' => __( 'Title', 'pg_woocommerce' ),
         'type' => 'text',
         'description' => __( 'This controls the title which the user sees during checkout page.', 'pg_woocommerce' ),
-        'default' => __( FLAVOR.' Gateway', 'pg_woocommerce' ),
+        'default' => FLAVOR.' Gateway',
         'desc_tip' => true,
     ),
     'description' => array(
@@ -71,7 +71,7 @@ return array (
     'app_code_client' => array(
       'title' => __('App Code Client', 'pg_woocommerce'),
       'type' => 'text',
-      'description' => __('Unique identifier in '.FLAVOR.' .', 'pg_woocommerce')
+      'description' => __('Unique commerce identifier in '.FLAVOR.' .', 'pg_woocommerce')
     ),
     'app_key_client' => array(
       'title' => __('App Key Client', 'pg_woocommerce'),
@@ -81,11 +81,11 @@ return array (
     'app_code_server' => array(
       'title' => __('App Code Server', 'pg_woocommerce'),
       'type' => 'text',
-      'description' => __('Unique identifier in '.FLAVOR.' Server.', 'pg_woocommerce')
+      'description' => __('Unique commerce identifier to perform admin actions on '.FLAVOR.' .', 'pg_woocommerce')
     ),
     'app_key_server' => array(
       'title' => __('App Key Server', 'pg_woocommerce'),
       'type' => 'text',
-      'description' => __('Key used for reverse communication with '.FLAVOR.' Server.', 'pg_woocommerce')
+      'description' => __('Key used to encrypt admin communication with '.FLAVOR, 'pg_woocommerce')
     )
   );
