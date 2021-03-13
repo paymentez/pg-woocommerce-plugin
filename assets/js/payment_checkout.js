@@ -8,7 +8,6 @@ jQuery(document).ready(function($) {
   var staging = checkout_values.getAttribute('environment');
   var environment = (staging === "yes") ? "stg" : "prod";
   var installments_type = checkout_values.getAttribute('installments_type');
-  console.log(installments_type);
 
   var paymentCheckout = new PaymentCheckout.modal({
       client_app_code: app_code_js,
@@ -16,14 +15,13 @@ jQuery(document).ready(function($) {
       locale: language,
       env_mode: environment,
       onOpen: function() {
-          console.log('modal open');
+          //console.log('modal open');
       },
       onClose: function() {
-          console.log('modal closed');
+          //console.log('modal closed');
       },
       onResponse: function(response) {
-          console.log('modal response');
-          console.log(response);
+          //console.log('modal response');
           announceTransaction(response);
           if (response.transaction["status_detail"] === 3) {
              showMessageSuccess();
