@@ -16,19 +16,19 @@ class PG_WC_Helper
    */
   public static function create_table() {
     global $wpdb;
-    if ($wpdb->get_var('SHOW TABLES LIKES ' .TABLE_NAME) != TABLE_NAME) {
-        $sql = 'CREATE TABLE '.TABLE_NAME.' (
-               id integer(9) unsigned NOT NULL AUTO_INCREMENT,
-               status varchar(50) NOT NULL,
-               comments varchar(50) NOT NULL,
-               description text(500) NOT NULL,
-               order_id int(9) NOT NULL,
-               pg_transaction_id varchar(50) NOT NULL,
-               PRIMARY KEY  (id)
-               );';
-        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-        dbDelta($sql);
-      }
+  
+    $sql = 'CREATE TABLE '.TABLE_NAME.' (
+           id integer(9) unsigned NOT NULL AUTO_INCREMENT,
+           status varchar(50) NOT NULL,
+           comments varchar(50) NOT NULL,
+           description text(500) NOT NULL,
+           order_id int(9) NOT NULL,
+           pg_transaction_id varchar(50) NOT NULL,
+           PRIMARY KEY  (id)
+           );';
+    require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+    dbDelta($sql);
+
   }
 
   /**
