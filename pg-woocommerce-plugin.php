@@ -37,7 +37,7 @@ if (!function_exists('pg_woocommerce_plugin')) {
         $this->id                 = 'pg_woocommerce';
         $this->icon               = apply_filters('woocomerce_pg_icon', plugins_url('/assets/imgs/payment_checkout.png', __FILE__));
         $this->method_title       = FLAVOR;
-        $this->method_description = __('This module is a solution developed by '. FLAVOR .' that allows WooCommerce users to easily process credit card payments.', 'pg_woocommerce');
+        $this->method_description = __('This module is a solution that allows WooCommerce users to easily process credit card payments. Developed by: ', 'pg_woocommerce').FLAVOR;
 				$this->supports           = array( 'products', 'refunds' );
 
         $this->init_settings();
@@ -73,7 +73,7 @@ if (!function_exists('pg_woocommerce_plugin')) {
         <p>
           <img style='width: 30%;position: relative;display: inherit;'src='<?php echo $logo;?>'>
         </p>
-        <h2><?php _e(FLAVOR.' Gateway','pg_woocommerce'); ?></h2>
+        <h2><?php echo FLAVOR.' Gateway'; ?></h2>
           <table class="form-table">
             <?php $this->generate_settings_html(); ?>
           </table>
@@ -102,7 +102,7 @@ if (!function_exists('pg_woocommerce_plugin')) {
 
       public function generate_ltp_form($order) {
         $url = PG_WC_Helper::generate_ltp($order, $this->environment);
-				$order->update_status( 'on-hold', __( 'Payment status will be updated via webhook.', 'pg_woocommerce' ) );
+				$order->update_status( 'pending', __( 'Payment status will be updated via webhook.', 'pg_woocommerce' ) );
         ?>
           <link rel="stylesheet" type="text/css" href="<?php echo $this->css; ?>">
           <button id="ltp-button" class="<?php if($url == NULL){echo "hide";} else {echo "ltp-button";} ?>" onclick="ltpRedirect()">
