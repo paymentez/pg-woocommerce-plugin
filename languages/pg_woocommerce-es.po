@@ -3,9 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2021-03-12 19:17-0600\n"
 "PO-Revision-Date: 2021-03-12 19:49-0600\n"
-"Last-Translator: \n"
 "Language-Team: \n"
-"Language: es_MX\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -13,6 +11,8 @@ msgstr ""
 "X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-KeywordsList: __;_e\n"
+"Last-Translator: \n"
+"Language: es\n"
 "X-Poedit-SearchPath-0: .\n"
 
 #: includes/admin/pg-woocommerce-settings.php:5
@@ -168,7 +168,7 @@ msgstr ""
 
 #: includes/admin/pg-woocommerce-settings.php:72
 msgid "App Code Client"
-msgstr ""
+msgstr "App Code Client"
 
 #: includes/admin/pg-woocommerce-settings.php:74
 msgid "Unique commerce identifier in "
@@ -176,7 +176,7 @@ msgstr "Identificador único de comercio en "
 
 #: includes/admin/pg-woocommerce-settings.php:77
 msgid "App Key Client"
-msgstr ""
+msgstr "App Key Client"
 
 #: includes/admin/pg-woocommerce-settings.php:79
 msgid "Key used to encrypt communication with "
@@ -184,7 +184,7 @@ msgstr "Clave utilizada para cifrar la comunicación con "
 
 #: includes/admin/pg-woocommerce-settings.php:82
 msgid "App Code Server"
-msgstr ""
+msgstr "App Code Server"
 
 #: includes/admin/pg-woocommerce-settings.php:84
 msgid "Unique commerce identifier to perform admin actions on "
@@ -193,7 +193,7 @@ msgstr ""
 
 #: includes/admin/pg-woocommerce-settings.php:87
 msgid "App Key Server"
-msgstr ""
+msgstr "App Key Server"
 
 #: includes/admin/pg-woocommerce-settings.php:89
 msgid "Key used to encrypt admin communication with "
@@ -282,7 +282,7 @@ msgid ""
 "credit card payments. Developed by: "
 msgstr ""
 "Este módulo es una solución que permite a los usuarios de WooCommerce "
-"procesar fácilmente los pagos con tarjeta de crédito. Desarrollada por: "
+"procesar fácilmente los pagos con tarjeta de crédito. Desarrollado por: "
 
 #: pg-woocommerce-plugin.php:96
 msgid "Transaction: "

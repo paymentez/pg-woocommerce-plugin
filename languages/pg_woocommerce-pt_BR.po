@@ -2,26 +2,26 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2021-03-12 19:17-0600\n"
-"PO-Revision-Date: 2021-03-12 19:49-0600\n"
-"Last-Translator: \n"
+"PO-Revision-Date: 2021-03-12 20:00-0600\n"
 "Language-Team: \n"
-"Language: es_MX\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 2.4.2\n"
 "X-Poedit-Basepath: ..\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Poedit-KeywordsList: __;_e\n"
+"Last-Translator: \n"
+"Language: pt_BR\n"
 "X-Poedit-SearchPath-0: .\n"
 
 #: includes/admin/pg-woocommerce-settings.php:5
 msgid "Staging Environment"
-msgstr "Entorno de Pruebas"
+msgstr "Ambiente de Preparação"
 
 #: includes/admin/pg-woocommerce-settings.php:7
 msgid "Use staging environment in "
-msgstr "Usar el entorno de pruebas de "
+msgstr "Use o ambiente de teste em "
 
 #: includes/admin/pg-woocommerce-settings.php:11
 msgid "Enable LinkToPay"
@@ -30,8 +30,8 @@ msgstr "Habilitar LinkToPay"
 #: includes/admin/pg-woocommerce-settings.php:13
 msgid "If selected, LinkToPay(Bank transfer, cash) can be used to pay."
 msgstr ""
-"Si se selecciona, LinkToPay (transferencia bancaria, efectivo) se puede "
-"utilizar para pagar."
+"Se selecionado, LinkToPay (transferência bancária, dinheiro) pode ser usado "
+"para pagar."
 
 #: includes/admin/pg-woocommerce-settings.php:17
 msgid "Title"
@@ -39,287 +39,289 @@ msgstr "Título"
 
 #: includes/admin/pg-woocommerce-settings.php:19
 msgid "This controls the title which the user sees during checkout page."
-msgstr "Esto controla el título que el usuario ve durante la página de pago."
+msgstr "Isso controla o título que o usuário vê durante a página de checkout."
 
 #: includes/admin/pg-woocommerce-settings.php:24
 msgid "Customer Message"
-msgstr "Mensaje al Cliente"
+msgstr "Mensagem do Cliente"
 
 #: includes/admin/pg-woocommerce-settings.php:26
 msgid "This controls the message which the user sees during checkout page."
-msgstr "Esto controla el mensaje que ve el usuario durante la página de pago."
+msgstr ""
+"Isso controla a mensagem que o usuário vê durante a página de checkout."
 
 #: includes/admin/pg-woocommerce-settings.php:27
 msgid " is a complete solution for online payments. Safe, easy and fast."
-msgstr " es una solución completa para pagos en línea. Segura, fácil y rápida."
+msgstr ""
+" é uma solução completa para pagamentos online. Seguro, fácil e rápido."
 
 #: includes/admin/pg-woocommerce-settings.php:31
 msgid "Checkout Language"
-msgstr "Idioma del Checkout"
+msgstr "Idioma do Checkout"
 
 #: includes/admin/pg-woocommerce-settings.php:39
 msgid ""
 "User's preferred language for checkout window. English will be used by "
 "default."
 msgstr ""
-"Idioma preferido del usuario para la ventana de pago. Inglés se usará de "
-"forma predeterminada."
+"Idioma preferido do usuário para a janela de checkout. O inglês será usado "
+"por padrão."
 
 #: includes/admin/pg-woocommerce-settings.php:42
 msgid "Installments Type"
-msgstr "Tipo de Cuotas/Diferidos"
+msgstr "Tipo de parcelamento"
 
 #: includes/admin/pg-woocommerce-settings.php:46
 msgid "Disabled"
-msgstr "Deshabilitar"
+msgstr "Desabilitado"
 
 #: includes/admin/pg-woocommerce-settings.php:47
 msgid "Enabled"
-msgstr "Habilitar"
+msgstr "Habilitado"
 
 #: includes/admin/pg-woocommerce-settings.php:48
 msgid ""
 "Revolving and deferred without interest (The bank will pay to the commerce "
 "the installment, month by month)(Ecuador)"
 msgstr ""
-"Revolvente y diferido sin intereses (El banco pagará al comercio la cuota, "
-"mes a mes) (Ecuador)"
+"Rotativo e diferido sem juros (O banco pagará ao comércio a parcela, mês a "
+"mês) (Equador)"
 
 #: includes/admin/pg-woocommerce-settings.php:49
 msgid "Deferred with interest (Ecuador)"
-msgstr "Diferido con intereses (Ecuador)"
+msgstr "Diferido com juros (Equador)"
 
 #: includes/admin/pg-woocommerce-settings.php:50
 msgid "Deferred without interest (Ecuador)"
-msgstr "Diferido sin intereses (Ecuador)"
+msgstr "Diferido sem juros (Equador)"
 
 #: includes/admin/pg-woocommerce-settings.php:51
 msgid "Deferred with interest and months of grace (Ecuador)"
-msgstr "Diferido con intereses y meses de gracia (Ecuador)"
+msgstr "Diferido com juros e meses de carência (Equador)"
 
 #: includes/admin/pg-woocommerce-settings.php:52
 msgid "Deferred without interest pay month by month (Ecuador)(Medianet)"
-msgstr "Deferred without interest pay month by month (Ecuador)(Medianet)"
+msgstr "Diferido sem pagamento de juros mês a mês (Equador) (Medianet)"
 
 #: includes/admin/pg-woocommerce-settings.php:53
 msgid "Deferred without interest and months of grace (Ecuador)"
-msgstr "Diferido sin intereses y meses de gracia (Ecuador)"
+msgstr "Diferido sem juros e meses de carência (Equador)"
 
 #: includes/admin/pg-woocommerce-settings.php:54
 msgid "Deferred without interest promotion bimonthly (Ecuador)(Medianet)"
-msgstr "Promoción bimestral diferida sin intereses (Ecuador) (Medianet)"
+msgstr "Diferido sem promoção de juros bimestral (Equador) (Medianet)"
 
 #: includes/admin/pg-woocommerce-settings.php:55
 #: includes/admin/pg-woocommerce-settings.php:56
 msgid "For Diners Club exclusive, deferred with and without interest (Ecuador)"
-msgstr "Para Diners Club exclusivo, diferido con y sin interés (Ecuador)"
+msgstr "Exclusivo para Diners Club, diferido com e sem juros (Equador)"
 
 #: includes/admin/pg-woocommerce-settings.php:57
 msgid "Deferred with interest pay month by month (Ecuador)(Medianet)"
-msgstr "Diferido con pago de intereses mes a mes (Ecuador) (Medianet)"
+msgstr "Diferido com pagamento de juros mês a mês (Equador) (Medianet)"
 
 #: includes/admin/pg-woocommerce-settings.php:58
 msgid "Deferred without interest promotions (Supermaxi)(Ecuador)(Medianet)"
-msgstr "Promociones diferidas sin intereses (Supermaxi) (Ecuador) (Medianet)"
+msgstr "Diferido sem promoções de juros (Supermaxi) (Equador) (Medianet)"
 
 #: includes/admin/pg-woocommerce-settings.php:59
 msgid "Deferred with interest (Cuota fácil)(Ecuador)(Medianet)"
-msgstr "Diferido con intereses (Cuota fácil) (Ecuador) (Medianet)"
+msgstr "Diferido com juros (Easy fee) (Equador) (Medianet)"
 
 #: includes/admin/pg-woocommerce-settings.php:60
 msgid "Without interest (Rendecion Produmillas)(Ecuador)(Medianet)"
-msgstr "Sin interés (Rendecion Produmillas) (Ecuador) (Medianet)"
+msgstr "Sem juros (Rendecion Produmillas) (Equador) (Medianet)"
 
 #: includes/admin/pg-woocommerce-settings.php:61
 msgid "Without interest sale with promotions (Ecuador)(Medianet)"
-msgstr "Venta sin intereses con promociones (Ecuador) (Medianet)"
+msgstr "Venda sem juros com promoções (Equador) (Medianet)"
 
 #: includes/admin/pg-woocommerce-settings.php:62
 msgid "Deferred special without interest (Ecuador)(Medianet)"
-msgstr "Especial diferido sin intereses (Ecuador) (Medianet)"
+msgstr "Especial diferido sem juros (Equador) (Medianet)"
 
 #: includes/admin/pg-woocommerce-settings.php:63
 msgid "Credit without interest (cte smax)(Ecuador)(Medianet)"
-msgstr "Crédito sin intereses (cte smax) (Ecuador) (Medianet)"
+msgstr "Crédito sem juros (cte smax) (Equador) (Medianet)"
 
 #: includes/admin/pg-woocommerce-settings.php:64
 msgid "Special credit without interest (smax)(Ecuador)(Medianet)"
-msgstr "Crédito especial sin intereses (smax) (Ecuador) (Medianet)"
+msgstr "Crédito especial sem juros (smax) (Equador) (Medianet)"
 
 #: includes/admin/pg-woocommerce-settings.php:65
 msgid "Prepay without interest (smax)(Ecuador)(Medianet)"
-msgstr "Prepago sin intereses (smax) (Ecuador) (Medianet)"
+msgstr "Pré-pagamento sem juros (smax) (Equador) (Medianet)"
 
 #: includes/admin/pg-woocommerce-settings.php:66
 msgid "Defered credit without interest (smax)(Ecuador)(Medianet)"
-msgstr "Crédito diferido sin intereses (dmax) (Ecuador) (Medianet)"
+msgstr "Defered credit without interest (smax)(Ecuador)(Medianet)"
 
 #: includes/admin/pg-woocommerce-settings.php:67
 msgid "Without interest with months of grace (Supermaxi)(Ecuador)(Medianet)"
-msgstr "Sin intereses con meses de gracia (Supermaxi) (Ecuador) (Medianet)"
+msgstr "Sem juros com meses de graça (Supermaxi) (Equador) (Medianet)"
 
 #: includes/admin/pg-woocommerce-settings.php:69
 msgid ""
 "Select the installments type that will be enabled on the payment screen "
 "(Only on card payment)."
 msgstr ""
-"Seleccione el tipo de cuotas que se habilitarán en la pantalla de pago (Solo "
-"en pago con tarjeta)."
+"Selecione o tipo de parcelamento que será habilitado na tela de pagamento "
+"(somente no pagamento com cartão)."
 
 #: includes/admin/pg-woocommerce-settings.php:72
 msgid "App Code Client"
-msgstr ""
+msgstr "App Code Client"
 
 #: includes/admin/pg-woocommerce-settings.php:74
 msgid "Unique commerce identifier in "
-msgstr "Identificador único de comercio en "
+msgstr "Identificador de comércio único em "
 
 #: includes/admin/pg-woocommerce-settings.php:77
 msgid "App Key Client"
-msgstr ""
+msgstr "App Key Client"
 
 #: includes/admin/pg-woocommerce-settings.php:79
 msgid "Key used to encrypt communication with "
-msgstr "Clave utilizada para cifrar la comunicación con "
+msgstr "Chave usada para criptografar a comunicação com "
 
 #: includes/admin/pg-woocommerce-settings.php:82
 msgid "App Code Server"
-msgstr ""
+msgstr "App Code Server"
 
 #: includes/admin/pg-woocommerce-settings.php:84
 msgid "Unique commerce identifier to perform admin actions on "
 msgstr ""
-"Identificador de comercio único para realizar acciones administrativas en "
+"Identificador exclusivo de comércio para realizar ações administrativas em "
 
 #: includes/admin/pg-woocommerce-settings.php:87
 msgid "App Key Server"
-msgstr ""
+msgstr "App Key Server"
 
 #: includes/admin/pg-woocommerce-settings.php:89
 msgid "Key used to encrypt admin communication with "
-msgstr "Clave utilizada para cifrar la comunicación del administrador con "
+msgstr "Chave usada para criptografar a comunicação do administrador com "
 
 #: includes/pg-woocommerce-webhook.php:46
 msgid "Payment Response: "
-msgstr "Respuesta de pago: "
+msgstr "Resposta de pagamento: "
 
 #: includes/pg-woocommerce-webhook.php:47
 msgid " | Status: "
-msgstr " | Estatus: "
+msgstr " | Status: "
 
 #: includes/pg-woocommerce-webhook.php:48
 msgid " | Status_detail: "
-msgstr " | Detalle_estado: "
+msgstr " | Detalhe do status: "
 
 #: includes/pg-woocommerce-webhook.php:49
 msgid " | Dev_Reference: "
-msgstr " | Referencia_WC: "
+msgstr " | Referência WC: "
 
 #: includes/pg-woocommerce-webhook.php:50
 msgid " | Authorization_Code: "
-msgstr " | Codigo_Autorización: "
+msgstr " | Código de autorização: "
 
 #: includes/pg-woocommerce-webhook.php:51
 msgid " | Transaction_Code: "
-msgstr " | Código_Transacción: "
+msgstr " | Código de transação: "
 
 #: includes/pg-woocommerce-webhook.php:54
 msgid "Successful Payment"
-msgstr "Pago Exitoso"
+msgstr "Pagamento bem sucedido"
 
 #: includes/pg-woocommerce-webhook.php:57
 msgid "The payment has been made successfully. Transaction Code: "
-msgstr "Su pago ha sido realizado con éxito. Código de transacción: "
+msgstr "O pagamento foi feito com sucesso. Código de transação: "
 
 #: includes/pg-woocommerce-webhook.php:57
 msgid " and its Authorization Code is: "
-msgstr " y su código de autorización es: "
+msgstr " e seu código de autorização é: "
 
 #: includes/pg-woocommerce-webhook.php:59
 msgid "Pending Payment"
-msgstr "Pago Pendiente"
+msgstr "Pagamento Pendente"
 
 #: includes/pg-woocommerce-webhook.php:61
 msgid "The payment is pending."
-msgstr "El pago está pendiente."
+msgstr "O pagamento está pendente."
 
 #: includes/pg-woocommerce-webhook.php:61
 #: includes/pg-woocommerce-webhook.php:73
 msgid " the reason is: "
-msgstr " la razón es: "
+msgstr " a razão é: "
 
 #: includes/pg-woocommerce-webhook.php:64
 msgid "Transaction refunded: "
-msgstr "Transacción reembolsada: "
+msgstr "Transação reembolsada: "
 
 #: includes/pg-woocommerce-webhook.php:64
 msgid " status: "
-msgstr " estatus: "
+msgstr " status: "
 
 #: includes/pg-woocommerce-webhook.php:67
 msgid "Payment Cancelled"
-msgstr "Pago Cancelado"
+msgstr "Pagamento Cancelado"
 
 #: includes/pg-woocommerce-webhook.php:69
 msgid "The payment was cancelled. Transaction Code: "
-msgstr "Su pago fue cancelado. Código de transacción: "
+msgstr "O pagamento foi cancelado. Código de transação: "
 
 #: includes/pg-woocommerce-webhook.php:69
 msgid " the reason is chargeback. "
-msgstr " la razón es contracargo: "
+msgstr " o motivo é o estorno. "
 
 #: includes/pg-woocommerce-webhook.php:71
 msgid "Failed Payment"
-msgstr "Pago Fallido"
+msgstr "Pagamento falhado"
 
 #: includes/pg-woocommerce-webhook.php:73
 msgid "The payment has failed. Transaction Code: "
-msgstr "Su pago a fallado. Código de transaccion: "
+msgstr "O pagamento falhou. Código de transação: "
 
 #: pg-woocommerce-plugin.php:40
 msgid ""
 "This module is a solution that allows WooCommerce users to easily process "
 "credit card payments. Developed by: "
 msgstr ""
-"Este módulo es una solución que permite a los usuarios de WooCommerce "
-"procesar fácilmente los pagos con tarjeta de crédito. Desarrollada por: "
+"Este módulo é uma solução que permite aos usuários do WooCommerce processar "
+"facilmente pagamentos com cartão de crédito. Desenvolvido por: "
 
 #: pg-woocommerce-plugin.php:96
 msgid "Transaction: "
-msgstr "Transacción: "
+msgstr "Transação: "
 
 #: pg-woocommerce-plugin.php:96
 msgid " refund status: "
-msgstr " estatus del reembolso: "
+msgstr " status do reembolso: "
 
 #: pg-woocommerce-plugin.php:96
 msgid " reason: "
-msgstr " la razón es: "
+msgstr " razão: "
 
 #: pg-woocommerce-plugin.php:105
 msgid "Payment status will be updated via webhook."
-msgstr "El estado del pago se actualizará mediante webhook."
+msgstr "O status do pagamento será atualizado via webhook."
 
 #: pg-woocommerce-plugin.php:109
 msgid "Pay with Cash/Bank Transfer"
-msgstr "Pagar con Efectivo/Transferencia Bancaria"
+msgstr "Pague com Dinheiro/Transferência bancária"
 
 #: pg-woocommerce-plugin.php:126
 msgid "Your payment has been made successfully. Thank you for your purchase."
-msgstr "Su pago ha sido realizado con éxito. Gracias por su compra."
+msgstr "Seu pagamento foi efetuado com sucesso. Obrigado por sua compra."
 
 #: pg-woocommerce-plugin.php:127
 msgid ""
 "An error occurred while processing your payment and could not be made. Try "
 "another Credit Card."
 msgstr ""
-"Se produjo un error al procesar su pago y no se pudo realizar. Pruebe con "
-"otra tarjeta de crédito."
+"Ocorreu um erro ao processar seu pagamento e não pôde ser efetuado. Tente "
+"outro cartão de crédito."
 
 #: pg-woocommerce-plugin.php:131
 msgid "Return to Store"
-msgstr "Regresar a la tienda"
+msgstr "Voltar à loja"
 
 #: pg-woocommerce-plugin.php:137
 msgid "Pay With Card"
-msgstr "Pagar con Tarjeta"
+msgstr "Pague com cartão"

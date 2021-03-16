@@ -1,51 +1,55 @@
 <?php
-/**
- *
- */
 require_once( dirname( __DIR__ ) . '/pg-woocommerce-plugin.php' );
 require_once( dirname( __FILE__ ) . '/pg-woocommerce-helper.php' );
 
-class WC_Paymentez_Refund
+/**
+ *
+ */
+class WC_Payment_Refund_PG
 {
-  function refund($order_id)
+  function refund($order_id, $amount)
   {
-    $refundObj = new WC_Gateway_Paymentez();
-    $app_code_server = $refundObj->app_code_server;
-    $app_key_server = $refundObj->app_key_server;
-    $enviroment = $refundObj->enviroment;
+    $refundObj = new PG_WC_Plugin();
 
-    $fecha_actual = time();
-    $variableTimestamp = (string)($fecha_actual);
-    $uniq_token_string = $app_key_server . $variableTimestamp;
-    $uniq_token_hash = hash('sha256', $uniq_token_string);
-    $auth_token = base64_encode($app_code_server . ';' . $variableTimestamp . ';' . $uniq_token_hash);
+    $auth_token = PG_WC_Helper::generate_auth_token('server');
 
-    $urlrefund = ($enviroment == 'yes') ? 'https://ccapi-stg.'.PG_DOMAIN.PG_REFUND : 'https://ccapi.'.PG_DOMAIN.PG_REFUND ;
+    $environment = $refundObj->environment;
+    $urlrefund = ($environment == 'yes') ? 'https://ccapi-stg.'.PG_DOMAIN.PG_REFUND : 'https://ccapi.'.PG_DOMAIN.PG_REFUND ;
 
-    $transactionCode = WC_Paymentez_Database_Helper::select_order($order_id);
+    $transactionCode = PG_WC_Helper::select_order($order_id);
     $data = array(
-        'id' => $transactionCode
+      'transaction' => array(
+        'id' => $transactionCode,
+      ),
+      'order' => array(
+        'amount' => (float)$amount
+      ),
     );
-    $payload = json_encode(array("transaction" => $data));
+    $payload = json_encode($data);
 
     $ch = curl_init($urlrefund);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
     curl_setopt($ch, CURLOPT_POSTFIELDS, ($payload));
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-        'Content-Type:application/json',
-        'Auth-Token:' . $auth_token));
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json', 'Auth-Token:' . $auth_token));
 
-    $response = curl_exec($ch);
-    $getresponse = json_decode($response, true);
-    $status = $getresponse['status'];
+    try {
+      $response = curl_exec($ch);
+      $getresponse = json_decode($response, true);
+      $status = $getresponse['status'];
+      $detail = $getresponse['detail'];
+
+    } catch (Exception $e) {
+      $status = 'error';
+      $detail = $e->getMessage();
+    }
 
     curl_close($ch);
 
-    // TODO: Definir estas dos variables bien
-    $comments = "Refund Completed";
-    $description = "Refund Completed";
+    $success = ($status == 'success') ? true : false ;
+    $comments = "Refund ".$status;
 
-    WC_Paymentez_Database_Helper::insert_data($status, $comments, $description, $order_id, $transactionCode);
+    PG_WC_Helper::insert_data($status, $comments, $detail, $order_id, $transactionCode);
+    return array('status' => $status, 'transaction_id' => $transactionCode, 'success' => $success);
   }
 }
