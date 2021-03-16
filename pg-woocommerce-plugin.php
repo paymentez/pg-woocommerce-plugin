@@ -89,7 +89,7 @@ if (!function_exists('pg_woocommerce_plugin')) {
       }
 
 			public function process_refund( $order_id, $amount = null,  $reason = '' ) {
-				$refund = new WC_Payment_Refund();
+				$refund = new WC_Payment_Refund_PG();
 				$refund_data = $refund->refund($order_id, $amount);
 				if ($refund_data['success']) {
 					$order = new WC_Order($order_id);
