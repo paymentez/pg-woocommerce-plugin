@@ -73,7 +73,7 @@ After having installed our plugin in Wordpress we must proceed to configure it i
 
 This is found in the WooCommerce tab of the main WordPress admin. Then we click on the Settings option and later on the Payments tab.
 
-### 4.1 Payment Gateway Activation
+### 4.1 Payment Gateway Activation
 To activate our payment gateway within WooCommerce we need to be within **WooCommerce -> Settings -> Payments** and we will see our plugin installed and detected.
 
 To enable it we must activate the Enabled button. This enablement is different from that of Wordpress which we did previously.
