@@ -4,7 +4,7 @@
 Plugin Name: Paymentez WooCommerce Plugin
 Plugin URI: http://www.paymentez.com
 Description: This module is a solution that allows WooCommerce users to easily process credit card payments.
-Version: 1.0
+Version: 2.0
 Author: Paymentez
 Author URI: http://www.paymentez.com
 Text Domain: pg_woocommerce
@@ -17,7 +17,7 @@ if ( ! in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins',
 	return;
 }
 
-define("FLAVOR", "Paymentez");
+define("PG_FLAVOR", "Paymentez");
 define("PG_DOMAIN", "paymentez.com");
 define("PG_REFUND", "/v2/transaction/refund/");
 define("PG_LTP", "/linktopay/init_order/");
@@ -36,8 +36,8 @@ if (!function_exists('pg_woocommerce_plugin')) {
       public function __construct() {
         $this->id                 = 'pg_woocommerce';
         $this->icon               = apply_filters('woocomerce_pg_icon', plugins_url('/assets/imgs/payment_checkout.png', __FILE__));
-        $this->method_title       = FLAVOR;
-        $this->method_description = __('This module is a solution that allows WooCommerce users to easily process credit card payments. Developed by: ', 'pg_woocommerce').FLAVOR;
+        $this->method_title       = PG_FLAVOR;
+        $this->method_description = __('This module is a solution that allows WooCommerce users to easily process credit card payments. Developed by: ', 'pg_woocommerce').PG_FLAVOR;
 				$this->supports           = array( 'products', 'refunds' );
 
         $this->init_settings();
@@ -73,7 +73,7 @@ if (!function_exists('pg_woocommerce_plugin')) {
         <p>
           <img style='width: 30%;position: relative;display: inherit;'src='<?php echo $logo;?>'>
         </p>
-        <h2><?php echo FLAVOR.' Gateway'; ?></h2>
+        <h2><?php echo PG_FLAVOR.' Gateway'; ?></h2>
           <table class="form-table">
             <?php $this->generate_settings_html(); ?>
           </table>

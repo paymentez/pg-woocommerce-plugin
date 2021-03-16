@@ -4,7 +4,7 @@ return array (
     'staging' => array(
         'title' => __( 'Staging Environment', 'pg_woocommerce' ),
         'type' => 'checkbox',
-        'label' => __( 'Use staging environment in ', 'pg_woocommerce' ).FLAVOR.'.',
+        'label' => __( 'Use staging environment in ', 'pg_woocommerce' ).PG_FLAVOR.'.',
         'default' => 'yes'
     ),
     'enable_ltp' => array(
@@ -17,14 +17,14 @@ return array (
         'title' => __( 'Title', 'pg_woocommerce' ),
         'type' => 'text',
         'description' => __( 'This controls the title which the user sees during checkout page.', 'pg_woocommerce' ),
-        'default' => FLAVOR.' Gateway',
+        'default' => PG_FLAVOR.' Gateway',
         'desc_tip' => true,
     ),
     'description' => array(
         'title' => __( 'Customer Message', 'pg_woocommerce' ),
         'type' => 'textarea',
         'description' => __( 'This controls the message which the user sees during checkout page.', 'pg_woocommerce' ),
-        'default' => FLAVOR.__(' is a complete solution for online payments. Safe, easy and fast.', 'pg_woocommerce
+        'default' => PG_FLAVOR.__(' is a complete solution for online payments. Safe, easy and fast.', 'pg_woocommerce
         ')
     ),
     'checkout_language' => array(
@@ -71,21 +71,21 @@ return array (
     'app_code_client' => array(
       'title' => __('App Code Client', 'pg_woocommerce'),
       'type' => 'text',
-      'description' => __('Unique commerce identifier in ', 'pg_woocommerce').FLAVOR.'.'
+      'description' => __('Unique commerce identifier in ', 'pg_woocommerce').PG_FLAVOR.'.'
     ),
     'app_key_client' => array(
       'title' => __('App Key Client', 'pg_woocommerce'),
       'type' => 'text',
-      'description' => __('Key used to encrypt communication with ', 'pg_woocommerce').FLAVOR.'.'
+      'description' => __('Key used to encrypt communication with ', 'pg_woocommerce').PG_FLAVOR.'.'
     ),
     'app_code_server' => array(
       'title' => __('App Code Server', 'pg_woocommerce'),
       'type' => 'text',
-      'description' => __('Unique commerce identifier to perform admin actions on ', 'pg_woocommerce').FLAVOR.'.'
+      'description' => __('Unique commerce identifier to perform admin actions on ', 'pg_woocommerce').PG_FLAVOR.'.'
     ),
     'app_key_server' => array(
       'title' => __('App Key Server', 'pg_woocommerce'),
       'type' => 'text',
-      'description' => __('Key used to encrypt admin communication with ', 'pg_woocommerce').FLAVOR.'.'
+      'description' => __('Key used to encrypt admin communication with ', 'pg_woocommerce').PG_FLAVOR.'.'
     )
   );
