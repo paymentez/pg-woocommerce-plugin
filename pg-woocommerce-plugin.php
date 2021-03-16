@@ -6,7 +6,7 @@ Plugin URI: http://www.paymentez.com
 Description: This module is a solution that allows WooCommerce users to easily process credit card payments.
 Version: 2.0
 Author: Paymentez
-Author URI: http://www.paymentez.com
+Author URI: https://developers.paymentez.com/docs/payments/
 Text Domain: pg_woocommerce
 Domain Path: /languages
 License: GPLv3
