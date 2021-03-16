@@ -128,7 +128,7 @@ if (!function_exists('pg_woocommerce_plugin')) {
 
           <div id="button-return" class="hide">
             <p>
-              <a class="purchase-button" href="<?php echo get_permalink( wc_get_page_id( 'shop' ) ); ?>"><?php _e( 'Return to Store', 'woocommerce' ) ?></a>
+              <a class="purchase-button" href="<?php echo get_permalink( wc_get_page_id( 'shop' ) ); ?>"><?php _e( 'Return to Store', 'pg_woocommerce' ) ?></a>
             </p>
           </div>
 
