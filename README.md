@@ -83,25 +83,25 @@ By enabling our plugin in the WooCommerce admin, we will have some options to co
 
 The options to configure are the following:
 
-- **Staging Environment:** When enabled, the plugin will point to the Paymentez or GlobalPay staging server.
+- **Staging Environment:** When enabled, the plugin will point to the Paymentez staging server.
 
 - **Enable LinkToPay:** If selected, LinkToPay(Bank transfer, cash) can be used to pay.
 
-- **Title:** This option configures the text that the customer will see in the checkout window next to the Paymentez or GlobalPay logo.
+- **Title:** This option configures the text that the customer will see in the checkout window next to the Paymentez logo.
 
-- **Customer Message:** This option configures the message that the customer will see in the checkout window when they select Paymentez or GlobalPay as the payment method.
+- **Customer Message:** This option configures the message that the customer will see in the checkout window when they select Paymentez as the payment method.
 
 - **Checkout Language:** This option selects the language that will be displayed in the checkout window. The available options are Spanish, Portuguese and English (by default).
 
 - **Installments Type:** Select the installments type that will be enabled on the payment screen (Only on card payment).
 
-- **App Code Client:** Unique identifier in Paymentez or GlobalPay.
+- **App Code Client:** Unique identifier in Paymentez.
 
-- **App Key Client:** Key used to encrypt communication with Paymentez or GlobalPay.
+- **App Key Client:** Key used to encrypt communication with Paymentez.
 
-- **App Code Server:** Unique identifier on the Paymentez or GlobalPay server.
+- **App Code Server:** Unique identifier on the Paymentez server.
 
-- **App Key Server:** Key used for communication with the GlobalPay server.
+- **App Key Server:** Key used for communication with the Paymentez server.
 
 ## 5.- Selecting the Plugin in the Store Checkout
 When we have all our plugin activated and configured in WooCommerce, we will see it available to be selected by customers on the Checkout page of our store.
@@ -121,7 +121,7 @@ In the item detail we will find the **Refund** button, we click and the refund o
 
 We type the amount to be reimbursed and click the **Refund via Paymentez** button. The status within WooCommerce will change and so will the status on the gateway.
 
-## 7. Configuración del Webhook
+## 7. Webhook Configuration
 The plugin includes the functionality of a webhook to receive the transaction updates that are made. This webhook receives transaction notifications and updates them in the WooCommerce admin and database.
 
 To configure it, the merchant must provide its **Paymentez** commercial advisor with the address where the webhook is installed, it will be in the following format: https://{{URL-COMMERCE}}/wp-content/plugins/pg-woocommerce-plugin/includes/pg-woocommerce-webhook.php.
