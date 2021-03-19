@@ -16,7 +16,7 @@ class PG_WC_Helper
    */
   public static function create_table() {
     global $wpdb;
-  
+
     $sql = 'CREATE TABLE '.TABLE_NAME.' (
            id integer(9) unsigned NOT NULL AUTO_INCREMENT,
            status varchar(50) NOT NULL,
@@ -108,7 +108,7 @@ class PG_WC_Helper
    */
   public static function generate_ltp($order, $environment) {
     $url_ltp = ($environment == 'yes') ? 'https://noccapi-stg.'.PG_DOMAIN.PG_LTP : 'https://noccapi.'.PG_DOMAIN.PG_LTP ;
-    $auth_token = PG_WC_Helper::generate_auth_token('client');
+    $auth_token = PG_WC_Helper::generate_auth_token('server');
 
     $checkout_data = PG_WC_Helper::get_checkout_params($order);
     $redirect_url = $order->get_view_order_url();
@@ -130,7 +130,7 @@ class PG_WC_Helper
       ],
       'configuration' => [
         'partial_payment' => false,
-        'expiration_time' => 3600,
+        'expiration_days' => 1,
         'success_url' => $redirect_url,
         'failure_url' => $redirect_url,
         'pending_url' => $redirect_url,
