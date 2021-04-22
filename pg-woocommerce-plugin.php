@@ -13,20 +13,43 @@ License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 */
 
+require( dirname( __FILE__ ) . '/includes/pg-woocommerce-refund.php' );
+require(dirname(__FILE__) . '/includes/pg-woocommerce-webhook-api.php');
+
 if ( ! in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
 	return;
 }
 
-define("PG_FLAVOR", "Paymentez");
-define("PG_DOMAIN", "paymentez.com");
-define("PG_REFUND", "/v2/transaction/refund/");
-define("PG_LTP", "/linktopay/init_order/");
+const PG_FLAVOR = "Paymentez";
+const PG_DOMAIN = "paymentez.com";
+const PG_REFUND = "/v2/transaction/refund/";
+const PG_LTP = "/linktopay/init_order/";
 
 add_action( 'plugins_loaded', 'pg_woocommerce_plugin' );
 
-register_activation_hook( __FILE__, array( 'PG_WC_Helper', 'create_table' ) );
+function paymentez_payment_webhook( WP_REST_Request $request ) {
+    $parameters = $request->get_params();
+    try {
+        $order = new WC_Order($parameters['transaction']['dev_reference']);
+        $response_params = WC_Payment_Webhook_PG::update_order($order, $parameters);
+        return new WP_REST_Response($response_params['message'], $response_params['code']);
+    } catch (Exception $e){
+        return new WP_REST_Response("update order fails, details: {$e}", 400);
+    }
+}
 
-require( dirname( __FILE__ ) . '/includes/pg-woocommerce-refund.php' );
+add_action( 'rest_api_init', function () {
+    register_rest_route( 'paymentez/webhook/v1', 'params', array(
+        'methods' => WP_REST_SERVER::CREATABLE,
+        'callback' => 'paymentez_payment_webhook',
+        'args' => array(),
+        'permission_callback' => function () {
+            return true;
+        }
+    ) );
+});
+
+register_activation_hook( __FILE__, array( 'PG_WC_Helper', 'create_table' ) );
 
 load_plugin_textdomain( 'pg_woocommerce', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
@@ -38,7 +61,7 @@ if (!function_exists('pg_woocommerce_plugin')) {
         $this->icon               = apply_filters('woocomerce_pg_icon', plugins_url('/assets/imgs/payment_checkout.png', __FILE__));
         $this->method_title       = PG_FLAVOR;
         $this->method_description = __('This module is a solution that allows WooCommerce users to easily process credit card payments. Developed by: ', 'pg_woocommerce').PG_FLAVOR;
-				$this->supports           = array( 'products', 'refunds' );
+        $this->supports           = array( 'products', 'refunds' );
 
         $this->init_settings();
         $this->init_form_fields();
@@ -49,7 +72,7 @@ if (!function_exists('pg_woocommerce_plugin')) {
         $this->checkout_language  = $this->get_option('checkout_language');
         $this->environment        = $this->get_option('staging');
         $this->enable_ltp         = $this->get_option('enable_ltp');
-				$this->installments_type  = $this->get_option('installments_type');
+        $this->installments_type  = $this->get_option('installments_type');
 
         $this->app_code_client    = $this->get_option('app_code_client');
         $this->app_key_client     = $this->get_option('app_key_client');
@@ -117,7 +140,7 @@ if (!function_exists('pg_woocommerce_plugin')) {
       }
 
       public function generate_cc_form($order) {
-        $webhook_p = plugins_url('/includes/pg-woocommerce-webhook.php', __FILE__);
+        $webhook_p = plugins_url('/includes/pg-woocommerce-webhook-checkout.php', __FILE__);
         $checkout = plugins_url('/assets/js/payment_checkout.js', __FILE__);
         $order_data = PG_WC_Helper::get_checkout_params($order);
         ?>
@@ -140,13 +163,14 @@ if (!function_exists('pg_woocommerce_plugin')) {
             <?php echo json_encode($order_data); ?>
           </div>
 
-          <script id="woocommerce_checkout_pg" webhook_p="<?php echo $webhook_p; ?>"
-            app_key="<?php echo $this->app_key_client; ?>"
-            app_code="<?php echo $this->app_code_client; ?>"
-            checkout_language="<?php echo $this->checkout_language; ?>"
-            environment="<?php echo $this->environment; ?>"
-						installments_type="<?php echo $this->installments_type; ?>"
-            src="<?php echo $checkout; ?>">
+          <script id="woocommerce_checkout_pg"
+                  webhook_p="<?php echo $webhook_p; ?>"
+                  app_key="<?php echo $this->app_key_client; ?>"
+                  app_code="<?php echo $this->app_code_client; ?>"
+                  checkout_language="<?php echo $this->checkout_language; ?>"
+                  environment="<?php echo $this->environment; ?>"
+                  installments_type="<?php echo $this->installments_type; ?>"
+                  src="<?php echo $checkout; ?>">
           </script>
         <?php
       }

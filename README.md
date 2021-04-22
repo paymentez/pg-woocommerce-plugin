@@ -124,4 +124,4 @@ We type the amount to be reimbursed and click the **Refund via Paymentez** butto
 ## 7. Webhook Configuration
 The plugin includes the functionality of a webhook to receive the transaction updates that are made. This webhook receives transaction notifications and updates them in the WooCommerce admin and database.
 
-To configure it, the merchant must provide its **Paymentez** commercial advisor with the address where the webhook is installed, it will be in the following format: https://{{URL-COMMERCE}}/wp-content/plugins/pg-woocommerce-plugin/includes/pg-woocommerce-webhook.php.
+To configure it, the merchant must provide its **Paymentez** commercial advisor with the address where the webhook is installed, it will be in the following format: https://{{URL-COMMERCE}}/wp-json/paymentez/webhook/v1/params.
