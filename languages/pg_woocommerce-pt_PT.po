@@ -1,9 +1,11 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-03-12 19:17-0600\n"
-"PO-Revision-Date: 2021-03-12 20:02-0600\n"
+"POT-Creation-Date: 2021-04-23 16:21-0500\n"
+"PO-Revision-Date: 2021-04-23 16:22-0500\n"
+"Last-Translator: \n"
 "Language-Team: \n"
+"Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -11,8 +13,6 @@ msgstr ""
 "X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Poedit-KeywordsList: __;_e\n"
-"Last-Translator: \n"
-"Language: pt\n"
 "X-Poedit-SearchPath-0: .\n"
 
 #: includes/admin/pg-woocommerce-settings.php:5
@@ -88,12 +88,12 @@ msgstr ""
 "mês) (Equador)"
 
 #: includes/admin/pg-woocommerce-settings.php:49
-msgid "Deferred with interest (Ecuador)"
-msgstr "Diferido com juros (Equador)"
+msgid "Deferred with interest (Ecuador, México)"
+msgstr "Diferido com juros (Equador, México)"
 
 #: includes/admin/pg-woocommerce-settings.php:50
-msgid "Deferred without interest (Ecuador)"
-msgstr "Diferido sem juros (Equador)"
+msgid "Deferred without interest (Ecuador, México)"
+msgstr "Diferido sem juros (Equador, México)"
 
 #: includes/admin/pg-woocommerce-settings.php:51
 msgid "Deferred with interest and months of grace (Ecuador)"
@@ -104,7 +104,7 @@ msgid "Deferred without interest pay month by month (Ecuador)(Medianet)"
 msgstr "Diferido sem pagamento de juros mês a mês (Equador) (Medianet)"
 
 #: includes/admin/pg-woocommerce-settings.php:53
-msgid "Deferred without interest and months of grace (Ecuador)"
+msgid "Deferred without interest and months of grace (Ecuador, México)"
 msgstr "Diferido sem juros e meses de carência (Equador)"
 
 #: includes/admin/pg-woocommerce-settings.php:54
@@ -201,84 +201,104 @@ msgstr "App Key Server"
 msgid "Key used to encrypt admin communication with "
 msgstr "Chave usada para criptografar a comunicação do administrador com "
 
-#: includes/pg-woocommerce-webhook.php:46
+#: includes/pg-woocommerce-webhook-api.php:34
+#: includes/pg-woocommerce-webhook-checkout.php:19
 msgid "Payment Response: "
 msgstr "Resposta de pagamento: "
 
-#: includes/pg-woocommerce-webhook.php:47
+#: includes/pg-woocommerce-webhook-api.php:35
+#: includes/pg-woocommerce-webhook-checkout.php:20
 msgid " | Status: "
 msgstr " | Status: "
 
-#: includes/pg-woocommerce-webhook.php:48
+#: includes/pg-woocommerce-webhook-api.php:36
+#: includes/pg-woocommerce-webhook-checkout.php:21
 msgid " | Status_detail: "
 msgstr " | Detalhe do status: "
 
-#: includes/pg-woocommerce-webhook.php:49
+#: includes/pg-woocommerce-webhook-api.php:37
+#: includes/pg-woocommerce-webhook-checkout.php:22
 msgid " | Dev_Reference: "
 msgstr " | Referência WC: "
 
-#: includes/pg-woocommerce-webhook.php:50
+#: includes/pg-woocommerce-webhook-api.php:38
+#: includes/pg-woocommerce-webhook-checkout.php:23
 msgid " | Authorization_Code: "
 msgstr " | Código de autorização: "
 
-#: includes/pg-woocommerce-webhook.php:51
+#: includes/pg-woocommerce-webhook-api.php:39
+#: includes/pg-woocommerce-webhook-checkout.php:24
 msgid " | Transaction_Code: "
 msgstr " | Código de transação: "
 
-#: includes/pg-woocommerce-webhook.php:54
+#: includes/pg-woocommerce-webhook-api.php:42
+#: includes/pg-woocommerce-webhook-checkout.php:27
 msgid "Successful Payment"
 msgstr "Pagamento bem sucedido"
 
-#: includes/pg-woocommerce-webhook.php:57
+#: includes/pg-woocommerce-webhook-api.php:45
+#: includes/pg-woocommerce-webhook-checkout.php:30
 msgid "The payment has been made successfully. Transaction Code: "
 msgstr "O pagamento foi feito com sucesso. Código de transação: "
 
-#: includes/pg-woocommerce-webhook.php:57
+#: includes/pg-woocommerce-webhook-api.php:45
+#: includes/pg-woocommerce-webhook-checkout.php:30
 msgid " and its Authorization Code is: "
 msgstr " e seu código de autorização é: "
 
-#: includes/pg-woocommerce-webhook.php:59
+#: includes/pg-woocommerce-webhook-api.php:47
+#: includes/pg-woocommerce-webhook-checkout.php:32
 msgid "Pending Payment"
 msgstr "Pagamento Pendente"
 
-#: includes/pg-woocommerce-webhook.php:61
+#: includes/pg-woocommerce-webhook-api.php:49
+#: includes/pg-woocommerce-webhook-checkout.php:34
 msgid "The payment is pending."
 msgstr "O pagamento está pendente."
 
-#: includes/pg-woocommerce-webhook.php:61
-#: includes/pg-woocommerce-webhook.php:73
+#: includes/pg-woocommerce-webhook-api.php:49
+#: includes/pg-woocommerce-webhook-api.php:61
+#: includes/pg-woocommerce-webhook-checkout.php:34
+#: includes/pg-woocommerce-webhook-checkout.php:46
 msgid " the reason is: "
 msgstr " a razão é: "
 
-#: includes/pg-woocommerce-webhook.php:64
+#: includes/pg-woocommerce-webhook-api.php:52
+#: includes/pg-woocommerce-webhook-checkout.php:37
 msgid "Transaction refunded: "
 msgstr "Transação reembolsada: "
 
-#: includes/pg-woocommerce-webhook.php:64
+#: includes/pg-woocommerce-webhook-api.php:52
+#: includes/pg-woocommerce-webhook-checkout.php:37
 msgid " status: "
 msgstr " status: "
 
-#: includes/pg-woocommerce-webhook.php:67
+#: includes/pg-woocommerce-webhook-api.php:55
+#: includes/pg-woocommerce-webhook-checkout.php:40
 msgid "Payment Cancelled"
 msgstr "Pagamento Cancelado"
 
-#: includes/pg-woocommerce-webhook.php:69
+#: includes/pg-woocommerce-webhook-api.php:57
+#: includes/pg-woocommerce-webhook-checkout.php:42
 msgid "The payment was cancelled. Transaction Code: "
 msgstr "O pagamento foi cancelado. Código de transação: "
 
-#: includes/pg-woocommerce-webhook.php:69
+#: includes/pg-woocommerce-webhook-api.php:57
+#: includes/pg-woocommerce-webhook-checkout.php:42
 msgid " the reason is chargeback. "
 msgstr " o motivo é o estorno. "
 
-#: includes/pg-woocommerce-webhook.php:71
+#: includes/pg-woocommerce-webhook-api.php:59
+#: includes/pg-woocommerce-webhook-checkout.php:44
 msgid "Failed Payment"
 msgstr "Pagamento falhado"
 
-#: includes/pg-woocommerce-webhook.php:73
+#: includes/pg-woocommerce-webhook-api.php:61
+#: includes/pg-woocommerce-webhook-checkout.php:46
 msgid "The payment has failed. Transaction Code: "
 msgstr "O pagamento falhou. Código de transação: "
 
-#: pg-woocommerce-plugin.php:40
+#: pg-woocommerce-plugin.php:63
 msgid ""
 "This module is a solution that allows WooCommerce users to easily process "
 "credit card payments. Developed by: "
@@ -286,31 +306,31 @@ msgstr ""
 "Este módulo é uma solução que permite aos usuários do WooCommerce processar "
 "facilmente pagamentos com cartão de crédito. Desenvolvido por: "
 
-#: pg-woocommerce-plugin.php:96
+#: pg-woocommerce-plugin.php:119
 msgid "Transaction: "
 msgstr "Transação: "
 
-#: pg-woocommerce-plugin.php:96
+#: pg-woocommerce-plugin.php:119
 msgid " refund status: "
 msgstr " status do reembolso: "
 
-#: pg-woocommerce-plugin.php:96
+#: pg-woocommerce-plugin.php:119
 msgid " reason: "
 msgstr " razão: "
 
-#: pg-woocommerce-plugin.php:105
+#: pg-woocommerce-plugin.php:128
 msgid "Payment status will be updated via webhook."
 msgstr "O status do pagamento será atualizado via webhook."
 
-#: pg-woocommerce-plugin.php:109
+#: pg-woocommerce-plugin.php:132
 msgid "Pay with Cash/Bank Transfer"
 msgstr "Pague com Dinheiro/Transferência bancária"
 
-#: pg-woocommerce-plugin.php:126
+#: pg-woocommerce-plugin.php:149
 msgid "Your payment has been made successfully. Thank you for your purchase."
 msgstr "Seu pagamento foi efetuado com sucesso. Obrigado por sua compra."
 
-#: pg-woocommerce-plugin.php:127
+#: pg-woocommerce-plugin.php:150
 msgid ""
 "An error occurred while processing your payment and could not be made. Try "
 "another Credit Card."
@@ -318,10 +338,10 @@ msgstr ""
 "Ocorreu um erro ao processar seu pagamento e não pôde ser efetuado. Tente "
 "outro cartão de crédito."
 
-#: pg-woocommerce-plugin.php:131
+#: pg-woocommerce-plugin.php:154
 msgid "Return to Store"
 msgstr "Voltar à loja"
 
-#: pg-woocommerce-plugin.php:137
+#: pg-woocommerce-plugin.php:160
 msgid "Pay With Card"
 msgstr "Pague com cartão"
