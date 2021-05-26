@@ -256,7 +256,7 @@ class PG_WC_Helper
         <div class="select" id="installments_div">
             <select name="installments_type" id="installments_type">
                 <option selected disabled><?php _e('Installments Type', 'pg_woocommerce'); ?>:</option>
-                <option value=-1><?php _e('Whitout Installments', 'pg_woocommerce'); ?></option>
+                <option value=-1><?php _e('Without Installments', 'pg_woocommerce'); ?></option>
                 <?php
                 if ($enable_installments == 'yes')
                 {

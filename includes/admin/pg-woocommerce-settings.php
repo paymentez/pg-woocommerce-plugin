@@ -22,7 +22,7 @@ return array (
     'ltp_expiration' => array(
         'title' => __( 'Expiration Days for LinkToPay', 'pg_woocommerce' ),
         'type' => 'number',
-        'description' => __( 'This value controls the number days that the generated LinkToPay will be available to pay.', 'pg_woocommerce' ),
+        'description' => __( 'This value controls the number of days that the generated LinkToPay will be available to pay.', 'pg_woocommerce' ),
         'default' => 1,
         'desc_tip' => true,
     ),
