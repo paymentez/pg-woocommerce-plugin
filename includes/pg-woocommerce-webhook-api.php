@@ -53,7 +53,7 @@ class WC_Payment_Webhook_PG
                     $product = $item->get_product();
                     $qty = $item->get_quantity();
                     wc_update_product_stock($product, $qty, 'increase');
-                    $order->add_order_note( __('Restock Product: ', 'sg_woocommerce') . $product->get_name());
+                    $order->add_order_note( __('Restock Product: ', 'pg_woocommerce') . $product->get_name());
                 }
                 $order->add_order_note(__('Transaction refunded: ', 'pg_woocommerce') . $transaction_id . __(' status: ', 'pg_woocommerce') . $payment_message);
             } elseif ($status_detail == 8) {
