@@ -26,7 +26,6 @@ if (!in_array($status_order, ['completed', 'cancelled', 'refunded', 'processing'
     if ($status_detail == 3) {
         $comments = __("Successful Payment", "pg_woocommerce");
         $order->update_status('processing');
-        $order->reduce_order_stock();
         $order->add_order_note( __('The payment has been made successfully. Transaction Code: ', 'pg_woocommerce') . $transaction_id . __(' and its Authorization Code is: ', 'pg_woocommerce') . $authorization_code);
     } elseif (in_array($status_detail, [0, 1, 31, 35, 36])) {
         $comments = __("Pending Payment", "pg_woocommerce");

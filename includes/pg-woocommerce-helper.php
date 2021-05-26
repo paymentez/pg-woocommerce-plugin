@@ -116,7 +116,6 @@ class PG_WC_Helper
     public static function generate_ltp($order, $environment) {
         $url_ltp = ($environment == 'yes') ? 'https://noccapi-stg.'.PG_DOMAIN.PG_LTP : 'https://noccapi.'.PG_DOMAIN.PG_LTP ;
         $auth_token = PG_WC_Helper::generate_auth_token('server');
-
         $checkout_data = PG_WC_Helper::get_checkout_params($order);
         $redirect_url = $order->get_view_order_url();
 
@@ -155,13 +154,32 @@ class PG_WC_Helper
 
         try {
             $response = curl_exec($ch);
-            $get_response = json_decode($response, true);
-            $payment_url = $get_response['data']['payment']['payment_url'];
         } catch (Exception $e) {
-            $payment_url = NULL;
+            curl_close($ch);
+            return NULL;
         }
-        curl_close($ch);
-        return $payment_url;
+        $get_response = json_decode($response, true);
+
+        $data = $get_response['data'] ?: [];
+        if (array_key_exists('payment', $data)) {
+            curl_close($ch);
+            return $data['payment']['payment_url'];
+        } else {
+            if (curl_errno($ch)) {
+                $response = curl_error($ch);
+            } else {
+                $response = json_encode($get_response);
+            }
+            curl_close($ch);
+            ?>
+            <div id="ltp-failed">
+                <p class="alert alert-warning">
+                    <?php _e('An error occurred generating the payment link, gateway response', 'pg_woocommerce')?>: <?php echo $response;?>
+                </p>
+            </div>
+            <?php
+            return NULL;
+        }
     }
 
     /**
@@ -201,5 +219,56 @@ class PG_WC_Helper
         $stoken_server = md5($transaction_id . "_" . $webhookObj->app_code_server . "_" . $user_id . "_" . $webhookObj->app_key_server);
         return array($stoken_server, $stoken_client);
 
+    }
+
+    /**
+     * Method to show the installments on the payment page.
+     * @param string $enable_installments
+     * @return void
+     */
+    public static function get_installments_type($enable_installments)
+    {
+        $installments_options = [
+            1  => __('Revolving and deferred without interest (The bank will pay to the commerce the installment, month by month)(Ecuador)', 'pg_woocommerce'),
+            2  => __('Deferred with interest (Ecuador, México)', 'pg_woocommerce'),
+            3  => __('Deferred without interest (Ecuador, México)', 'pg_woocommerce'),
+            7  => __('Deferred with interest and months of grace (Ecuador)', 'pg_woocommerce'),
+            6  => __('Deferred without interest pay month by month (Ecuador)(Medianet)', 'pg_woocommerce'),
+            9  => __('Deferred without interest and months of grace (Ecuador, México)', 'pg_woocommerce'),
+            10 => __('Deferred without interest promotion bimonthly (Ecuador)(Medianet)', 'pg_woocommerce'),
+            21 => __('For Diners Club exclusive, deferred with and without interest (Ecuador)', 'pg_woocommerce'),
+            22 => __('For Diners Club exclusive, deferred with and without interest (Ecuador)', 'pg_woocommerce'),
+            30 => __('Deferred with interest pay month by month (Ecuador)(Medianet)', 'pg_woocommerce'),
+            50 => __('Deferred without interest promotions (Supermaxi)(Ecuador)(Medianet)', 'pg_woocommerce'),
+            51 => __('Deferred with interest (Cuota fácil)(Ecuador)(Medianet)', 'pg_woocommerce'),
+            52 => __('Without interest (Rendecion Produmillas)(Ecuador)(Medianet)', 'pg_woocommerce'),
+            53 => __('Without interest sale with promotions (Ecuador)(Medianet)', 'pg_woocommerce'),
+            70 => __('Deferred special without interest (Ecuador)(Medianet)', 'pg_woocommerce'),
+            72 => __('Credit without interest (cte smax)(Ecuador)(Medianet)', 'pg_woocommerce'),
+            73 => __('Special credit without interest (smax)(Ecuador)(Medianet)', 'pg_woocommerce'),
+            74 => __('Prepay without interest (smax)(Ecuador)(Medianet)', 'pg_woocommerce'),
+            75 => __('Defered credit without interest (smax)(Ecuador)(Medianet)', 'pg_woocommerce'),
+            90 => __('Without interest with months of grace (Supermaxi)(Ecuador)(Medianet)', 'pg_woocommerce'),
+        ];
+        ?>
+        <div class="select" id="installments_div">
+            <select name="installments_type" id="installments_type">
+                <option selected disabled><?php _e('Installments Type', 'pg_woocommerce'); ?>:</option>
+                <option value=-1><?php _e('Whitout Installments', 'pg_woocommerce'); ?></option>
+                <?php
+                if ($enable_installments == 'yes')
+                {
+                    foreach($installments_options as $value => $text)
+                    {
+                        ?>
+                        <option value=<?php echo $value;?>><?php echo $text; ?></option>
+                        <?php
+                    }
+                }
+                ?>
+            </select>
+            <br><br>
+        </div>
+        <?php
     }
 }
