@@ -77,6 +77,7 @@ if (!function_exists('pg_woocommerce_plugin')) {
                 $this->enable_ltp           = $this->get_option('enable_ltp');
                 $this->enable_card          = $this->get_option('enable_card');
                 $this->enable_installments  = $this->get_option('enable_installments');
+                $this->ltp_expiration       = $this->get_option('ltp_expiration');
 
                 $this->app_code_client      = $this->get_option('app_code_client');
                 $this->app_key_client       = $this->get_option('app_key_client');

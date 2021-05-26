@@ -118,6 +118,7 @@ class PG_WC_Helper
         $auth_token = PG_WC_Helper::generate_auth_token('server');
         $checkout_data = PG_WC_Helper::get_checkout_params($order);
         $redirect_url = $order->get_view_order_url();
+        $plugin = new PG_WC_Plugin();
 
         $data = [
             'user' => [
@@ -136,7 +137,7 @@ class PG_WC_Helper
             ],
             'configuration' => [
                 'partial_payment' => false,
-                'expiration_days' => 1,
+                'expiration_days' => $plugin->ltp_expiration,
                 'success_url' => $redirect_url,
                 'failure_url' => $redirect_url,
                 'pending_url' => $redirect_url,
