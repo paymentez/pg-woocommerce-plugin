@@ -229,6 +229,7 @@ class PG_WC_Helper
     public static function get_installments_type($enable_installments)
     {
         $installments_options = [
+            0  => __('Enable Installments', 'pg_woocommerce'),
             1  => __('Revolving and deferred without interest (The bank will pay to the commerce the installment, month by month)(Ecuador)', 'pg_woocommerce'),
             2  => __('Deferred with interest (Ecuador, México)', 'pg_woocommerce'),
             3  => __('Deferred without interest (Ecuador, México)', 'pg_woocommerce'),
