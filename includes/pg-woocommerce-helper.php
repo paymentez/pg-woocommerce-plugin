@@ -82,8 +82,8 @@ class PG_WC_Helper
         foreach ($order->get_items() as $product) {
             $description .= $product['name'] . ',';
         }
-        if (strlen($description) > 240) {
-            $description = substr($description,0,240);
+        if (strlen($description) > 100) {
+            $description = substr($description,0,99);
         }
 
         if (is_null($order_data['customer_id']) or empty($order_data['customer_id'])) {
