@@ -149,16 +149,17 @@ if (!function_exists('pg_woocommerce_plugin')) {
             }
 
             public function generate_ltp_form($order) {
+                $url = PG_WC_Helper::generate_ltp($order, $this->environment);
                 ?>
                 <link rel="stylesheet" type="text/css" href="<?php echo $this->css; ?>">
                 <div id="payment-buttons">
-                    <button id="ltp-button" class="ltp-button" onclick="ltpRedirect()">
+                    <button id="ltp-button" class="<?php if($url == NULL){echo "hide";} else {echo "ltp-button";} ?>" onclick="ltpRedirect()">
                         <?php echo $this->ltp_button_text; ?>
                     </button>
                 </div>
                 <script>
                     function ltpRedirect() {
-                        location.replace("<?php echo PG_WC_Helper::generate_ltp($order, $this->environment); ?>")
+                        location.replace("<?php echo $url; ?>")
                     }
                 </script>
                 <?php
