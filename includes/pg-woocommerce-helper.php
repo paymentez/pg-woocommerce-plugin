@@ -100,8 +100,15 @@ class PG_WC_Helper
             'purchase_description' => $description,
             'customer_phone'       => $order_data['billing']['phone'],
             'customer_email'       => $order_data['billing']['email'],
+            'first_name'           => $order_data['billing']['first_name'],
+            'last_name'            => $order_data['billing']['last_name'],
             'user_id'              => $uid,
-            'vat'                  => $vat
+            'vat'                  => $vat,
+            'city'                 => $order_data['billing']['city'],
+            'country'              => $order_data['billing']['country'],
+            'state'                => $order_data['billing']['state'],
+            'street'               => $order_data['billing']['address_1'],
+            'zip'                  => $order_data['billing']['postcode'],
         );
 
         return $parametersArgs;
@@ -123,8 +130,8 @@ class PG_WC_Helper
         $data = [
             'user' => [
                 'id'=> $checkout_data['user_id'],
-                'name'=> $order->get_billing_first_name(),
-                'last_name'=> $order->get_billing_last_name(),
+                'name'=> $checkout_data['first_name'],
+                'last_name'=> $checkout_data['last_name'],
                 'email'=> $checkout_data['customer_email'],
             ],
             'order' => [
