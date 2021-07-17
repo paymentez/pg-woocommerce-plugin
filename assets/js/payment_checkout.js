@@ -67,6 +67,13 @@ jQuery(document).ready(function($) {
             order_vat: Number(order_data.vat),
             order_reference: order_data.purchase_order_id.toString(),
             order_installments_type: Number(document.getElementById('installments_type').value),
+            billing_address: {
+                street: order_data.street.toString(),
+                city: order_data.city.toString(),
+                country: order_data.country.toString(),
+                state: order_data.state.toString(),
+                zip: order_data.zip.toString()
+            }
         });
     });
 
