@@ -67,6 +67,7 @@ jQuery(document).ready(function($) {
             order_vat: Number(order_data.vat),
             order_reference: order_data.purchase_order_id.toString(),
             order_installments_type: Number(document.getElementById('installments_type').value),
+            billing_address: order_data.billing_address
         });
     });
 
