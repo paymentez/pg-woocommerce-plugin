@@ -181,9 +181,6 @@ if (!function_exists('pg_woocommerce_plugin')) {
                     </p>
                 </div>
 
-                <?php
-                PG_WC_Helper::get_installments_type($this->enable_installments);
-                ?>
                 <div id="payment-buttons">
                     <script src="https://cdn.paymentez.com/ccapi/sdk/payment_checkout_stable.min.js"></script>
                 </div>
