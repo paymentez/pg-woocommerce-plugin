@@ -7,7 +7,7 @@ jQuery(document).ready(function($) {
     var webhook_p = checkout_values.getAttribute('webhook_p');
     var staging = checkout_values.getAttribute('environment');
     var environment = (staging === "yes") ? "stg" : "prod";
-    var enable_installments = checkout_values.getAttribute('enable_installments');
+    // var enable_installments = checkout_values.getAttribute('enable_installments');
 
     var paymentCheckout = new PaymentCheckout.modal({
         client_app_code: app_code_js,
@@ -62,7 +62,7 @@ jQuery(document).ready(function($) {
             order_amount: Number(order_data.purchase_amount),
             order_vat: Number(order_data.vat),
             order_reference: order_data.purchase_order_id.toString(),
-            order_installments_type: enable_installments === "no" ? -1 : 0,
+            order_installments_type: Number(btnOpenCheckout.getAttribute('installments_type_commerce')),
             billing_address: order_data.billing_address
         });
     });
@@ -82,9 +82,9 @@ jQuery(document).ready(function($) {
         if (document.getElementById("msj-failed")) {
             $("#msj-failed").addClass("hide");
         }
-        if (document.getElementById("installments_div")) {
-            $("#installments_div").addClass("hide");
-        }
+        // if (document.getElementById("installments_div")) {
+        //     $("#installments_div").addClass("hide");
+        // }
     }
 
     function showMessageError() {

@@ -234,50 +234,29 @@ class PG_WC_Helper
      * @param string $enable_installments
      * @return void
      */
-    public static function get_installments_type($enable_installments)
+    public static function get_installments_type($enable_installments, $environment, $card_button_text)
     {
-        $installments_options = [
-            0  => __('Enable Installments', 'pg_woocommerce'),
-            1  => __('Revolving and deferred without interest (The bank will pay to the commerce the installment, month by month)(Ecuador)', 'pg_woocommerce'),
-            2  => __('Deferred with interest (Ecuador, México)', 'pg_woocommerce'),
-            3  => __('Deferred without interest (Ecuador, México)', 'pg_woocommerce'),
-            7  => __('Deferred with interest and months of grace (Ecuador)', 'pg_woocommerce'),
-            6  => __('Deferred without interest pay month by month (Ecuador)(Medianet)', 'pg_woocommerce'),
-            9  => __('Deferred without interest and months of grace (Ecuador, México)', 'pg_woocommerce'),
-            10 => __('Deferred without interest promotion bimonthly (Ecuador)(Medianet)', 'pg_woocommerce'),
-            21 => __('For Diners Club exclusive, deferred with and without interest (Ecuador)', 'pg_woocommerce'),
-            22 => __('For Diners Club exclusive, deferred with and without interest (Ecuador)', 'pg_woocommerce'),
-            30 => __('Deferred with interest pay month by month (Ecuador)(Medianet)', 'pg_woocommerce'),
-            50 => __('Deferred without interest promotions (Supermaxi)(Ecuador)(Medianet)', 'pg_woocommerce'),
-            51 => __('Deferred with interest (Cuota fácil)(Ecuador)(Medianet)', 'pg_woocommerce'),
-            52 => __('Without interest (Rendecion Produmillas)(Ecuador)(Medianet)', 'pg_woocommerce'),
-            53 => __('Without interest sale with promotions (Ecuador)(Medianet)', 'pg_woocommerce'),
-            70 => __('Deferred special without interest (Ecuador)(Medianet)', 'pg_woocommerce'),
-            72 => __('Credit without interest (cte smax)(Ecuador)(Medianet)', 'pg_woocommerce'),
-            73 => __('Special credit without interest (smax)(Ecuador)(Medianet)', 'pg_woocommerce'),
-            74 => __('Prepay without interest (smax)(Ecuador)(Medianet)', 'pg_woocommerce'),
-            75 => __('Defered credit without interest (smax)(Ecuador)(Medianet)', 'pg_woocommerce'),
-            90 => __('Without interest with months of grace (Supermaxi)(Ecuador)(Medianet)', 'pg_woocommerce'),
-        ];
+        // to uncomment
+        $auth_token = PG_WC_Helper::generate_auth_token('client');
+        $commerce_data = PG_WC_Utils::get_enable_installments_app($environment, $auth_token);
+        $installments_options_app = $commerce_data['installments_options'];
+        $enable_installments_app = filter_var($commerce_data['enable_installments'], FILTER_VALIDATE_BOOLEAN)
         ?>
-        <div class="select" id="installments_div">
-            <select name="installments_type" id="installments_type">
-                <option selected disabled><?php _e('Installments Type', 'pg_woocommerce'); ?>:</option>
-                <option value=-1><?php _e('Without Installments', 'pg_woocommerce'); ?></option>
-                <?php
-                if ($enable_installments == 'yes')
-                {
-                    foreach($installments_options as $value => $text)
-                    {
-                        ?>
-                        <option value=<?php echo $value;?>><?php echo $text; ?></option>
-                        <?php
-                    }
-                }
-                ?>
-            </select>
-            <br><br>
-        </div>
+        <?php
+        if ($enable_installments_app and in_array('3', array_keys($commerce_data['installments_options']))){
+            $enable_installments ='yes';
+            $installments_options = 3;
+            $card_button_text = __('Deferred without interest', 'gp_woocommerce');
+        }else{
+            $enable_installments = 'no';
+            $installments_options = -1;
+        }
+        ?>
+        <button id="checkout-button" 
+            class="js-payment-checkout" 
+            installments_type_commerce=<?php echo $installments_options; ?>>
+            <?php echo $card_button_text; ?>
+        </button>
         <?php
     }
 }

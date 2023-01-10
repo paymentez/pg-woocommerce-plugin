@@ -1,4 +1,5 @@
 <?php
+require_once( dirname( __DIR__ ) . '/pg-woocommerce-plugin.php' );
 class PG_WC_Utils
 {
     /**
@@ -264,5 +265,27 @@ class PG_WC_Utils
         );
 
         return isset($countries[$country]) ? $countries[$country] : $country;
+    }
+
+    public static function get_enable_installments_app($environment, $auth_token){
+        $url_commerce = ($environment == 'yes') ? 'https://ccapi-stg.'.PG_DOMAIN.PG_COMMERCE : 'https://ccapi.'.PG_DOMAIN.PG_COMMERCE;
+        $ch = curl_init($url_commerce);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json', 'Auth-Token:' . $auth_token));
+
+        try {
+            $response = curl_exec($ch);
+        } catch (Exception $e) {
+            curl_close($ch);
+            return  array('enable_installments' => $e) ;
+        }
+        $get_response = json_decode($response, true);
+        $enable_installments = $get_response['enable_installments'];
+        $installments_options = $get_response['installments_options'];
+        return array(
+            'enable_installments' => $enable_installments,
+            'installments_options' => $installments_options 
+        );
     }
 }

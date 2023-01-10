@@ -24,6 +24,7 @@ const PG_FLAVOR = "Paymentez";
 const PG_DOMAIN = "paymentez.com";
 const PG_REFUND = "/v2/transaction/refund/";
 const PG_LTP = "/linktopay/init_order/";
+const PG_COMMERCE = "/utils/commerce/";
 
 add_action( 'plugins_loaded', 'pg_woocommerce_plugin' );
 
@@ -185,7 +186,9 @@ if (!function_exists('pg_woocommerce_plugin')) {
                     <script src="https://cdn.paymentez.com/ccapi/sdk/payment_checkout_stable.min.js"></script>
                 </div>
 
-                <button id="checkout-button" class="js-payment-checkout"><?php echo $this->card_button_text; ?></button>
+                <?php
+                    PG_WC_Helper::get_installments_type($this->enable_installments, $this->environment, $this->card_button_text);
+                ?>
 
                 <div id="order_data" class="hide">
                     <?php echo json_encode($order_data); ?>
