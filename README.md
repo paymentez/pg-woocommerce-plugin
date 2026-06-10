@@ -1,14 +1,52 @@
-# Paymentez Payment Gateway Plugin for WooCommerce
-This is a Wordpress plugin prepared to work as a payment gateway for another plugin called WooCommerce.
+# Nuvei Paymentez Gateway for WooCommerce
+Contributors:      paymentez
+Tags:              woocommerce, payment gateway, paymentez, credit card, link to pay
+Requires at least: 6.5
+Tested up to:      6.9
+Requires PHP:      7.4
+Stable tag:        3.0.0
+License:           GPL-2.0+
+License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+WC requires at least: 8.0
+WC tested up to:      10.0
 
-## 1.- Prerequisites
+Integrates Paymentez payment gateway (Card Checkout modal and Link to Pay) into WooCommerce.
+
+# Description 
+
+Nuvei Paymentez Gateway for WooCommerce** adds two payment methods to your WooCommerce store:
+
+# Paymentez Checkout (Card) 
+Presents a secure modal powered by the official Paymentez JS SDK so customers can pay with their credit or debit card
+without leaving your store.
+
+# Paymentez Link to Pay 
+Generates a hosted payment link on the Paymentez platform and redirects the customer there. Supports multiple payment
+methods (PSE, cash vouchers, wallets, etc.) depending on your Paymentez account configuration.
+
+# Key features 
+
+* Two independent payment methods, each configurable separately.
+* Staging / Production environment toggle.
+* Webhook endpoint (`/wp-json/paymentez/webhook/v1/params`) with HMAC-SHA256 signature validation.
+* Automatic WooCommerce order status updates: success → processing, failure → failed, pending → on-hold.
+* WC_Logger integration for easy debugging.
+* Fully internationalised (English, Spanish es_ES, Portuguese pt_BR).
+* HPOS (High-Performance Order Storage) compatible.
+
+# Installation
+
+# 1.- Prerequisites
+
 ### 1.1.- XAMPP, LAMPP, MAMPP, Bitnami or any PHP development environment
+
 - XAMPP: https://www.apachefriends.org/download.html
 - LAMPP: https://www.apachefriends.org/download.html
 - MAMPP: https://www.mamp.info/en/mac/
 - Bitnami: https://bitnami.com/stack/wordpress
 
 ### 1.2.- Wordpress
+
 If you already install the Bitnami option, this step can be omitted.
 
 The documentation necessary to install and configure Wordpress is at the following link:
@@ -18,6 +56,7 @@ https://wordpress.org/support/article/how-to-install-wordpress/
 All the minimum requirements (PHP and MySQL) must be fulfilled so that the developed plugin can work correctly.
 
 ### 1.3.- WooCommerce
+
 The documentation needed to install WooCommerce is at the following link:
 
 https://docs.woocommerce.com/document/installing-uninstalling-woocommerce/
@@ -25,6 +64,7 @@ https://docs.woocommerce.com/document/installing-uninstalling-woocommerce/
 There you will also find information necessary for troubleshooting related to the installation.
 
 ### 1.4.- WooCommerce Admin
+
 The documentation needed to install WooCommerce is at the following link:
 
 https://wordpress.org/plugins/woocommerce-admin/
@@ -36,92 +76,60 @@ There you will also find information necessary for troubleshooting related to th
 You can download the current stable release from: https://github.com/paymentez/pg-woocommerce-plugin/releases
 
 ## 3.- Plugin Installation
-The development works like a Wordpress plugin that connects to another Wordpress plugin, WooCommerce.
 
-So when it is installed and activated, WooCommerce and Wordpress hooks and actions are used.
+1. Upload the `paymentez-gateway` folder to `/wp-content/plugins/`.
+2. Activate the plugin via **Plugins > Installed Plugins**.
+3. Go to **WooCommerce > Settings > Payments**.
+4. Enable and configure each payment method individually.
 
-### 3.1 Installation and Activation Through Wordpress Admin
-When we have the project compressed in .zip format, we proceed to the installation through Wordpress Admin.
+# Configuration
 
-1. The first step will be to login into Wordpress Admin as administrator.
+Each method has its own settings page under **WooCommerce > Settings > Payments**:
 
-2. Being in the main screen of the admin we click on the Plugins tab.
+* **Environment** — select *Staging* for testing or *Production* for live transactions.
+* **App Code** — your Paymentez App Code.
+* **App Key** — your Paymentez App Key (stored securely).
+* **Title** — payment method label visible to customers.
+* **Description** — short text shown below the title at checkout.
+* **Button Text** (Checkout method) — label on the payment button.
 
-3. Within the Plugins screen we click on Add New.
+# Webhook 
+Add the following URL in your Paymentez merchant dashboard as the confirmation/webhook URL:
 
-4. Within the Add Plugins screen we click on Upload Plugin.
+`https://your-site.com/wp-json/paymentez/webhook/v1/params`
 
-5. The option to upload our plugin in .zip format will be displayed. We upload it and click on the Install Now button.
+The endpoint validates the `Auth-Token` header sent by Paymentez before processing any order update.
 
-6. We will be redirected to the plugin installation screen. We wait to get the message Plugin installed successfully and click on the Activate Plugin button.
+**Note on plain permalinks:** If your WordPress site uses plain permalinks (Settings → Permalinks set to "Plain"), the
+`/wp-json/` URL will not work. Use this format instead:
 
-7. We will be redirected to the Plugins screen where we will see our plugin installed and activated.
+`https://your-site.com/?rest_route=/paymentez/webhook/v1/params`
 
-### 3.2.- Languages
-The language of the plugin is dynamically selected according to the language that is configured in Wordpress. The languages that are available are:
-- Spanish
-- Spanish MX
-- Spanish CO
-- Spanish PE
-- Spanish EC
-- Spanish LA
-- Portuguese
-- Portuguese BR
+To check which format applies to your store, visit `https://your-site.com/wp-json/` — if it returns JSON, use the clean
+URL. If it returns a 404, use the `?rest_route=` format.
+https://your-site.com/wp-json/paymentez/webhook/v1/params
+# Frequently Asked Questions
 
-## 4. Activation and Configuration of the Plugin in WooCommerce
-After having installed our plugin in Wordpress we must proceed to configure it in the WooCommerce admin.
+1. Does this plugin support PHP 8? 
+Yes. The plugin is compatible with PHP 7.4 through 8.x.
 
-This is found in the WooCommerce tab of the main WordPress admin. Then we click on the Settings option and later on the Payments tab.
+2.  Is the plugin compatible with WooCommerce HPOS? 
+Yes. High-Performance Order Storage compatibility is declared.
 
-### 4.1 Payment Gateway Activation
-To activate our payment gateway within WooCommerce we need to be within **WooCommerce -> Settings -> Payments** and we will see our plugin installed and detected.
+3. How do I test payments? 
+Set the environment to *Staging* in the gateway settings and use Paymentez test card credentials.
 
-To enable it we must activate the Enabled button. This enablement is different from that of Wordpress which we did previously.
+4. Where are errors logged? 
+Go to **WooCommerce > Status > Logs** and filter by `paymentez-checkout`, `paymentez-link`, `paymentez-api`, or
+`paymentez-webhook`.
 
-### 4.2 Gateway Settings in WooCommerce Admin
-By enabling our plugin in the WooCommerce admin, we will have some options to configure. To do this we click on the Manage button that will appear on the side of our plugin.
+== Changelog ==
 
-The options to configure are the following:
+= 3.0.0 =
 
-- **Staging Environment:** When enabled, the plugin will point to the Paymentez staging server.
+* Initial release.
 
-- **Enable LinkToPay:** If selected, LinkToPay(Bank transfer, cash) can be used to pay.
+== Upgrade Notice ==
 
-- **Title:** This option configures the text that the customer will see in the checkout window next to the Paymentez logo.
-
-- **Customer Message:** This option configures the message that the customer will see in the checkout window when they select Paymentez as the payment method.
-
-- **Checkout Language:** This option selects the language that will be displayed in the checkout window. The available options are Spanish, Portuguese and English (by default).
-
-- **Installments Type:** Select the installments type that will be enabled on the payment screen (Only on card payment).
-
-- **App Code Client:** Unique identifier in Paymentez.
-
-- **App Key Client:** Key used to encrypt communication with Paymentez.
-
-- **App Code Server:** Unique identifier on the Paymentez server.
-
-- **App Key Server:** Key used for communication with the Paymentez server.
-
-## 5.- Selecting the Plugin in the Store Checkout
-When we have all our plugin activated and configured in WooCommerce, we will see it available to be selected by customers on the Checkout page of our store.
-
-Just select it, fill in the Billing Details and click on the Place Order button.
-
-By clicking we will arrive at the Order-Pay or Pay For Order window in which we will see a summary of our order. The Purchase button will be displayed which will open the payment checkout.
-
-## 6. Process to make a Refund
-The refund process will start in the main Wordpress admin window.
-
-We select the WooCommerce tab and click on the Orders option.
-
-We select the order that we want to refund and the Edit Order window will open.
-
-In the item detail we will find the **Refund** button, we click and the refund options will be displayed.
-
-We type the amount to be reimbursed and click the **Refund via Paymentez** button. The status within WooCommerce will change and so will the status on the gateway.
-
-## 7. Webhook Configuration
-The plugin includes the functionality of a webhook to receive the transaction updates that are made. This webhook receives transaction notifications and updates them in the WooCommerce admin and database.
-
-To configure it, the merchant must provide its **Paymentez** commercial advisor with the address where the webhook is installed, it will be in the following format: https://{{URL-COMMERCE}}/wp-json/paymentez/webhook/v1/params.
+= 3.0.0 =
+Initial release — no upgrade steps required.
