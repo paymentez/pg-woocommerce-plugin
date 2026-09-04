@@ -1,0 +1,159 @@
+# Portuguese (Brazil) translation for Nuvei Paymentez Gateway for WooCommerce
+# Copyright (C) 2024 Paymentez
+# This file is distributed under the GPL-2.0+ license.
+msgid ""
+msgstr ""
+"Project-Id-Version: Nuvei Paymentez Gateway for WooCommerce 1.0.0\n"
+"Report-Msgid-Bugs-To: https://github.com/paymentez/paymentez-woocommerce/issues\n"
+"POT-Creation-Date: 2024-01-01 00:00:00+00:00\n"
+"PO-Revision-Date: 2024-01-01 00:00+0000\n"
+"Last-Translator: Paymentez <suporte@paymentez.com>\n"
+"Language-Team: Portuguese (Brazil) <pt_BR@li.org>\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 3.x\n"
+"X-Domain: paymentez-gateway\n"
+
+msgid "Nuvei Paymentez Gateway for WooCommerce"
+msgstr "Gateway Paymentez para WooCommerce"
+
+msgid "Integrates Paymentez payment gateway (Card Checkout & Link to Pay) into WooCommerce."
+msgstr "Integra o gateway de pagamento Paymentez (Checkout com cartão e Link de Pagamento) ao WooCommerce."
+
+msgid "Paymentez"
+msgstr "Paymentez"
+
+msgid "Nuvei Paymentez Gateway requires WooCommerce to be installed and active."
+msgstr "O Nuvei Paymentez Gateway requer que o WooCommerce esteja instalado e ativo."
+
+msgid "Paymentez Checkout"
+msgstr "Paymentez Checkout"
+
+msgid "Accept card payments via the Paymentez modal checkout."
+msgstr "Aceite pagamentos com cartão via modal de checkout do Paymentez."
+
+msgid "Enable / Disable"
+msgstr "Ativar / Desativar"
+
+msgid "Enable Paymentez Checkout"
+msgstr "Ativar Paymentez Checkout"
+
+msgid "Title"
+msgstr "Título"
+
+msgid "Payment method title shown to the customer at checkout."
+msgstr "Título do método de pagamento exibido ao cliente no checkout."
+
+msgid "Pay with Card"
+msgstr "Pagar com Cartão"
+
+msgid "Description"
+msgstr "Descrição"
+
+msgid "Description shown below the payment method title at checkout."
+msgstr "Descrição exibida abaixo do título do método de pagamento no checkout."
+
+msgid "Secure card payment powered by Paymentez."
+msgstr "Pagamento seguro com cartão fornecido pelo Paymentez."
+
+msgid "Environment"
+msgstr "Ambiente"
+
+msgid "Select the Paymentez environment to use."
+msgstr "Selecione o ambiente Paymentez a ser utilizado."
+
+msgid "Staging"
+msgstr "Homologação"
+
+msgid "Production"
+msgstr "Produção"
+
+msgid "App Code"
+msgstr "Código da Aplicação"
+
+msgid "Your Paymentez application code."
+msgstr "O código da sua aplicação Paymentez."
+
+msgid "App Key"
+msgstr "Chave da Aplicação"
+
+msgid "Your Paymentez application secret key."
+msgstr "A chave secreta da sua aplicação Paymentez."
+
+msgid "Button Text"
+msgstr "Texto do Botão"
+
+msgid "Label displayed on the payment button."
+msgstr "Rótulo exibido no botão de pagamento."
+
+msgid "Processing payment, please wait..."
+msgstr "Processando pagamento, aguarde…"
+
+msgid "An error occurred while processing your payment. Please try again."
+msgstr "Ocorreu um erro ao processar seu pagamento. Por favor, tente novamente."
+
+msgid "Could not retrieve payment token. Please try again."
+msgstr "Não foi possível obter o token de pagamento. Por favor, tente novamente."
+
+msgid "Payment cancelled."
+msgstr "Pagamento cancelado."
+
+msgid "Invalid order."
+msgstr "Pedido inválido."
+
+msgid "Order not found."
+msgstr "Pedido não encontrado."
+
+msgid "Order #%s"
+msgstr "Pedido #%s"
+
+msgid "Awaiting Paymentez card payment."
+msgstr "Aguardando pagamento com cartão via Paymentez."
+
+msgid "Invalid JSON response from Paymentez."
+msgstr "Resposta JSON inválida do Paymentez."
+
+msgid "Paymentez Link to Pay"
+msgstr "Paymentez Link de Pagamento"
+
+msgid "Redirect customers to a Paymentez-hosted payment page (supports multiple payment methods)."
+msgstr "Redireciona os clientes para uma página de pagamento hospedada pelo Paymentez (suporta múltiplos métodos de pagamento)."
+
+msgid "Enable Paymentez Link to Pay"
+msgstr "Ativar Paymentez Link de Pagamento"
+
+msgid "Other Payment Methods"
+msgstr "Outros Métodos de Pagamento"
+
+msgid "Pay via multiple methods on the Paymentez secure payment page."
+msgstr "Pague por múltiplos métodos na página de pagamento seguro do Paymentez."
+
+msgid "Payment error: could not create payment link. Please try again."
+msgstr "Erro de pagamento: não foi possível criar o link de pagamento. Por favor, tente novamente."
+
+msgid "Payment error: invalid response from Paymentez. Please try again."
+msgstr "Erro de pagamento: resposta inválida do Paymentez. Por favor, tente novamente."
+
+msgid "Awaiting payment via Paymentez Link to Pay."
+msgstr "Aguardando pagamento via Paymentez Link de Pagamento."
+
+msgid "Invalid payload."
+msgstr "Payload inválido."
+
+msgid "Missing required data."
+msgstr "Dados obrigatórios ausentes."
+
+msgid "Invalid signature."
+msgstr "Assinatura inválida."
+
+msgid "Paymentez: payment %1$s. Transaction ID: %2$s."
+msgstr "Paymentez: pagamento %1$s. ID da transação: %2$s."
+
+msgid "Paymentez: received unknown status \"%s\"."
+msgstr "Paymentez: status desconhecido recebido \"%s\"."
+
+msgid "Webhook processed successfully."
+msgstr "Webhook processado com sucesso."

@@ -1,0 +1,81 @@
+/**
+ * Nuvei Paymentez Gateway — Checkout Styles
+ *
+ * @package PaymentezGateway
+ */
+
+/* -----------------------------------------------------------------------
+   Loading state on the payment button
+   ----------------------------------------------------------------------- */
+
+#place_order.paymentez-loading,
+#payment [type="submit"].paymentez-loading {
+	position: relative;
+	color: transparent !important;
+	pointer-events: none;
+	cursor: not-allowed;
+}
+
+#place_order.paymentez-loading::after,
+#payment [type="submit"].paymentez-loading::after {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 1.25em;
+	height: 1.25em;
+	margin-top: -0.625em;
+	margin-left: -0.625em;
+	border: 3px solid rgba(255, 255, 255, 0.4);
+	border-top-color: #fff;
+	border-radius: 50%;
+	animation: paymentez-spin 0.7s linear infinite;
+}
+
+@keyframes paymentez-spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+/* -----------------------------------------------------------------------
+   Payment method description area
+   ----------------------------------------------------------------------- */
+
+.payment_method_paymentez_checkout .payment_box,
+.payment_method_paymentez_link .payment_box {
+	padding: 1em;
+	background: #f9f9f9;
+	border-left: 3px solid #0073aa;
+	border-radius: 2px;
+	font-size: 0.95em;
+}
+
+.payment_method_paymentez_checkout .payment_box p,
+.payment_method_paymentez_link .payment_box p {
+	margin: 0;
+}
+
+/* -----------------------------------------------------------------------
+   Paymentez branding badge (optional, shown next to method title)
+   ----------------------------------------------------------------------- */
+
+.paymentez-badge {
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: 0.5em;
+	height: 1.4em;
+	width: auto;
+	opacity: 0.85;
+}
+
+/* -----------------------------------------------------------------------
+   Responsive
+   ----------------------------------------------------------------------- */
+
+@media ( max-width: 768px ) {
+	.payment_method_paymentez_checkout .payment_box,
+	.payment_method_paymentez_link .payment_box {
+		font-size: 0.875em;
+	}
+}
